@@ -1,0 +1,2341 @@
+<!DOCTYPE html>
+<html dir="rtl" lang="ar">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>why 88 v4 — قوائم المهام ثانوية</title>
+<meta content="الحلقة الرابعة من why 88: عن قوائم المهام، والإنجاز، والعقل الذي يرفض التخطيط، والرحمة بالنفس." name="description"/>
+<meta content="#f5f1e8" name="theme-color"/>
+<meta content="MC88" name="author"/>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=Readex+Pro:wght@300;400;500;600;700&family=Noto+Serif+Arabic:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+<style>
+  :root {
+    --paper: #f5f1e8;
+    --paper-2: #efe9dc;
+    --ink: #1c1a16;
+    --ink-soft: #4a463e;
+    --ink-faint: #8a8478;
+    --line: #d9d2c2;
+    --line-soft: #e5dfd0;
+    --accent: #6b5f4a;
+    --whisper: #a89d86;
+    --signal: #a4462d;
+    --sage: #6b7a5c;
+    --max: 780px;
+    --ease: cubic-bezier(0.22, 1, 0.36, 1);
+    --bloom: cubic-bezier(0.34, 1.56, 0.64, 1);
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--paper);
+    color: var(--ink);
+    font-family: 'Readex Pro', system-ui, -apple-system, sans-serif;
+    font-weight: 300;
+    line-height: 1.9;
+    font-size: 17px;
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+    position: relative;
+  }
+
+  body::before {
+    content: "";
+    position: fixed; inset: 0;
+    pointer-events: none;
+    background-image:
+      radial-gradient(circle at 20% 30%, rgba(107,122,92,0.045) 0%, transparent 45%),
+      radial-gradient(circle at 80% 70%, rgba(107,95,74,0.03) 0%, transparent 45%);
+    z-index: 0;
+  }
+
+  .grain {
+    position: fixed; inset: -100%;
+    width: 300%; height: 300%;
+    pointer-events: none;
+    z-index: 9999;
+    opacity: 0.035;
+    mix-blend-mode: multiply;
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='180' height='180'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>");
+    animation: grainShift 9s steps(8) infinite;
+  }
+  @keyframes grainShift {
+    0%,100% { transform: translate(0,0); }
+    25%  { transform: translate(-5%, 3%); }
+    50%  { transform: translate(-4%, 2%); }
+    75%  { transform: translate(3%, -3%); }
+  }
+
+  .cursor-glow {
+    position: fixed;
+    width: 460px; height: 460px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(107,122,92,0.09) 0%, rgba(107,122,92,0.03) 40%, transparent 70%);
+    pointer-events: none;
+    transform: translate(-50%, -50%);
+    z-index: 1; left: 0; top: 0;
+    opacity: 0;
+    transition: opacity 0.6s ease;
+  }
+  .cursor-glow.on { opacity: 1; }
+  @media (pointer: coarse) { .cursor-glow { display: none; } }
+
+  .progress {
+    position: fixed; top: 0; right: 0;
+    height: 1.5px;
+    background: linear-gradient(to left, var(--sage), var(--accent));
+    width: 0%; z-index: 100;
+    transition: width 0.12s linear;
+    opacity: 0.75;
+  }
+
+  /* ============ HEADER ============ */
+  header {
+    position: sticky; top: 0; z-index: 10;
+    background: rgba(245,241,232,0.85);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border-bottom: 1px solid transparent;
+    transition: border-color 0.5s ease;
+  }
+  header.scrolled { border-bottom-color: var(--line); }
+
+  .nav {
+    max-width: var(--max);
+    margin: 0 auto;
+    padding: 18px 28px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 13.5px;
+  }
+
+  .brand {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--ink);
+    text-decoration: none;
+    direction: ltr;
+  }
+  .brand-text { position: relative; }
+  .brand-text::after {
+    content: "_";
+    color: var(--ink-faint);
+    animation: caret 1.2s steps(2) infinite;
+  }
+  @keyframes caret {
+    0%,49% { opacity: 1; }
+    50%,100% { opacity: 0; }
+  }
+  .brand-num {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 26px; height: 26px;
+    border: 1px solid var(--ink);
+    border-radius: 50%;
+    font-size: 11px;
+    font-weight: 600;
+    position: relative;
+  }
+  .brand-num::after {
+    content: "";
+    position: absolute;
+    inset: -3px;
+    border-radius: 50%;
+    border: 1px solid var(--whisper);
+    opacity: 0;
+    animation: pulseRing 3.6s ease-out infinite;
+  }
+  @keyframes pulseRing {
+    0%   { transform: scale(0.9); opacity: 0.7; }
+    70%  { transform: scale(1.5); opacity: 0; }
+    100% { transform: scale(1.5); opacity: 0; }
+  }
+  .brand-ver {
+    font-size: 10px;
+    letter-spacing: 0.08em;
+    color: var(--ink-faint);
+    padding: 2px 6px;
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    margin-right: 2px;
+    transition: color 0.4s ease, border-color 0.4s ease;
+    direction: ltr;
+  }
+  .brand:hover .brand-ver {
+    color: var(--ink);
+    border-color: var(--ink-faint);
+  }
+
+  .nav-links { display: flex; gap: 22px; }
+  .nav-links a {
+    color: var(--ink-faint);
+    text-decoration: none;
+    transition: color 0.3s ease;
+    position: relative;
+  }
+  .nav-links a::after {
+    content: "";
+    position: absolute;
+    bottom: -4px; right: 0;
+    height: 1px; width: 0;
+    background: var(--ink);
+    transition: width 0.4s var(--ease);
+  }
+  .nav-links a:hover { color: var(--ink); }
+  .nav-links a:hover::after { width: 100%; }
+  @media (max-width: 620px) { .nav-links { display: none; } }
+
+  .wrap {
+    position: relative;
+    z-index: 2;
+    max-width: var(--max);
+    margin: 0 auto;
+    padding: 0 28px;
+  }
+
+  /* ============ HERO ============ */
+  .hero {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 90px 0 80px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .dust {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    overflow: hidden;
+    z-index: 0;
+  }
+  .dust span {
+    position: absolute;
+    width: 3px; height: 3px;
+    border-radius: 50%;
+    background: var(--whisper);
+    opacity: 0;
+    animation: drift linear infinite;
+    filter: blur(0.3px);
+  }
+  @keyframes drift {
+    0%   { transform: translate(0, 20px) scale(0.6); opacity: 0; }
+    15%  { opacity: var(--op, 0.35); }
+    85%  { opacity: var(--op, 0.35); }
+    100% { transform: translate(var(--dx, 20px), -110vh) scale(1); opacity: 0; }
+  }
+
+  /* ============ HERO CLIPBOARD ============ */
+  .clip-wrap {
+    position: relative;
+    margin-bottom: 36px;
+    z-index: 2;
+    animation: heroFloat 8s ease-in-out infinite;
+  }
+  @keyframes heroFloat {
+    0%, 100% { transform: translateY(0) rotate(0deg); }
+    50%      { transform: translateY(-5px) rotate(-1deg); }
+  }
+  .clip-svg {
+    display: block;
+    width: 210px;
+    height: 250px;
+    color: var(--ink);
+    overflow: visible;
+  }
+
+  .clip-svg .cl-board {
+    fill: currentColor;
+    fill-opacity: 0.05;
+    stroke: currentColor;
+    stroke-width: 1.6;
+  }
+  .clip-svg .cl-clip {
+    fill: currentColor;
+    fill-opacity: 0.4;
+  }
+  .clip-svg .cl-line-bg {
+    stroke: currentColor;
+    stroke-width: 1.2;
+    opacity: 0.35;
+    stroke-linecap: round;
+  }
+
+  /* checkbox + strike + fade per item */
+  .clip-svg .cl-item {
+    transform-box: fill-box;
+    transform-origin: right center;
+    animation: clDisappear 9s ease-in-out infinite;
+  }
+  .clip-svg .cl-item.i1 { animation-delay: 0s; }
+  .clip-svg .cl-item.i2 { animation-delay: 1.2s; }
+  .clip-svg .cl-item.i3 { animation-delay: 2.4s; }
+  .clip-svg .cl-item.i4 { animation-delay: 3.6s; }
+  .clip-svg .cl-item.i5 { animation-delay: 4.8s; }
+
+  @keyframes clDisappear {
+    0%, 10%   { opacity: 1; transform: translateX(0); }
+    20%       { opacity: 1; transform: translateX(0); }
+    35%       { opacity: 0.6; transform: translateX(-8px); }
+    55%       { opacity: 0; transform: translateX(-24px); }
+    90%, 100% { opacity: 0; transform: translateX(-24px); }
+  }
+
+  .clip-svg .cl-box {
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 1.4;
+  }
+  .clip-svg .cl-strike {
+    stroke: currentColor;
+    stroke-width: 1.4;
+    stroke-linecap: round;
+    stroke-dasharray: 40;
+    stroke-dashoffset: 40;
+    animation: clStrike 9s ease-in-out infinite;
+  }
+  .clip-svg .cl-item.i1 .cl-strike { animation-delay: 0s; }
+  .clip-svg .cl-item.i2 .cl-strike { animation-delay: 1.2s; }
+  .clip-svg .cl-item.i3 .cl-strike { animation-delay: 2.4s; }
+  .clip-svg .cl-item.i4 .cl-strike { animation-delay: 3.6s; }
+  .clip-svg .cl-item.i5 .cl-strike { animation-delay: 4.8s; }
+
+  @keyframes clStrike {
+    0%, 12%   { stroke-dashoffset: 40; }
+    22%       { stroke-dashoffset: 0; }
+    55%, 100% { stroke-dashoffset: 0; }
+  }
+
+  .clip-svg .cl-check {
+    fill: none;
+    stroke: var(--sage);
+    stroke-width: 1.8;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    stroke-dasharray: 14;
+    stroke-dashoffset: 14;
+    animation: clCheck 9s ease-in-out infinite;
+  }
+  .clip-svg .cl-item.i1 .cl-check { animation-delay: 0s; }
+  .clip-svg .cl-item.i2 .cl-check { animation-delay: 1.2s; }
+  .clip-svg .cl-item.i3 .cl-check { animation-delay: 2.4s; }
+  .clip-svg .cl-item.i4 .cl-check { animation-delay: 3.6s; }
+  .clip-svg .cl-item.i5 .cl-check { animation-delay: 4.8s; }
+
+  @keyframes clCheck {
+    0%, 8%    { stroke-dashoffset: 14; }
+    20%       { stroke-dashoffset: 0; }
+    55%, 100% { stroke-dashoffset: 0; }
+  }
+
+  /* empty space label appears at end */
+  .clip-svg .cl-empty {
+    fill: currentColor;
+    opacity: 0;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 8px;
+    letter-spacing: 0.12em;
+    animation: clEmpty 9s ease-in-out infinite;
+  }
+  @keyframes clEmpty {
+    0%, 60%   { opacity: 0; }
+    75%       { opacity: 0.5; }
+    92%, 100% { opacity: 0.5; }
+  }
+
+  .clip-svg .cl-cursor {
+    fill: currentColor;
+    animation: clCursor 9s ease-in-out infinite;
+  }
+  @keyframes clCursor {
+    0%, 100% { opacity: 0.6; }
+    50%      { opacity: 1; }
+  }
+
+  /* ============ EPISODE ROAD ============ */
+  .episode-road {
+    position: relative;
+    width: min(680px, 100%);
+    height: 86px;
+    margin: 0 auto 34px;
+    direction: ltr;
+    opacity: 0;
+    animation: riseIn 1s var(--ease) 0.25s forwards;
+  }
+  .episode-road svg {
+    position: absolute; inset: 0;
+    width: 100%; height: 100%;
+    overflow: visible;
+  }
+  .episode-road .road-base {
+    fill: none; stroke: var(--line); stroke-width: 1.2;
+  }
+  .episode-road .road-flow {
+    fill: none; stroke: var(--ink); stroke-width: 1.4;
+    stroke-linecap: round; stroke-dasharray: 8 16;
+    animation: roadFlow 7s linear infinite;
+  }
+  @keyframes roadFlow { to { stroke-dashoffset: -96; } }
+
+  .episode-node {
+    position: absolute; top: 50%;
+    width: 42px; height: 42px;
+    transform: translate(-50%, -50%);
+    border: 1px solid var(--line);
+    border-radius: 50%;
+    background: var(--paper);
+    display: grid; place-items: center;
+    font: 500 11px/1 'IBM Plex Mono', monospace;
+    color: var(--ink-faint);
+    transition: transform 0.7s var(--ease), border-color 0.5s ease, color 0.5s ease, box-shadow 0.7s ease;
+    text-decoration: none;
+  }
+  .episode-node::before {
+    content: ""; position: absolute; inset: -7px;
+    border: 1px solid transparent; border-radius: 50%;
+    transform: scale(0.65); opacity: 0;
+  }
+  .episode-node.current {
+    color: var(--ink);
+    border-color: var(--ink);
+    transform: translate(-50%, -50%) scale(1.08);
+    box-shadow: 0 0 0 7px rgba(107,122,92,0.05);
+  }
+  .episode-node.current::before {
+    border-color: var(--whisper);
+    animation: nodeRing 3.8s ease-out infinite;
+  }
+  @keyframes nodeRing {
+    0% { transform: scale(0.7); opacity: 0.75; }
+    75%, 100% { transform: scale(1.45); opacity: 0; }
+  }
+  .episode-node.done { opacity: 0.7; }
+  .episode-node.done:hover { opacity: 1; color: var(--ink); border-color: var(--ink-faint); }
+  .episode-node.future { opacity: 0.4; }
+  .episode-node.n1 { left: 8%; }
+  .episode-node.n2 { left: 38%; }
+  .episode-node.n3 { left: 68%; }
+  .episode-node.n4 { left: 94%; }
+
+  .episode-road-label {
+    position: absolute; left: 50%; bottom: -4px;
+    transform: translateX(-50%);
+    white-space: nowrap; color: var(--ink-faint);
+    font: 400 10px/1.2 'IBM Plex Mono', monospace;
+    letter-spacing: 0.12em;
+  }
+  @media (max-width: 560px) {
+    .episode-road { height: 74px; }
+    .episode-node { width: 36px; height: 36px; }
+    .episode-road-label { font-size: 9px; }
+  }
+
+  /* ============ HERO TEXT ============ */
+  .eyebrow {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    letter-spacing: 0.18em;
+    color: var(--ink-faint);
+    margin-bottom: 22px;
+    opacity: 0;
+    animation: riseIn 1s var(--ease) 0.4s forwards;
+    display: inline-block;
+    direction: ltr;
+  }
+  .eyebrow::after {
+    content: "";
+    display: block;
+    height: 1px; width: 0;
+    background: var(--whisper);
+    margin-top: 10px;
+    margin-right: auto;
+    margin-left: auto;
+    animation: lineDraw 1.4s var(--ease) 0.9s forwards;
+  }
+  @keyframes lineDraw { to { width: 42px; } }
+
+  h1.title {
+    font-family: 'Noto Serif Arabic', serif;
+    font-weight: 700;
+    font-size: clamp(1.8rem, 5.4vw, 3.1rem);
+    line-height: 1.35;
+    color: var(--ink);
+    margin-bottom: 26px;
+  }
+  h1.title .word {
+    display: inline-block;
+    opacity: 0;
+    transform: translateY(28px) rotate(1.5deg);
+    animation: wordIn 1.1s var(--ease) forwards;
+  }
+  @keyframes wordIn {
+    to { opacity: 1; transform: translateY(0) rotate(0); }
+  }
+
+  .subtitle {
+    font-family: 'Noto Serif Arabic', serif;
+    font-size: clamp(1.02rem, 2.5vw, 1.28rem);
+    font-weight: 400;
+    color: var(--ink-soft);
+    line-height: 1.8;
+    margin-bottom: 30px;
+    max-width: 580px;
+    opacity: 0;
+    animation: riseIn 1.2s var(--ease) 1.5s forwards;
+  }
+  .subtitle .series-tag {
+    display: inline-block;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.72em;
+    letter-spacing: 0.06em;
+    color: var(--ink-faint);
+    border: 1px solid var(--line);
+    padding: 2px 8px;
+    border-radius: 10px;
+    margin-left: 8px;
+    direction: ltr;
+    vertical-align: middle;
+  }
+
+  .hero-text {
+    font-size: 16.5px;
+    color: var(--ink-soft);
+    max-width: 560px;
+    line-height: 2;
+    opacity: 0;
+    animation: riseIn 1.2s var(--ease) 1.7s forwards;
+  }
+  .hero-text p + p { margin-top: 16px; }
+
+  @keyframes riseIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  .cta-row {
+    display: flex;
+    gap: 16px;
+    margin-top: 40px;
+    flex-wrap: wrap;
+    justify-content: center;
+    opacity: 0;
+    animation: riseIn 1.2s var(--ease) 2s forwards;
+  }
+
+  .btn {
+    display: inline-block;
+    padding: 14px 26px;
+    border: 1px solid var(--ink);
+    background: transparent;
+    color: var(--ink);
+    text-decoration: none;
+    font-size: 14.5px;
+    cursor: pointer;
+    transition: all 0.5s var(--ease);
+    border-radius: 2px;
+    position: relative;
+    overflow: hidden;
+    isolation: isolate;
+  }
+  .btn:hover {
+    background: var(--ink);
+    color: var(--paper);
+    transform: translateY(-2px);
+    box-shadow: 0 10px 24px -14px rgba(28,26,22,0.5);
+  }
+  .btn.ghost { border-color: var(--line); color: var(--ink-faint); }
+  .btn.ghost:hover { border-color: var(--ink-faint); background: transparent; color: var(--ink); box-shadow: none; }
+
+  .ripple {
+    position: absolute;
+    border-radius: 50%;
+    background: currentColor;
+    opacity: 0.25;
+    transform: scale(0);
+    animation: ripple 0.7s var(--ease);
+    pointer-events: none;
+    z-index: -1;
+  }
+  @keyframes ripple {
+    to { transform: scale(2.4); opacity: 0; }
+  }
+
+  .hero-note {
+    margin-top: 50px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12.5px;
+    color: var(--ink-faint);
+    letter-spacing: 0.08em;
+    direction: ltr;
+    opacity: 0;
+    animation: riseIn 1.4s var(--ease) 2.3s forwards;
+  }
+  .hero-note .hl { color: var(--ink); }
+
+  /* ============ MANTRA ============ */
+  .mantra {
+    padding: 70px 0;
+    text-align: center;
+    border-top: 1px solid var(--line);
+    border-bottom: 1px solid var(--line);
+    background: rgba(107,122,92,0.03);
+  }
+  .mantra-line {
+    display: block;
+    font-family: 'Noto Serif Arabic', serif;
+    font-weight: 700;
+    font-size: clamp(1.4rem, 4.2vw, 2.2rem);
+    color: var(--ink);
+    letter-spacing: 0.01em;
+    line-height: 1.4;
+    opacity: 0;
+    transform: translateY(16px);
+    transition: opacity 1.2s var(--ease), transform 1.2s var(--ease);
+  }
+  .mantra.in .mantra-line:nth-child(1) { opacity: 1; transform: none; transition-delay: 0.1s; }
+  .mantra.in .mantra-line:nth-child(2) { opacity: 1; transform: none; transition-delay: 0.5s; }
+  .mantra-sub {
+    margin-top: 22px;
+    font-family: 'Noto Serif Arabic', serif;
+    font-size: 1rem;
+    color: var(--ink-faint);
+    opacity: 0;
+    transition: opacity 1.4s var(--ease) 1s;
+  }
+  .mantra.in .mantra-sub { opacity: 1; }
+
+  /* ============ SECTION ============ */
+  section {
+    padding: 90px 0;
+    border-top: 1px solid var(--line);
+    position: relative;
+  }
+
+  .section-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11.5px;
+    letter-spacing: 0.22em;
+    color: var(--ink-faint);
+    margin-bottom: 26px;
+    display: inline-block;
+    position: relative;
+    direction: ltr;
+  }
+  .section-label::before {
+    content: "";
+    position: absolute;
+    top: 50%; right: -60px;
+    width: 0; height: 1px;
+    background: var(--line);
+    transition: width 1s var(--ease) 0.3s;
+  }
+  .reveal.in .section-label::before { width: 40px; }
+
+  h2 {
+    font-family: 'Noto Serif Arabic', serif;
+    font-weight: 700;
+    font-size: clamp(1.5rem, 4vw, 2.1rem);
+    line-height: 1.4;
+    margin-bottom: 30px;
+    color: var(--ink);
+  }
+  h2 .w {
+    display: inline-block;
+    opacity: 0;
+    transform: translateY(16px);
+    transition: opacity 0.9s var(--ease), transform 0.9s var(--ease);
+  }
+  .reveal.in h2 .w { opacity: 1; transform: none; }
+
+  p {
+    color: var(--ink-soft);
+    margin-bottom: 18px;
+    line-height: 2;
+  }
+  p.lead { font-size: 1.08rem; color: var(--ink); }
+
+  blockquote {
+    border-right: 2px solid var(--whisper);
+    padding-right: 22px;
+    margin: 30px 0;
+    font-family: 'Noto Serif Arabic', serif;
+    font-size: 1.15rem;
+    color: var(--ink);
+    line-height: 1.9;
+  }
+
+  .callout {
+    font-family: 'JetBrains Mono', monospace;
+    font-weight: 500;
+    font-size: 1.05rem;
+    direction: ltr;
+    text-align: center;
+    color: var(--ink);
+    padding: 22px 20px;
+    margin: 30px 0;
+    background: rgba(28,26,22,0.04);
+    border-radius: 2px;
+    letter-spacing: 0.02em;
+    position: relative;
+    overflow: hidden;
+    transition: transform 0.7s var(--ease), background 0.5s ease;
+  }
+  .callout:hover { transform: translateY(-2px); background: rgba(28,26,22,0.055); }
+  .callout::before {
+    content: "";
+    position: absolute;
+    top: 0; right: 0;
+    height: 2px;
+    width: 0;
+    background: var(--sage);
+    transition: width 1.6s var(--ease) 0.4s;
+  }
+  .reveal.in .callout::before { width: 100%; }
+
+  /* ============ ILLUSTRATIONS ============ */
+  .illus-block {
+    display: flex;
+    justify-content: center;
+    margin: 0 0 26px;
+    transform: translateY(12px);
+    opacity: 0.2;
+    transition: transform 1.2s var(--ease), opacity 1.2s ease;
+  }
+  .reveal.in .illus-block { transform: none; opacity: 1; }
+  .illus {
+    width: 120px;
+    height: 120px;
+    color: var(--ink);
+    overflow: visible;
+    filter: drop-shadow(0 8px 16px rgba(28,26,22,0.035));
+  }
+
+  /* — 01 Origin: hand writing on clipboard — */
+  .il-board {
+    fill: none; stroke: currentColor; stroke-width: 1.6;
+  }
+  .il-clip {
+    fill: currentColor; fill-opacity: 0.4;
+  }
+  .il-line {
+    stroke: currentColor; stroke-width: 1.2;
+    stroke-linecap: round;
+    opacity: 0.5;
+  }
+  .il-writing {
+    stroke: currentColor;
+    stroke-width: 1.6;
+    stroke-linecap: round;
+    stroke-dasharray: 30;
+    stroke-dashoffset: 30;
+    animation: ilWrite 5s ease-in-out infinite;
+  }
+  @keyframes ilWrite {
+    0%, 10%   { stroke-dashoffset: 30; opacity: 0.3; }
+    50%       { stroke-dashoffset: 0; opacity: 1; }
+    80%       { stroke-dashoffset: 0; opacity: 1; }
+    95%,100%  { stroke-dashoffset: 0; opacity: 0.4; }
+  }
+  .il-pen {
+    fill: currentColor;
+    animation: ilPenMove 5s ease-in-out infinite;
+    transform-box: fill-box;
+    transform-origin: bottom left;
+  }
+  @keyframes ilPenMove {
+    0%, 10%   { transform: translate(0, 0); opacity: 0.3; }
+    50%       { transform: translate(-6px, 2px); opacity: 1; }
+    80%       { transform: translate(-6px, 2px); opacity: 1; }
+    95%,100%  { transform: translate(0, 0); opacity: 0.3; }
+  }
+
+  /* — 02 List: checkboxes with animation — */
+  .il-cb-box {
+    fill: none; stroke: currentColor; stroke-width: 1.5;
+  }
+  .il-cb-line {
+    stroke: currentColor; stroke-width: 1.4;
+    stroke-linecap: round;
+    opacity: 0.5;
+  }
+  .il-cb-check {
+    fill: none; stroke: var(--sage); stroke-width: 2;
+    stroke-linecap: round; stroke-linejoin: round;
+    stroke-dasharray: 14;
+    stroke-dashoffset: 14;
+  }
+  .il-cb-check.c1 { animation: ilCbCheck 5s ease-in-out infinite; animation-delay: 0s; }
+  .il-cb-check.c2 { animation: ilCbCheck 5s ease-in-out infinite; animation-delay: 0.7s; }
+  .il-cb-check.c3 { animation: ilCbCheck 5s ease-in-out infinite; animation-delay: 1.4s; }
+  @keyframes ilCbCheck {
+    0%, 10%   { stroke-dashoffset: 14; opacity: 0; }
+    30%       { stroke-dashoffset: 0; opacity: 1; }
+    65%       { stroke-dashoffset: 0; opacity: 1; }
+    85%, 100% { stroke-dashoffset: 0; opacity: 0.2; }
+  }
+  .il-cb-strike {
+    stroke: currentColor;
+    stroke-width: 1.4;
+    stroke-linecap: round;
+    stroke-dasharray: 40;
+    stroke-dashoffset: 40;
+  }
+  .il-cb-strike.s1 { animation: ilCbStrike 5s ease-in-out infinite; animation-delay: 0s; }
+  .il-cb-strike.s2 { animation: ilCbStrike 5s ease-in-out infinite; animation-delay: 0.7s; }
+  .il-cb-strike.s3 { animation: ilCbStrike 5s ease-in-out infinite; animation-delay: 1.4s; }
+  @keyframes ilCbStrike {
+    0%, 12%   { stroke-dashoffset: 40; opacity: 0.5; }
+    32%       { stroke-dashoffset: 0; opacity: 0.8; }
+    65%       { stroke-dashoffset: 0; opacity: 0.8; }
+    85%, 100% { stroke-dashoffset: 0; opacity: 0.15; }
+  }
+
+  /* — 03 Achievement: circle growing then shrinking — */
+  .il-ach-circle {
+    fill: none; stroke: currentColor; stroke-width: 1.6;
+    transform-box: fill-box; transform-origin: center;
+    animation: ilAchCircle 6s ease-in-out infinite;
+  }
+  @keyframes ilAchCircle {
+    0%, 100% { transform: scale(0.4); opacity: 0.3; }
+    40%      { transform: scale(1); opacity: 1; }
+    70%      { transform: scale(1); opacity: 1; }
+    90%      { transform: scale(0.6); opacity: 0.4; }
+  }
+  .il-ach-ring {
+    fill: none; stroke: currentColor; stroke-width: 0.8;
+    opacity: 0;
+    transform-box: fill-box; transform-origin: center;
+  }
+  .il-ach-ring.r1 { animation: ilAchRing 6s ease-out infinite; animation-delay: 0s; }
+  .il-ach-ring.r2 { animation: ilAchRing 6s ease-out infinite; animation-delay: 1.5s; }
+  .il-ach-ring.r3 { animation: ilAchRing 6s ease-out infinite; animation-delay: 3s; }
+  @keyframes ilAchRing {
+    0%   { transform: scale(0.3); opacity: 0.5; }
+    100% { transform: scale(1.7); opacity: 0; }
+  }
+  .il-ach-dot {
+    fill: currentColor;
+    animation: ilAchDot 6s ease-in-out infinite;
+  }
+  @keyframes ilAchDot {
+    0%, 100% { opacity: 0.2; }
+    40%      { opacity: 1; }
+    70%      { opacity: 1; }
+    90%      { opacity: 0.3; }
+  }
+
+  /* — 04 Mind: open/closed — */
+  .il-mind-head {
+    fill: none; stroke: currentColor; stroke-width: 1.5;
+  }
+  .il-mind-chain {
+    stroke: currentColor; stroke-width: 1.4;
+    stroke-linecap: round;
+    stroke-dasharray: 3 4;
+    animation: ilChainFade 5s ease-in-out infinite;
+  }
+  @keyframes ilChainFade {
+    0%, 100% { opacity: 0.4; }
+    50%      { opacity: 1; }
+  }
+  .il-mind-key {
+    fill: none; stroke: currentColor; stroke-width: 1.6;
+    transform-box: fill-box; transform-origin: center;
+    animation: ilKeyFloat 5s ease-in-out infinite;
+  }
+  @keyframes ilKeyFloat {
+    0%, 100% { transform: translateY(0) rotate(-6deg); opacity: 0.7; }
+    50%      { transform: translateY(-6px) rotate(6deg); opacity: 1; }
+  }
+
+  /* — 05 Body & mind: heart + brain together — */
+  .il-bh-heart {
+    fill: currentColor; fill-opacity: 0.15;
+    stroke: currentColor; stroke-width: 1.5;
+    transform-origin: center;
+    animation: ilBhPulse 3.5s ease-in-out infinite;
+  }
+  @keyframes ilBhPulse {
+    0%, 100% { transform: scale(1); }
+    20%      { transform: scale(1.06); }
+    40%      { transform: scale(1); }
+  }
+  .il-bh-brain {
+    fill: none; stroke: currentColor; stroke-width: 1.4;
+    stroke-linejoin: round;
+  }
+  .il-bh-connection {
+    stroke: currentColor; stroke-width: 1.2;
+    stroke-linecap: round;
+    stroke-dasharray: 4 6;
+    animation: ilBhConnection 3.5s linear infinite;
+  }
+  @keyframes ilBhConnection {
+    to { stroke-dashoffset: -20; }
+  }
+
+  /* — 06 Simplicity: leaf alone — */
+  .il-simple-circle {
+    fill: none; stroke: currentColor; stroke-width: 1.2;
+    opacity: 0.3;
+  }
+  .il-simple-leaf {
+    fill: currentColor; fill-opacity: 0.12;
+    stroke: currentColor; stroke-width: 1.4;
+    stroke-linejoin: round;
+    transform-box: fill-box; transform-origin: bottom center;
+    animation: ilSimpleLeaf 5s ease-in-out infinite;
+  }
+  @keyframes ilSimpleLeaf {
+    0%, 100% { transform: rotate(-3deg); }
+    50%      { transform: rotate(3deg); }
+  }
+  .il-simple-vein {
+    stroke: currentColor; stroke-width: 1.2;
+    stroke-linecap: round;
+  }
+
+  /* — 07 Mercy: two hands / cupped — */
+  .il-mercy-cup {
+    fill: none; stroke: currentColor; stroke-width: 1.6;
+    stroke-linecap: round; stroke-linejoin: round;
+  }
+  .il-mercy-glow {
+    fill: currentColor; fill-opacity: 0.15;
+    animation: ilMercyGlow 4s ease-in-out infinite;
+  }
+  @keyframes ilMercyGlow {
+    0%, 100% { fill-opacity: 0.08; transform: scale(0.9); }
+    50%      { fill-opacity: 0.22; transform: scale(1.05); }
+  }
+  .il-mercy-spark {
+    fill: currentColor;
+    transform-box: fill-box; transform-origin: center;
+    animation: ilMercySpark 4s ease-in-out infinite;
+  }
+  .il-mercy-spark.sp1 { animation-delay: 0s; }
+  .il-mercy-spark.sp2 { animation-delay: 0.7s; }
+  .il-mercy-spark.sp3 { animation-delay: 1.4s; }
+  @keyframes ilMercySpark {
+    0%, 100% { opacity: 0.2; transform: scale(0.6); }
+    50%      { opacity: 1; transform: scale(1.2); }
+  }
+
+  /* — 08 Second chance: two roads — */
+  .il-road-now {
+    fill: none; stroke: currentColor; stroke-width: 1.6;
+    stroke-linecap: round;
+    stroke-dasharray: 200;
+    stroke-dashoffset: 200;
+    animation: ilRoadDraw 5s ease-in-out infinite;
+  }
+  @keyframes ilRoadDraw {
+    0%   { stroke-dashoffset: 200; opacity: 0.4; }
+    50%  { stroke-dashoffset: 0; opacity: 1; }
+    80%  { stroke-dashoffset: 0; opacity: 1; }
+    100% { stroke-dashoffset: -200; opacity: 0.4; }
+  }
+  .il-road-split {
+    fill: none; stroke: currentColor; stroke-width: 1.4;
+    stroke-linecap: round;
+    stroke-dasharray: 100;
+    stroke-dashoffset: 100;
+    animation: ilRoadSplit 5s ease-in-out infinite;
+    animation-delay: 0.6s;
+  }
+  @keyframes ilRoadSplit {
+    0%, 30%   { stroke-dashoffset: 100; opacity: 0.3; }
+    70%       { stroke-dashoffset: 0; opacity: 0.9; }
+    90%, 100% { stroke-dashoffset: 0; opacity: 0.5; }
+  }
+  .il-road-qmark {
+    fill: currentColor;
+    font-family: 'Noto Serif Arabic', serif;
+    font-weight: 700;
+    font-size: 14px;
+    text-anchor: middle;
+    animation: ilRoadQ 5s ease-in-out infinite;
+  }
+  @keyframes ilRoadQ {
+    0%, 40%   { opacity: 0; }
+    70%       { opacity: 0.8; }
+    90%, 100% { opacity: 0.4; }
+  }
+
+  /* ============ CARDS ============ */
+  .cards {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px;
+    margin-top: 20px;
+  }
+  @media (max-width: 560px) { .cards { grid-template-columns: 1fr; } }
+
+  .card {
+    padding: 26px 24px;
+    background: var(--paper-2);
+    border: 1px solid transparent;
+    border-radius: 2px;
+    opacity: 0;
+    transform: translateY(24px) rotate(-1.2deg);
+    transition: opacity 0.9s var(--ease), transform 0.9s var(--ease),
+                border-color 0.5s ease, background 0.5s ease;
+  }
+  .cards.in .card { opacity: 1; transform: none; }
+  .cards.in .card:nth-child(1) { transition-delay: 0.05s; }
+  .cards.in .card:nth-child(2) { transition-delay: 0.15s; }
+  .cards.in .card:nth-child(3) { transition-delay: 0.25s; }
+  .cards.in .card:nth-child(4) { transition-delay: 0.35s; }
+  .card:hover {
+    border-color: var(--line);
+    background: var(--paper);
+    transform: translateY(-3px) rotate(0deg);
+  }
+  .card p {
+    font-family: 'Noto Serif Arabic', serif;
+    font-size: 1.05rem;
+    color: var(--ink);
+    margin: 0;
+    line-height: 1.7;
+  }
+
+  /* ============ INTERACTIVE TO-DO LIST ============ */
+  .todo-stage {
+    margin: 44px auto;
+    max-width: 460px;
+    padding: 30px 26px 26px;
+    background: var(--paper-2);
+    border: 1px solid var(--line);
+    border-radius: 2px;
+    position: relative;
+    box-shadow: 0 20px 40px -30px rgba(28,26,22,0.3);
+  }
+  .todo-stage::before {
+    content: "";
+    position: absolute;
+    top: 0; left: 50%;
+    transform: translateX(-50%);
+    width: 70px; height: 6px;
+    background: var(--paper);
+    border: 1px solid var(--line);
+    border-top: none;
+    border-radius: 0 0 4px 4px;
+  }
+  .todo-header {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10.5px;
+    letter-spacing: 0.18em;
+    color: var(--ink-faint);
+    text-align: center;
+    margin-bottom: 20px;
+    direction: ltr;
+  }
+  .todo-header span { color: var(--sage); }
+  .todo-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+  .todo-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px 6px;
+    cursor: pointer;
+    border-bottom: 1px dashed var(--line-soft);
+    transition: all 0.55s var(--ease);
+    position: relative;
+    opacity: 1;
+    max-height: 60px;
+  }
+  .todo-item:last-child { border-bottom: none; }
+  .todo-item:hover { padding-right: 12px; }
+  .todo-check {
+    flex-shrink: 0;
+    width: 20px; height: 20px;
+    border: 1.5px solid var(--ink-faint);
+    border-radius: 3px;
+    display: grid; place-items: center;
+    transition: all 0.4s var(--ease);
+    position: relative;
+  }
+  .todo-check::after {
+    content: "";
+    width: 10px; height: 6px;
+    border-left: 2px solid var(--sage);
+    border-bottom: 2px solid var(--sage);
+    transform: rotate(-45deg) scale(0);
+    transition: transform 0.35s var(--bloom) 0.15s;
+    margin-top: -3px;
+  }
+  .todo-item.checked .todo-check {
+    border-color: var(--sage);
+    background: rgba(107,122,92,0.08);
+  }
+  .todo-item.checked .todo-check::after {
+    transform: rotate(-45deg) scale(1);
+  }
+  .todo-text {
+    font-family: 'Noto Serif Arabic', serif;
+    font-size: 1.02rem;
+    color: var(--ink);
+    transition: all 0.5s var(--ease);
+    position: relative;
+    flex: 1;
+  }
+  .todo-text::after {
+    content: "";
+    position: absolute;
+    right: 0; top: 50%;
+    width: 0; height: 1.5px;
+    background: var(--ink-faint);
+    transition: width 0.55s var(--ease);
+  }
+  .todo-item.checked .todo-text {
+    color: var(--ink-faint);
+  }
+  .todo-item.checked .todo-text::after { width: 100%; }
+  .todo-item.checked {
+    opacity: 1;
+  }
+  .todo-item.gone {
+    opacity: 0;
+    max-height: 0;
+    padding: 0 6px;
+    margin: 0;
+    transform: translateX(-30px);
+    overflow: hidden;
+    pointer-events: none;
+  }
+
+  .todo-empty {
+    text-align: center;
+    padding: 24px 10px 6px;
+    font-family: 'Noto Serif Arabic', serif;
+    font-size: 1.05rem;
+    color: var(--ink-faint);
+    font-style: italic;
+    opacity: 0;
+    max-height: 0;
+    overflow: hidden;
+    transition: opacity 1.2s var(--ease) 0.3s, max-height 1.2s var(--ease) 0.3s;
+  }
+  .todo-empty.show {
+    opacity: 1;
+    max-height: 200px;
+  }
+  .todo-empty .line {
+    display: block;
+    line-height: 2;
+  }
+  .todo-empty .em {
+    color: var(--ink);
+    font-style: normal;
+    font-weight: 600;
+  }
+
+  .todo-actions {
+    display: flex;
+    justify-content: center;
+    gap: 12px;
+    margin-top: 22px;
+  }
+  .todo-reset {
+    background: transparent;
+    border: 1px solid var(--line);
+    color: var(--ink-faint);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10.5px;
+    letter-spacing: 0.12em;
+    padding: 8px 16px;
+    cursor: pointer;
+    border-radius: 2px;
+    transition: all 0.5s var(--ease);
+    direction: ltr;
+  }
+  .todo-reset:hover {
+    border-color: var(--ink-faint);
+    color: var(--ink);
+    transform: translateY(-2px);
+  }
+  .todo-hint {
+    text-align: center;
+    margin-top: 16px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10.5px;
+    color: var(--ink-faint);
+    letter-spacing: 0.08em;
+    direction: ltr;
+  }
+
+  /* ============ FALL / ACCEPT BUTTON ============ */
+  .fall-btn-wrap { text-align: center; margin-top: 34px; }
+  .fall-btn {
+    font-family: 'Noto Serif Arabic', serif;
+    font-size: 1.35rem;
+    font-weight: 600;
+    padding: 18px 44px;
+    border: 1px solid var(--ink);
+    background: transparent;
+    color: var(--ink);
+    cursor: pointer;
+    border-radius: 2px;
+    position: relative;
+    overflow: hidden;
+    isolation: isolate;
+    transition: all 0.5s var(--ease);
+    animation: heartbeat 4.2s ease-in-out infinite;
+  }
+  .fall-btn:hover {
+    background: var(--ink);
+    color: var(--paper);
+    animation-play-state: paused;
+  }
+  @keyframes heartbeat {
+    0%,100% { transform: scale(1); }
+    12% { transform: scale(1.035); }
+    24% { transform: scale(1); }
+    36% { transform: scale(1.02); }
+    48% { transform: scale(1); }
+  }
+  .fall-response {
+    margin-top: 30px;
+    font-family: 'Noto Serif Arabic', serif;
+    font-size: 1.15rem;
+    color: var(--ink);
+    line-height: 2;
+    opacity: 0;
+    max-height: 0;
+    overflow: hidden;
+    transition: opacity 1.2s var(--ease), max-height 1.2s var(--ease);
+  }
+  .fall-response.visible { opacity: 1; max-height: 340px; }
+
+  /* ============ CLOSING ============ */
+  .closing {
+    padding: 110px 0 90px;
+    text-align: center;
+  }
+  .breath-wrap {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 34px;
+    height: 130px;
+    align-items: center;
+  }
+  .breath {
+    position: relative;
+    width: 90px; height: 90px;
+  }
+  .breath::before,
+  .breath::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(107,122,92,0.2) 0%, transparent 70%);
+    animation: breathe 8s ease-in-out infinite;
+  }
+  .breath::after {
+    inset: 12px;
+    background: radial-gradient(circle, rgba(107,122,92,0.3) 0%, transparent 70%);
+    animation-delay: 0.3s;
+  }
+  @keyframes breathe {
+    0%,100% { transform: scale(0.85); opacity: 0.5; }
+    50% { transform: scale(1.15); opacity: 1; }
+  }
+  .closing h2 { font-size: clamp(1.6rem, 4.5vw, 2.4rem); }
+  .closing p {
+    font-family: 'Noto Serif Arabic', serif;
+    font-size: 1.1rem;
+    color: var(--ink-soft);
+    max-width: 560px;
+    margin: 0 auto 22px;
+  }
+  .closing .final-mantra {
+    font-family: 'Noto Serif Arabic', serif;
+    font-size: clamp(1.3rem, 4vw, 1.9rem);
+    font-weight: 700;
+    color: var(--ink);
+    letter-spacing: 0.01em;
+    margin: 40px auto 0;
+    line-height: 1.45;
+    max-width: 520px;
+  }
+  .closing .final-mantra .line {
+    display: block;
+    opacity: 0;
+    transform: translateY(12px);
+    transition: opacity 1.4s var(--ease), transform 1.4s var(--ease);
+  }
+  .closing.in .final-mantra .line:nth-child(1) { opacity: 1; transform: none; transition-delay: 0.2s; }
+  .closing.in .final-mantra .line:nth-child(2) { opacity: 1; transform: none; transition-delay: 0.7s; }
+  .closing.in .final-mantra .line:nth-child(3) { opacity: 1; transform: none; transition-delay: 1.2s; }
+  .closing .whisper {
+    font-family: 'Noto Serif Arabic', serif;
+    color: var(--ink-faint);
+    font-size: 14.5px;
+    margin-top: 30px;
+    line-height: 2;
+  }
+
+  /* ============ GO LIVE ============ */
+  .go-live {
+    display: inline-block;
+    margin-top: 34px;
+    font-size: 14px;
+    letter-spacing: 0.06em;
+    color: var(--ink-faint);
+    text-decoration: none;
+    padding-bottom: 3px;
+    border-bottom: 1px solid transparent;
+    transition: color 0.4s ease, border-color 0.4s ease;
+  }
+  .go-live:hover { color: var(--ink); border-bottom-color: var(--ink); }
+  .go-live .arrow {
+    display: inline-block;
+    margin-right: 6px;
+    transition: transform 0.6s var(--ease);
+  }
+  .go-live:hover .arrow { transform: translateX(-6px); }
+
+  /* ============ EPISODE NAV ============ */
+  .episode-nav {
+    margin-top: 70px;
+    padding-top: 40px;
+    border-top: 1px solid var(--line);
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 12px;
+    text-align: left;
+  }
+  @media (max-width: 720px) { .episode-nav { grid-template-columns: 1fr 1fr; } }
+  @media (max-width: 480px) { .episode-nav { grid-template-columns: 1fr; } }
+
+  .ep-nav-item {
+    display: block;
+    padding: 22px 20px;
+    background: var(--paper-2);
+    border: 1px solid transparent;
+    border-radius: 2px;
+    text-decoration: none;
+    color: var(--ink);
+    transition: all 0.5s var(--ease);
+    position: relative;
+    overflow: hidden;
+    direction: rtl;
+    text-align: right;
+  }
+  .ep-nav-item:hover {
+    border-color: var(--line);
+    background: var(--paper);
+    transform: translateY(-3px);
+  }
+  .ep-nav-item .ep-nav-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10.5px;
+    color: var(--accent);
+    letter-spacing: 0.16em;
+    direction: ltr;
+    display: block;
+    margin-bottom: 10px;
+    text-align: left;
+  }
+  .ep-nav-item .ep-nav-title {
+    font-family: 'Noto Serif Arabic', serif;
+    font-size: 0.98rem;
+    color: var(--ink);
+    line-height: 1.5;
+    display: block;
+  }
+  .ep-nav-item .ep-nav-arrow {
+    display: inline-block;
+    margin-top: 12px;
+    color: var(--ink-faint);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    transition: transform 0.5s var(--ease), color 0.4s ease;
+    direction: ltr;
+  }
+  .ep-nav-item:hover .ep-nav-arrow { color: var(--ink); transform: translateX(-6px); }
+
+  /* ============ FOOTER ============ */
+  footer {
+    border-top: 1px solid var(--line);
+    padding: 50px 0 60px;
+    text-align: center;
+  }
+  footer p {
+    font-size: 13.5px;
+    color: var(--ink-faint);
+    line-height: 1.9;
+    margin: 4px 0;
+  }
+  footer .mark {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 15px;
+    color: var(--ink-soft);
+    margin-bottom: 14px;
+    direction: ltr;
+  }
+  footer .mark .brand-num {
+    font-size: 10px;
+    width: 22px; height: 22px;
+  }
+  .source-note {
+    margin: 26px auto 0;
+    max-width: 600px;
+    padding-top: 22px;
+    border-top: 1px solid var(--line);
+    font-size: 12.5px;
+    color: var(--ink-faint);
+    line-height: 1.9;
+  }
+  .copyright {
+    margin-top: 26px !important;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    letter-spacing: 0.14em;
+    color: var(--ink-faint) !important;
+    direction: ltr;
+  }
+  .copyright .cline {
+    display: inline-block;
+    height: 1px;
+    width: 0;
+    background: var(--line);
+    transition: width 1.4s var(--ease) 0.4s;
+  }
+  .copyright.in .cline { width: 40px; }
+
+  ::selection { background: var(--ink); color: var(--paper); }
+
+  .reveal {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 1.1s var(--ease), transform 1.1s var(--ease);
+  }
+  .reveal.in { opacity: 1; transform: none; }
+
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+    }
+    .reveal { opacity: 1; transform: none; }
+    .card { opacity: 1; transform: none; }
+    h2 .w { opacity: 1; transform: none; }
+    .mantra-line { opacity: 1; transform: none; }
+    .closing .final-mantra .line { opacity: 1; transform: none; }
+    .grain { display: none; }
+    .illus-block { opacity: 1; transform: none; }
+  }
+</style>
+</head>
+<body>
+
+<div class="grain" aria-hidden="true"></div>
+<div class="cursor-glow" id="cursorGlow" aria-hidden="true"></div>
+<div class="progress" id="progress" aria-hidden="true"></div>
+
+<!-- ============ HEADER ============ -->
+<header id="header">
+  <nav class="nav">
+    <a href="index.html" class="brand" aria-label="why 88 version 4">
+      <span class="brand-text">why 88</span>
+      <span class="brand-ver">v4</span>
+    </a>
+    <div class="nav-links">
+      <a href="#origin">الأصل</a>
+      <a href="#list">القائمة</a>
+      <a href="#done">الإنجاز</a>
+      <a href="#mind">العقل</a>
+      <a href="#mercy">الرحمة</a>
+      <a href="#simple">البساطة</a>
+      <a href="#chance">الفرصة</a>
+    </div>
+  </nav>
+</header>
+
+<!-- ============ HERO ============ -->
+<div class="wrap">
+<section class="hero" style="border-top:none;">
+  <div class="dust" id="dust" aria-hidden="true"></div>
+
+  <!-- HERO CLIPBOARD SYMBOL -->
+  <div class="clip-wrap" aria-hidden="true">
+    <svg class="clip-svg" viewBox="0 0 210 250">
+      <!-- clip -->
+      <rect class="cl-clip" x="82" y="6" width="46" height="14" rx="4"></rect>
+      <rect class="cl-clip" x="92" y="2" width="26" height="10" rx="3"></rect>
+
+      <!-- board -->
+      <rect class="cl-board" x="26" y="16" width="158" height="222" rx="6"></rect>
+
+      <!-- item 1 -->
+      <g class="cl-item i1">
+        <rect class="cl-box" x="44" y="46" width="14" height="14" rx="2"></rect>
+        <path class="cl-check" d="M47 53 L50 56 L56 49"></path>
+        <line class="cl-line-bg" x1="68" y1="53" x2="164" y2="53"></line>
+        <line class="cl-strike" x1="68" y1="53" x2="164" y2="53"></line>
+      </g>
+
+      <!-- item 2 -->
+      <g class="cl-item i2">
+        <rect class="cl-box" x="44" y="82" width="14" height="14" rx="2"></rect>
+        <path class="cl-check" d="M47 89 L50 92 L56 85"></path>
+        <line class="cl-line-bg" x1="68" y1="89" x2="150" y2="89"></line>
+        <line class="cl-strike" x1="68" y1="89" x2="150" y2="89"></line>
+      </g>
+
+      <!-- item 3 -->
+      <g class="cl-item i3">
+        <rect class="cl-box" x="44" y="118" width="14" height="14" rx="2"></rect>
+        <path class="cl-check" d="M47 125 L50 128 L56 121"></path>
+        <line class="cl-line-bg" x1="68" y1="125" x2="158" y2="125"></line>
+        <line class="cl-strike" x1="68" y1="125" x2="158" y2="125"></line>
+      </g>
+
+      <!-- item 4 -->
+      <g class="cl-item i4">
+        <rect class="cl-box" x="44" y="154" width="14" height="14" rx="2"></rect>
+        <path class="cl-check" d="M47 161 L50 164 L56 157"></path>
+        <line class="cl-line-bg" x1="68" y1="161" x2="140" y2="161"></line>
+        <line class="cl-strike" x1="68" y1="161" x2="140" y2="161"></line>
+      </g>
+
+      <!-- item 5 -->
+      <g class="cl-item i5">
+        <rect class="cl-box" x="44" y="190" width="14" height="14" rx="2"></rect>
+        <path class="cl-check" d="M47 197 L50 200 L56 193"></path>
+        <line class="cl-line-bg" x1="68" y1="197" x2="156" y2="197"></line>
+        <line class="cl-strike" x1="68" y1="197" x2="156" y2="197"></line>
+      </g>
+
+      <!-- empty message -->
+      <text class="cl-empty" x="105" y="225" text-anchor="middle">THE PAGE IS EMPTY</text>
+
+      <!-- soft cursor -->
+      <circle class="cl-cursor" cx="175" cy="230" r="2.5"></circle>
+    </svg>
+  </div>
+
+  <!-- EPISODE ROAD -->
+  <div class="episode-road" aria-label="طريق حلقات why 88">
+    <svg viewBox="0 0 680 86" preserveAspectRatio="none" aria-hidden="true">
+      <path class="road-base" d="M55 43 C170 8 240 78 340 43 S510 8 640 43"></path>
+      <path class="road-flow" d="M55 43 C170 8 240 78 340 43 S510 8 640 43"></path>
+    </svg>
+    <a href="index.html" class="episode-node n1 done" title="ep. 01 — لماذا بعض التطبيقات بلا فائدة">01</a>
+    <a href="ep2.html" class="episode-node n2 done" title="ep. 02 — Eat less, do more exercise">02</a>
+    <a href="ep3.html" class="episode-node n3 done" title="ep. 03 — تطبيقات النوم كذبة">03</a>
+    <span class="episode-node n4 current">04</span>
+    <span class="episode-road-label">حلقات في الطريق · ليست قائمة مهام</span>
+  </div>
+
+  <div class="eyebrow">why 88 · v4 · سلسلة تعبيرية</div>
+
+  <h1 class="title" id="heroTitle" aria-label="لماذا قوائم المهام ثانوية؟">
+    <span class="word">لماذا</span>
+    <span class="word">قوائم</span>
+    <span class="word">المهام</span>
+    <br>
+    <span class="word">ثانوية</span>
+    <span class="word">جداً</span>
+    <span class="word">جداً؟</span>
+  </h1>
+
+  <p class="subtitle">
+    حلقة عن القوائم التي تنتهي، والإنجاز الذي يصغر، والعقل الذي
+    يعرف كيف يخطط — لكنه يرفض تحمل النتائج.
+    <span class="series-tag">ep. 04</span>
+  </p>
+
+  <div class="hero-text">
+    <p>
+      هذه المرة لا أقول إن قوائم المهام بلا فائدة. فائدتها موجودة،
+      لكنها ثانوية. الشيء الأهم ليس أن تُنجز قائمتك — بل أن تفهم
+      لماذا أنت تُنجزها.
+    </p>
+    <p>
+      وأنت تقرأ، تذكّر: هل تتنفس؟ هل تنام؟ هل ترى ما أمامك؟
+      إن كانت الإجابة نعم، فقد قضيت قائمتك بالفعل قبل أن تبدأ.
+    </p>
+  </div>
+
+  <div class="cta-row">
+    <a href="#origin" class="btn">اقرأ القصة</a>
+    <a href="#mantra" class="btn ghost">الجملة الأولى</a>
+  </div>
+
+  <p class="hero-note">NO CHECKBOX · <span class="hl">JUST BREATHE</span></p>
+</section>
+</div>
+
+<!-- ============ MANTRA ============ -->
+<div class="wrap">
+<section class="mantra reveal" id="mantra" style="border-top:none; padding:80px 0;">
+  <span class="mantra-line">قائمتك ليست حياتك.</span>
+  <span class="mantra-line">حياتك أن تبقى حياً.</span>
+  <p class="mantra-sub">جملة واحدة تختصر الحلقة. الباقي تفصيل.</p>
+</section>
+</div>
+
+<!-- ============ 01 — ORIGIN ============ -->
+<div class="wrap">
+<section id="origin" class="reveal">
+  <div class="section-label">01 — الأصل</div>
+
+  <div class="illus-block">
+    <svg class="illus" viewBox="0 0 100 100" aria-hidden="true">
+      <rect class="il-board" x="28" y="14" width="44" height="72" rx="4"></rect>
+      <rect class="il-clip" x="40" y="8" width="20" height="8" rx="3"></rect>
+      <line class="il-line" x1="38" y1="36" x2="62" y2="36"></line>
+      <line class="il-line" x1="38" y1="52" x2="62" y2="52"></line>
+      <line class="il-line" x1="38" y1="68" x2="56" y2="68"></line>
+      <path class="il-writing" d="M38 36 C42 34 46 40 50 38"></path>
+      <path class="il-pen" d="M68 44 L74 50 L70 54 L64 48 Z"></path>
+    </svg>
+  </div>
+
+  <h2>كنت سأبني تطبيقاً لقوائم المهام.</h2>
+
+  <p class="lead">
+    قائمة جميلة، سحب وإفلات، علامات صح خضراء، صوت صغير عند
+    الإنجاز، واحتفال لطيف عندما تكمل قائمة كاملة. هذه المرة لم
+    أتوقف لأشك في فائدتها. قوائم المهام مفيدة. لكن السؤال
+    الذي أوقفني كان أعمق.
+  </p>
+
+  <p>
+    أنا جالس أفكر: <strong>هل قائمة المهام هي المشكلة، أم
+    أنني أعرف أن قوائمي الصغيرة تُخفي قائمة أكبر لا أريد أن
+    أكتبها؟</strong>
+  </p>
+
+  <p>
+    لأنك لو سألتني: ما الذي تريد فعلاً؟ لن أكتب قائمة. سأقول
+    شيئاً غامضاً عن السلام، عن الطمأنينة، عن أن أكون بخير. هذه
+    ليست بنوداً. هذه حالة. والقوائم لا تعرف كيف تُنجز الحالات.
+  </p>
+
+  <blockquote>قوائمك الصغيرة تُلهيك عن القائمة الكبيرة.</blockquote>
+
+  <p>
+    من هنا بدأت أفكر: ما الذي يجعل الإنسان يملأ يومه بمهام
+    ثانوية ثم يغلق التطبيق راضياً؟ ربما لأن القائمة الصغيرة
+    تعطيه إحساساً بأنه يتحرك. والحركة على قائمة ثانوية أرحم
+    من مواجهة أنك لا تعرف أين تتجه.
+  </p>
+
+  <p>
+    هذه الحلقة ليست ضد القوائم. إنها ضد أن تجعل القائمة
+    الصغيرة تُغني عن السؤال الكبير.
+  </p>
+
+  <a href="#list" class="go-live"><span class="arrow">←</span> اذهب لتعيش</a>
+</section>
+</div>
+
+<!-- ============ 02 — LIST (INTERACTIVE) ============ -->
+<div class="wrap">
+<section id="list" class="reveal">
+  <div class="section-label">02 — القائمة</div>
+
+  <div class="illus-block">
+    <svg class="illus" viewBox="0 0 100 100" aria-hidden="true">
+      <rect class="il-cb-box" x="20" y="26" width="14" height="14" rx="2"></rect>
+      <path class="il-cb-check c1" d="M23 33 L26 36 L32 29"></path>
+      <line class="il-cb-strike s1" x1="42" y1="33" x2="82" y2="33"></line>
+
+      <rect class="il-cb-box" x="20" y="46" width="14" height="14" rx="2"></rect>
+      <path class="il-cb-check c2" d="M23 53 L26 56 L32 49"></path>
+      <line class="il-cb-strike s2" x1="42" y1="53" x2="76" y2="53"></line>
+
+      <rect class="il-cb-box" x="20" y="66" width="14" height="14" rx="2"></rect>
+      <path class="il-cb-check c3" d="M23 73 L26 76 L32 69"></path>
+      <line class="il-cb-strike s3" x1="42" y1="73" x2="80" y2="73"></line>
+    </svg>
+  </div>
+
+  <h2>جرب بنفسك: ضع صح على المهام.</h2>
+
+  <p>
+    أمامك قائمة صغيرة. انقر على أي بند لتضع عليه صح. لاحظ
+    ماذا يحدث له، ولاحظ ماذا يحدث لك. تتبع الشعور الذي سيمر
+    بك لحظة اختفاء البند.
+  </p>
+
+  <div class="todo-stage">
+    <div class="todo-header">TODAY'S LIST · <span id="todoCount">5</span> / 5</div>
+    <ul class="todo-list" id="todoList">
+      <li class="todo-item" data-i="1">
+        <span class="todo-check"></span>
+        <span class="todo-text">أنام مبكراً</span>
+      </li>
+      <li class="todo-item" data-i="2">
+        <span class="todo-check"></span>
+        <span class="todo-text">أتمرن اليوم</span>
+      </li>
+      <li class="todo-item" data-i="3">
+        <span class="todo-check"></span>
+        <span class="todo-text">أقرأ عشر صفحات</span>
+      </li>
+      <li class="todo-item" data-i="4">
+        <span class="todo-check"></span>
+        <span class="todo-text">أشرب ماءً كافياً</span>
+      </li>
+      <li class="todo-item" data-i="5">
+        <span class="todo-check"></span>
+        <span class="todo-text">أرد على الرسائل</span>
+      </li>
+    </ul>
+    <div class="todo-empty" id="todoEmpty">
+      <span class="line">قائمتك فارغة.</span>
+      <span class="line em">هل أنت فارغ؟</span>
+      <span class="line">لكنك ما زلت هنا. لم يتوقف شيء.</span>
+    </div>
+    <div class="todo-actions">
+      <button class="todo-reset" id="todoReset" type="button">RESET LIST</button>
+    </div>
+    <p class="todo-hint">CLICK ON ANY ITEM — WATCH IT FADE</p>
+  </div>
+
+  <p>
+    هل لاحظت؟ البند يختفي بعد لحظات من وضع الصح. القائمة تصغر.
+    وفي النهاية لا يبقى شيء. وهذا هو الدرس الأول: القائمة ليست
+    نهاية، إنها وسيلة. عندما تنتهي، لا ينتهي شيء حقيقي. حياتك
+    مازالت مستمرة، ونفسك مازالت تحتاجك.
+  </p>
+
+  <p>
+    السؤال الحقيقي ليس «كم بنداً أنجزت؟». السؤال هو: <strong>لماذا
+    كنت تكتب القائمة من البداية؟</strong> لو كنت تعرف الجواب،
+    فربما أنت لا تحتاج إلى القائمة أصلاً.
+  </p>
+
+  <div class="callout">THE LIST IS NOT THE POINT.</div>
+
+  <a href="#done" class="go-live"><span class="arrow">←</span> اذهب لتعيش</a>
+</section>
+</div>
+
+<!-- ============ 03 — DONE ============ -->
+<div class="wrap">
+<section id="done" class="reveal">
+  <div class="section-label">03 — الإنجاز</div>
+
+  <div class="illus-block">
+    <svg class="illus" viewBox="0 0 100 100" aria-hidden="true">
+      <circle class="il-ach-ring r1" cx="50" cy="50" r="18"></circle>
+      <circle class="il-ach-ring r2" cx="50" cy="50" r="18"></circle>
+      <circle class="il-ach-ring r3" cx="50" cy="50" r="18"></circle>
+      <circle class="il-ach-circle" cx="50" cy="50" r="18"></circle>
+      <circle class="il-ach-dot" cx="50" cy="50" r="4"></circle>
+    </svg>
+  </div>
+
+  <h2>ما تراه اليوم إنجازاً، لن يبدو غداً أكبر من حجمه.</h2>
+
+  <p>
+    هل تتذكر لحظة أنجزت فيها شيئاً كنت تظن أنه سيكون فتحاً في
+    حياتك؟ الوظيفة التي حصلت عليها، العلاقة التي بدأتها،
+    المشروع الذي أطلقته. في تلك اللحظة كان الأمر كبيراً. لكن
+    بعد سنوات، رأيت حجمه الحقيقي. لا هو أصغر مما كان، ولا
+    هو أكبر. هو فقط ما هو عليه.
+  </p>
+
+  <p>
+    هذا ليس تقليلاً من قيمة إنجازك. هذا تحرير لك من وزن
+    الإنجاز. لأن الفرق بين من يظن أن إنجازه سيكون الخلاص،
+    وبين من يعرف أن إنجازه مجرد خطوة، هو فرق في مدى الراحة
+    التي يعيشها بعد ذلك.
+  </p>
+
+  <p>
+    <strong>مع الزمن، سترى أن ما كنت تظنه نجاحاً كان تمريناً.
+    وما كنت تظنه فشلاً كان تمريناً. وأنت لم تتوقف عن
+    التمرين.</strong>
+  </p>
+
+  <blockquote>كل ما أنجزته، أنجزته في يوم واحد. وهذا اليوم مرّ.</blockquote>
+
+  <p>
+    وهذا لا يعني أن تتوقف عن الإنجاز. يعني أن تُخفض من صوت
+    الاحتفال، وتُعلي من صوت الفهم. أن تعرف لماذا فعلت ما
+    فعلت، أكثر من أن تعرف كم أنجزت.
+  </p>
+
+  <div class="fall-btn-wrap">
+    <button class="fall-btn" id="fallBtn">وماذا يعني هذا؟</button>
+    <div class="fall-response" id="fallResponse">
+      يعني أن قائمتك ليست هدفاً في حد ذاتها.<br>
+      اكتبها، أكملها، ثم انظر إلى الوراء واسأل: ماذا تغير فيّ؟
+      <br>
+      وإن لم يتغير شيء — فقد كانت مجرد حركة.
+    </div>
+  </div>
+
+  <a href="#mind" class="go-live"><span class="arrow">←</span> اذهب لتعيش</a>
+</section>
+</div>
+
+<!-- ============ 04 — MIND ============ -->
+<div class="wrap">
+<section id="mind" class="reveal">
+  <div class="section-label">04 — العقل</div>
+
+  <div class="illus-block">
+    <svg class="illus" viewBox="0 0 100 100" aria-hidden="true">
+      <path class="il-mind-head" d="M50 22 C32 22 22 38 22 55 C22 70 32 80 48 80 C52 80 54 78 54 74 C54 70 56 66 60 66 L68 66 C74 66 78 60 78 54 C78 38 68 22 50 22 Z"></path>
+      <circle cx="62" cy="44" r="2.5" fill="currentColor" opacity="0.7"></circle>
+      <path class="il-mind-chain" d="M18 30 L24 36 M76 72 L84 78"></path>
+      <path class="il-mind-key" d="M86 24 L90 28 L86 32 L82 28 Z M90 28 L94 28 M94 28 L94 31"></path>
+    </svg>
+  </div>
+
+  <h2>لديك قدرة على التخطيط. لكنك ترفض الثمن.</h2>
+
+  <p>
+    هذه هي الجزئية التي أراها في أكثر الناس، وأراها في نفسي
+    كثيراً. نحن نعرف كيف نخطط. نعرف كيف نقسم المهمة الكبيرة
+    إلى خطوات. نعرف كيف نبدأ من الأصغر. نعرف كل شيء على
+    الورق.
+  </p>
+
+  <p>
+    لكن شيئاً فينا يرفض أن يبدأ. ليس لأننا لا نستطيع. بل
+    لأننا لا نريد أن نتحمل النتائج. لأننا إذا بدأنا، فهذا
+    يعني أننا لن نستطيع أن نلوم «عدم التخطيط» بعد اليوم.
+    سيكون علينا أن ننظر في المرآة ونسأل: أنا الآن بلا عذر.
+  </p>
+
+  <p>
+    <strong>هذا أخطر من التسويف. هذا هرب من المسؤولية تحت
+    غطاء ضعف القدرة.</strong> لأن التسويف العادي مؤقت. أما هذا
+    الهرب، فهو أن تصدّق بنفسك أنك لا تستطيع، بينما أنت في
+    الحقيقة لا تريد.
+  </p>
+
+  <blockquote>أنت لا تعجز عن التخطيط. أنت تهرب من مواجهة أنك قادر.</blockquote>
+
+  <p>
+    وربما هذا هو لبّ سلسلة why 88 كلها: أن تعرف ما تحتاج،
+    ثم تعطيه لنفسك بأقل تكلفة ممكنة — بلا وسيط، بلا اشتراك،
+    بلا إشعار. لكن هذا «العطاء للنفس» ليس مريحاً دائماً.
+    لأن العطاء الحقيقي يعني أن تواجه.
+  </p>
+
+  <div class="callout">YOU CAN PLAN. YOU JUST DON'T WANT THE PRICE.</div>
+
+  <a href="#body" class="go-live"><span class="arrow">←</span> اذهب لتعيش</a>
+</section>
+</div>
+
+<!-- ============ 05 — BODY & MIND ============ -->
+<div class="wrap">
+<section id="body" class="reveal">
+  <div class="section-label">05 — الجسد والعقل</div>
+
+  <div class="illus-block">
+    <svg class="illus" viewBox="0 0 100 100" aria-hidden="true">
+      <path class="il-bh-heart" d="M50 82 C50 82 34 68 26 56 C20 46 24 32 34 32 C40 32 46 36 50 42 C54 36 60 32 66 32 C76 32 80 46 74 56 C66 68 50 82 50 82 Z"></path>
+      <path class="il-bh-brain" d="M38 22 C30 18 24 24 26 30 C22 32 22 38 26 40 C24 44 28 48 32 46 C34 50 40 50 42 46 C44 50 50 50 52 46 C54 50 60 48 60 44 C62 40 58 36 56 38 C56 32 52 26 46 26 C44 22 42 22 38 22 Z"></path>
+      <path class="il-bh-connection" d="M50 46 L50 56"></path>
+    </svg>
+  </div>
+
+  <h2>أثمن ما تملكه: عقلك وجسدك وراحتهما.</h2>
+
+  <p>
+    هذا ليس شعاراً. هذا استنتاج من كل ما سبق. لأن كل ما
+    تفعله — القوائم، الإشعارات، التطبيقات، التقارير — يصبح
+    بلا معنى إن استهلك أثمن شيئين عندك.
+  </p>
+
+  <p>
+    عقلك ليس طاقة لا تنتهي. جسدك ليس آلة تعمل 24 ساعة. وحين
+    تستنزفهما من أجل إنجاز لا تعرف لماذا تفعله، أنت لا
+    تُنجز — أنت تحرق نفسك.
+  </p>
+
+  <p>
+    <strong>هذا ليس تشديداً ولا عقاباً.</strong> لن أطلب منك
+    أن ترتاح أكثر، ولا أن تعمل أقل، ولا أن تصبح راهباً. أطلب
+    منك أن تفهم شيئاً بسيطاً: أنت لن تشعر بقيمة هذا الكلام
+    إلا عندما تخسر جزءاً من صحتك أو عقلك. وحينها لن تحتاج
+    إلى أن تسمعه مني — ستقول الحقيقة لنفسك.
+  </p>
+
+  <blockquote>أنت لا تحتاج إلى قائمة جديدة. تحتاج إلى أن تعطي نفسك شيئاً واحداً: أن تكون بصحة يمكنها أن تكمل.</blockquote>
+
+  <a href="#mercy" class="go-live"><span class="arrow">←</span> اذهب لتعيش</a>
+</section>
+</div>
+
+<!-- ============ 06 — MERCY ============ -->
+<div class="wrap">
+<section id="mercy" class="reveal">
+  <div class="section-label">06 — الرحمة</div>
+
+  <div class="illus-block">
+    <svg class="illus" viewBox="0 0 100 100" aria-hidden="true">
+      <ellipse class="il-mercy-glow" cx="50" cy="46" rx="14" ry="10"></ellipse>
+      <path class="il-mercy-cup" d="M28 60 C28 74 38 84 50 84 C62 84 72 74 72 60"></path>
+      <path class="il-mercy-cup" d="M22 62 C22 78 32 88 50 88 C68 88 78 78 78 62"></path>
+      <circle class="il-mercy-spark sp1" cx="44" cy="40" r="2"></circle>
+      <circle class="il-mercy-spark sp2" cx="56" cy="36" r="2"></circle>
+      <circle class="il-mercy-spark sp3" cx="50" cy="44" r="2.5"></circle>
+    </svg>
+  </div>
+
+  <h2>الإنسانية قبل الرحمة للآخرين: أرحم نفسك.</h2>
+
+  <p>
+    نُربّى على أن نكون رحماء مع الناس، وأن نسامح، وأن نتقبل
+    أخطاء الآخرين. لكن كثيرين منا لا يُطبقون هذا على أنفسهم.
+    مع أنفسنا، نصبح قضاة صارمين. لا نقبل التأخير، لا
+    نقبل الفشل، لا نقبل حتى أننا بشر يمكن أن نتعثر.
+  </p>
+
+  <p>
+    وأخطر من ذلك: نحن نحمل ما لا نستطيع، ونتهم أنفسنا لأننا
+    لا نستطيع حمله. بينما الذي يمكن أن يحمله إنسان أقل
+    ممّا نحمله نحن. وفي النهاية نستغرب لماذا نستيقظ متعبين،
+    ولماذا ننام ثقيلين، ولماذا لا نتقدم كما نظن.
+  </p>
+
+  <p>
+    <strong>ارحم عقلك. ارحم جسدك.</strong> لأنك لن تجد نسخة
+    أخرى منهما في السوق. لن تشتري عقلاً جديداً إذا استهلكته.
+    ولن تستأجر جسماً بديلاً إذا حرقته. هما ما تملكه فعلاً.
+  </p>
+
+  <blockquote>الإنسان عبر التاريخ وجد ما يحتاجه بلا وسيط. وأنت قادر أن تجده لنفسك.</blockquote>
+
+  <p>
+    هذا ليس دعوة لأن تعيش بلا أدوات. أنت تعيش في وقتك،
+    وتستطيع أن تستخدم ما تريد. لكن الأدوات يجب أن تخدمك،
+    لا أن تحل مكانك. الأدوات تُعينك على تذكر شيء نسيتَه،
+    لا على أن تعرف ما يجب أن تفعله بدلاً منك.
+  </p>
+
+  <div class="callout">BE MERCIFUL TO YOURSELF FIRST.</div>
+
+  <a href="#simple" class="go-live"><span class="arrow">←</span> اذهب لتعيش</a>
+</section>
+</div>
+
+<!-- ============ 07 — SIMPLE ============ -->
+<div class="wrap">
+<section id="simple" class="reveal">
+  <div class="section-label">07 — البساطة</div>
+
+  <div class="illus-block">
+    <svg class="illus" viewBox="0 0 100 100" aria-hidden="true">
+      <circle class="il-simple-circle" cx="50" cy="50" r="34"></circle>
+      <path class="il-simple-leaf" d="M50 30 C36 42 32 58 40 72 C46 78 54 78 60 72 C68 58 64 42 50 30 Z"></path>
+      <line class="il-simple-vein" x1="50" y1="34" x2="50" y2="76"></line>
+      <path class="il-simple-vein" d="M50 46 C44 48 40 54 38 62"></path>
+      <path class="il-simple-vein" d="M50 56 C56 58 60 64 62 70"></path>
+    </svg>
+  </div>
+
+  <h2>لا تحتاج إلى كل هذه الإضافات.</h2>
+
+  <p>
+    تخيل أنك في غرفة فيها لوح وقلم. لا شيء آخر. لا شاشة،
+    لا إشعارات، لا تطبيقات، لا قوائم مطبوعة. فقط أنت وورقة.
+    ماذا كنت ستفعل؟ ربما كنت ستكتب شيئاً بسيطاً. ربما كنت
+    ستجلس تفكر. ربما كنت تنام. وكل هذا يكفي.
+  </p>
+
+  <p>
+    الإضافات ليست خطأ. لكنها تصبح خطأً عندما تُشعرك أنك لا
+    تستطيع أن تعيش بدونها. أنت لا تحتاج إلى تطبيق لتخبرك
+    أنك عطشان. أنت لا تحتاج إلى تطبيق لتخبرك أنك متعب.
+    أنت تحتاج إلى أن تُنصت لنفسك.
+  </p>
+
+  <p>
+    <strong>البساطة ليست نقصاً. البساطة هي أن تعرف ما تحتاجه
+    فعلاً، وتترك الباقي.</strong> وأنت تعرف. الجميع يعرف.
+    المشكلة ليست في المعرفة. المشكلة في أنك تعرف ولا تفعل،
+    لأن الفعل يستدعي مسؤولية.
+  </p>
+
+  <blockquote>لا تحتاج إلى نسخة أفضل من نفسك. تحتاج إلى أن تصدّق أن هذه النسخة كافية لتبدأ.</blockquote>
+
+  <a href="#chance" class="go-live"><span class="arrow">←</span> اذهب لتعيش</a>
+</section>
+</div>
+
+<!-- ============ 08 — CHANCE ============ -->
+<div class="wrap">
+<section id="chance" class="reveal">
+  <div class="section-label">08 — الفرصة</div>
+
+  <div class="illus-block">
+    <svg class="illus" viewBox="0 0 100 100" aria-hidden="true">
+      <path class="il-road-now" d="M14 84 C30 76 40 60 50 44"></path>
+      <path class="il-road-split" d="M50 44 C58 32 68 24 82 20"></path>
+      <path class="il-road-split" d="M50 44 C54 56 58 68 62 84"></path>
+      <text class="il-road-qmark" x="50" y="38">?</text>
+    </svg>
+  </div>
+
+  <h2>دائماً توجد فرصة ثانية. والسؤال: هل ستُدركها؟</h2>
+
+  <p>
+    هذه هي الجملة التي أريدك أن تتذكرها بعد كل شيء: الفرصة
+    الثانية ليست دائماً بنفس الشكل. قد تأتي قوية، وقد تأتي
+    هادئة. قد تأتي في لحظة رخاء، وقد تأتي وأنت منهك.
+  </p>
+
+  <p>
+    لكن الفرصة موجودة. حتى لو ضاعت ألف فرصة، فأنت ما زلت
+    هنا. وقدرتك على أن تبدأ من جديد لم تمت. الشيء الذي قد
+    يموت هو الأمل — إذا استسلمت له.
+  </p>
+
+  <p>
+    <strong>والسؤال الذي أراه الأخطر:</strong> هل ستُدرك
+    الفرصة القادمة وأنت في حال أفضل، أم أسوأ، أم غير موجود؟
+    لا أعرف. لا أحد يعرف. لكن ما أعرفه أن من يرحم نفسه اليوم
+    سيكون أقدر على استقبال الفرصة غداً. ومن يستنزف نفسه في
+    قوائم لا يفهمها، قد يصل إلى الفرصة وهو لا يستطيع
+    الوقوف عليها.
+  </p>
+
+  <blockquote>لن تعدم فرصة ثانية. لكن لا تدري متى تأتي ولا بأي حال.</blockquote>
+
+  <p>
+    لذلك لا تُؤجّل رحمة نفسك. لأنك لا تعرف متى ستُدعى إلى
+    شيء أكبر منك، ولا بأي جسد ستستقبله.
+  </p>
+
+  <a href="#kernel" class="go-live"><span class="arrow">←</span> اذهب لتعيش</a>
+</section>
+</div>
+
+<!-- ============ 09 — KERNEL ============ -->
+<div class="wrap">
+<section id="kernel" class="closing reveal">
+  <div class="breath-wrap" aria-hidden="true">
+    <div class="breath"></div>
+  </div>
+
+  <h2>هذا هو تطبيقي الحقيقي: أنك أغلقت القائمة.</h2>
+
+  <p>
+    لن أطلب منك أن تحفظ شيئاً، ولن أطلب منك أن تعود، ولن
+    أطلب منك أن تشارك هذه الحلقة مع أحد. أطلب منك أن تفهم:
+    القائمة التي كنت تستخدمها لم تكن تكتب نفسها أبداً. أنت
+    كنت تكتبها. وأنت قادر أن تكتب قائمة مختلفة، أو أن لا
+    تكتب قائمة أصلاً.
+  </p>
+
+  <p>
+    رتّب يومك كما ترى، ثم اعتنِ بعقلك وجسدك، ثم أرحم نفسك.
+    هذا كل ما أستطيع أن أقوله لك. وأقول لك شيئاً أخيراً: قد
+    لا تستوعب هذا الكلام اليوم، وقد تحتاج إلى سنوات لتفهمه.
+    وقد تأتيك مصائب قبل ذلك. حينها تذكّر هذه الجملة البسيطة:
+    أنت كنت تكفي.
+  </p>
+
+  <p>
+    إذا قرأت هذه الحلقة، فقد ثبتتُ فكرتي في عقلك — بلا
+    تطبيق، بلا اشتراك، بلا إشعار. هذا هو تطبيقي. الآن،
+    أغلق القائمة، وأذهب لتكون إنساناً قبل أن تكون منجزاً.
+  </p>
+
+  <p class="final-mantra">
+    <span class="line">أنت لا تحتاج إلى قائمة.</span>
+    <span class="line">أنت تحتاج أن تكون رحيماً بنفسك.</span>
+    <span class="line">والفرصة الثانية موجودة — دائماً.</span>
+  </p>
+
+  <p class="whisper">
+    إن استطعت أن تعطي نفسك ما تحتاجه بأقل تكلفة،<br>
+    فقد فعلت ما كنت أريد أن أفعله بك منذ الحلقة الأولى.<br>
+    وحينها، أنت التطبيق.
+  </p>
+
+  <!-- ============ EPISODE NAV ============ -->
+  <nav class="episode-nav" aria-label="حلقات why 88">
+    <a href="ep3.html" class="ep-nav-item">
+      <span class="ep-nav-label">← EPISODE 03</span>
+      <span class="ep-nav-title">تطبيقات النوم كذبة</span>
+      <span class="ep-nav-arrow">←</span>
+    </a>
+    <a href="ep2.html" class="ep-nav-item">
+      <span class="ep-nav-label">← EPISODE 02</span>
+      <span class="ep-nav-title">Eat less, do more exercise</span>
+      <span class="ep-nav-arrow">←</span>
+    </a>
+    <a href="index.html" class="ep-nav-item">
+      <span class="ep-nav-label">← EPISODE 01</span>
+      <span class="ep-nav-title">لماذا بعض التطبيقات بلا فائدة؟</span>
+      <span class="ep-nav-arrow">←</span>
+    </a>
+  </nav>
+
+</section>
+</div>
+
+</main>
+
+<!-- ============ FOOTER ============ -->
+<footer>
+  <div class="wrap">
+    <p class="mark">why 88 <span class="brand-num">v4</span></p>
+    <p>هذا الموقع لا يتابعك.</p>
+    <p>لا يذكّرك.</p>
+    <p>لا يحكم عليك.</p>
+    <p style="margin-top:14px;">عد متى شئت.</p>
+
+    <div class="source-note">
+      ملاحظة: هذه الحلقة نص تأملي وتجربة فكرية. ليست نصيحة
+      نفسية أو طبية، ولا بديلاً عن المختص. إن كنت تعاني من
+      ضغط نفسي مزمن أو استنزاف مستمر، فاستعن بأحد تثق به.
+    </div>
+
+    <p class="copyright" id="copyright">
+      <span class="cline"></span>
+      <span>© MC88</span>
+      <span class="cline"></span>
+    </p>
+  </div>
+</footer>
+
+<script>
+(function () {
+  const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  /* HERO WORDS */
+  document.querySelectorAll('#heroTitle .word').forEach((w, i) => {
+    w.style.animationDelay = (0.75 + i * 0.09) + 's';
+  });
+
+  /* H2 WORD-BY-WORD */
+  document.querySelectorAll('h2').forEach(h2 => {
+    const text = h2.textContent.trim();
+    if (!text) return;
+    const words = text.split(/\s+/);
+    h2.innerHTML = words.map((w, i) =>
+      `<span class="w" style="transition-delay:${(0.05 + i * 0.06).toFixed(2)}s">${w}</span>`
+    ).join(' ');
+  });
+
+  /* DUST */
+  if (!reduce) {
+    const dust = document.getElementById('dust');
+    if (dust) {
+      for (let i = 0; i < 28; i++) {
+        const s = document.createElement('span');
+        const size = 1 + Math.random() * 2.5;
+        const dur = 18 + Math.random() * 22;
+        const delay = -Math.random() * dur;
+        const dx = (Math.random() - 0.5) * 120;
+        const op = 0.15 + Math.random() * 0.35;
+        s.style.width = size + 'px';
+        s.style.height = size + 'px';
+        s.style.right = Math.random() * 100 + '%';
+        s.style.bottom = '-10px';
+        s.style.animationDuration = dur + 's';
+        s.style.animationDelay = delay + 's';
+        s.style.setProperty('--dx', dx + 'px');
+        s.style.setProperty('--op', op);
+        dust.appendChild(s);
+      }
+    }
+  }
+
+  /* CURSOR GLOW */
+  const glow = document.getElementById('cursorGlow');
+  if (glow && window.matchMedia('(pointer: fine)').matches && !reduce) {
+    let tx = 0, ty = 0, cx = 0, cy = 0;
+    document.addEventListener('mousemove', (e) => {
+      tx = e.clientX; ty = e.clientY;
+      glow.classList.add('on');
+    });
+    document.addEventListener('mouseleave', () => glow.classList.remove('on'));
+    (function loop() {
+      cx += (tx - cx) * 0.15;
+      cy += (ty - cy) * 0.15;
+      glow.style.transform = `translate(${cx}px, ${cy}px) translate(-50%, -50%)`;
+      requestAnimationFrame(loop);
+    })();
+  }
+
+  /* SCROLL PROGRESS + HEADER */
+  const progress = document.getElementById('progress');
+  const header = document.getElementById('header');
+  const updateScroll = () => {
+    const h = document.documentElement;
+    const scrolled = h.scrollTop / (h.scrollHeight - h.clientHeight) * 100;
+    progress.style.width = Math.min(scrolled, 100) + '%';
+    header.classList.toggle('scrolled', h.scrollTop > 20);
+  };
+  window.addEventListener('scroll', updateScroll, { passive: true });
+  updateScroll();
+
+  /* REVEAL */
+  const reveals = document.querySelectorAll('.reveal');
+  if ('IntersectionObserver' in window && !reduce) {
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          e.target.classList.add('in');
+          io.unobserve(e.target);
+        }
+      });
+    }, { threshold: 0.12 });
+    reveals.forEach(el => io.observe(el));
+  } else {
+    reveals.forEach(el => el.classList.add('in'));
+  }
+
+  /* COPYRIGHT */
+  const copyright = document.getElementById('copyright');
+  if (copyright && 'IntersectionObserver' in window) {
+    const co = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          e.target.classList.add('in');
+          co.unobserve(e.target);
+        }
+      });
+    }, { threshold: 0.6 });
+    co.observe(copyright);
+  }
+
+  /* EPISODE ROAD */
+  const episodeRoad = document.querySelector('.episode-road');
+  if (episodeRoad && 'IntersectionObserver' in window && !reduce) {
+    const roadObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        episodeRoad.querySelectorAll('.road-flow').forEach(path => {
+          path.style.animationPlayState = entry.isIntersecting ? 'running' : 'paused';
+        });
+      });
+    }, { threshold: 0.1 });
+    roadObserver.observe(episodeRoad);
+  }
+
+  /* CLIPBOARD PARALLAX */
+  const clipWrap = document.querySelector('.clip-wrap');
+  if (clipWrap && window.matchMedia('(pointer:fine)').matches && !reduce) {
+    let px = 0, py = 0, bx = 0, by = 0;
+    window.addEventListener('mousemove', (e) => {
+      px = (e.clientX / window.innerWidth - 0.5) * 8;
+      py = (e.clientY / window.innerHeight - 0.5) * 6;
+    }, { passive: true });
+    (function heroLoop() {
+      bx += (px - bx) * 0.045;
+      by += (py - by) * 0.045;
+      clipWrap.style.transform = `translate3d(${bx}px, ${by}px, 0)`;
+      requestAnimationFrame(heroLoop);
+    })();
+  }
+
+  /* ============ INTERACTIVE TO-DO LIST ============ */
+  const todoList = document.getElementById('todoList');
+  const todoEmpty = document.getElementById('todoEmpty');
+  const todoReset = document.getElementById('todoReset');
+  const todoCount = document.getElementById('todoCount');
+
+  function updateCount() {
+    const remaining = todoList.querySelectorAll('.todo-item:not(.gone)').length;
+    if (todoCount) todoCount.textContent = remaining;
+    if (remaining === 0) {
+      setTimeout(() => todoEmpty.classList.add('show'), 350);
+    } else {
+      todoEmpty.classList.remove('show');
+    }
+  }
+
+  if (todoList) {
+    todoList.querySelectorAll('.todo-item').forEach(item => {
+      item.addEventListener('click', () => {
+        if (item.classList.contains('checked') || item.classList.contains('gone')) return;
+        item.classList.add('checked');
+        setTimeout(() => {
+          item.classList.add('gone');
+          updateCount();
+        }, 900);
+      });
+    });
+
+    updateCount();
+  }
+
+  if (todoReset) {
+    todoReset.addEventListener('click', () => {
+      todoEmpty.classList.remove('show');
+      todoList.querySelectorAll('.todo-item').forEach((item, i) => {
+        setTimeout(() => {
+          item.classList.remove('gone');
+          item.classList.remove('checked');
+        }, i * 60);
+      });
+      setTimeout(updateCount, 500);
+    });
+  }
+
+  /* FALL BUTTON */
+  const fallBtn = document.getElementById('fallBtn');
+  const fallResponse = document.getElementById('fallResponse');
+  if (fallBtn && fallResponse) {
+    fallBtn.addEventListener('click', () => {
+      const open = fallResponse.classList.toggle('visible');
+      fallBtn.textContent = open ? 'أغلق' : 'وماذا يعني هذا؟';
+    });
+  }
+
+  /* RIPPLE */
+  document.querySelectorAll('.btn, .fall-btn').forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      const rect = btn.getBoundingClientRect();
+      const size = Math.max(rect.width, rect.height);
+      const ripple = document.createElement('span');
+      ripple.className = 'ripple';
+      ripple.style.width = ripple.style.height = size + 'px';
+      ripple.style.left = (e.clientX - rect.left - size / 2) + 'px';
+      ripple.style.top  = (e.clientY - rect.top  - size / 2) + 'px';
+      btn.appendChild(ripple);
+      setTimeout(() => ripple.remove(), 800);
+    });
+  });
+})();
+</script>
+
+</body>
+  </html>
