@@ -1,379 +1,2375 @@
 <!DOCTYPE html>
-<html lang="ar" dir="rtl">
+<html dir="rtl" lang="ar">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>why 88 — لا تحتاج إلى تطبيق ليخبرك أنك حي</title>
-<meta name="description" content="why 88 / الحالة الأولى: تأمل عملي في العادات، الكمال، السقوط، الإرادة، والعيش قبل الإنجاز.">
-<meta name="author" content="MC88">
-<meta name="theme-color" content="#0b0d0c">
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>why 88 v1 — لا تحتاج إلى تطبيق ليخبرك أنك حي</title>
+<meta content="الحلقة الأولى من why 88: عن تطبيق كنت سأبنيه، وعن الإشعارات، والعادات، والسقوط، والإنسان قبل المنتج." name="description"/>
+<meta content="#f5f1e8" name="theme-color"/>
+<meta content="MC88" name="author"/>
+
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@300;400;500;600&family=Noto+Naskh+Arabic:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=Readex+Pro:wght@300;400;500;600;700&family=Noto+Serif+Arabic:wght@400;500;600;700&display=swap" rel="stylesheet">
 
 <style>
-:root{
-  --bg:#0b0d0c; --bg2:#111412; --panel:#151916; --ink:#ece9df; --soft:#b9b8ae;
-  --muted:#777a73; --line:rgba(236,233,223,.12); --line2:rgba(236,233,223,.06);
-  --accent:#b9a77b; --accent2:#71826f; --max:820px;
-  --ease:cubic-bezier(.22,1,.36,1); --slow:cubic-bezier(.16,1,.3,1);
-}
-*{box-sizing:border-box;margin:0;padding:0}
-html{scroll-behavior:smooth;background:var(--bg)}
-body{
-  background:
-    radial-gradient(900px 600px at 50% -10%,rgba(185,167,123,.09),transparent 70%),
-    radial-gradient(700px 500px at 10% 55%,rgba(113,130,111,.06),transparent 70%),
-    var(--bg);
-  color:var(--ink);font-family:"IBM Plex Sans Arabic",sans-serif;font-weight:300;
-  line-height:2;overflow-x:hidden;-webkit-font-smoothing:antialiased;
-}
-body:before{content:"";position:fixed;inset:0;pointer-events:none;z-index:20;opacity:.045;
- background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
- animation:grain 10s steps(8) infinite}
-@keyframes grain{0%,100%{transform:translate(0)}25%{transform:translate(-2%,1%)}50%{transform:translate(1%,-2%)}75%{transform:translate(2%,2%)}}
-a{color:inherit}.wrap{width:min(var(--max),calc(100% - 40px));margin:auto;position:relative;z-index:2}
-.progress{position:fixed;top:0;right:0;height:2px;width:0;background:linear-gradient(90deg,var(--accent2),var(--accent));z-index:100;box-shadow:0 0 18px rgba(185,167,123,.25)}
-header{position:fixed;top:0;left:0;right:0;z-index:50;transition:.5s var(--ease);background:rgba(11,13,12,.45);backdrop-filter:blur(14px);border-bottom:1px solid transparent}
-header.scrolled{background:rgba(11,13,12,.82);border-color:var(--line)}
-.nav{width:min(1040px,calc(100% - 40px));margin:auto;height:72px;display:flex;align-items:center;justify-content:space-between}
-.brand{display:flex;gap:9px;align-items:center;text-decoration:none;direction:ltr;font:500 13px "JetBrains Mono",monospace;letter-spacing:.02em}
-.brand-mark{width:29px;height:29px;border:1px solid var(--accent);border-radius:50%;display:grid;place-items:center;font-size:10px;position:relative}
-.brand-mark:after{content:"";position:absolute;inset:-5px;border:1px solid rgba(185,167,123,.25);border-radius:50%;animation:ring 3.8s ease-out infinite}
-@keyframes ring{0%{transform:scale(.75);opacity:.8}100%{transform:scale(1.6);opacity:0}}
-.navlinks{display:flex;gap:22px}.navlinks a{font-size:12px;color:var(--muted);text-decoration:none;position:relative}
-.navlinks a:after{content:"";position:absolute;right:0;bottom:-6px;width:0;height:1px;background:var(--accent);transition:.45s var(--ease)}
-.navlinks a:hover{color:var(--ink)}.navlinks a:hover:after{width:100%}
-.hero{min-height:100svh;display:grid;place-items:center;text-align:center;padding:130px 0 80px;position:relative}
-.hero-orbit{position:absolute;width:min(720px,100vw);height:min(720px,100vw);border:1px solid var(--line2);border-radius:50%;animation:slowspin 40s linear infinite;pointer-events:none}
-.hero-orbit:before,.hero-orbit:after{content:"";position:absolute;border-radius:50%;border:1px solid var(--line2)}
-.hero-orbit:before{inset:12%;animation:counter 25s linear infinite}.hero-orbit:after{inset:30%;border-style:dashed;animation:slowspin 28s linear infinite}
-@keyframes slowspin{to{transform:rotate(360deg)}}@keyframes counter{to{transform:rotate(-360deg)}}
-.hero-content{position:relative;z-index:2;max-width:700px}
-.kicker{font:500 10px "JetBrains Mono",monospace;letter-spacing:.16em;color:var(--muted);margin-bottom:25px;direction:ltr}
-.kicker span{color:var(--accent)}
-h1,h2,.serif{font-family:"Noto Naskh Arabic",serif}
-h1{font-size:clamp(2.45rem,7vw,5.2rem);line-height:1.2;font-weight:700;letter-spacing:-.02em}
-.hero .line{display:block;opacity:0;transform:translateY(30px);animation:up 1.1s var(--ease) forwards}
-.hero .line:nth-child(2){animation-delay:.12s}.hero .line:nth-child(3){animation-delay:.24s}
-.hero-lead{max-width:620px;margin:30px auto 0;color:var(--soft);font:400 clamp(1.05rem,2.5vw,1.35rem)/2 "Noto Naskh Arabic",serif;opacity:0;animation:up 1.2s var(--ease) .5s forwards}
-.hero-note{margin-top:32px;color:var(--muted);font-size:12px;opacity:0;animation:up 1.2s var(--ease) .75s forwards}
-@keyframes up{to{opacity:1;transform:none}}
-.scrollcue{position:absolute;bottom:28px;left:50%;transform:translateX(-50%);color:var(--muted);font:10px "JetBrains Mono",monospace;display:flex;flex-direction:column;gap:8px;align-items:center}
-.scrollcue i{width:1px;height:42px;background:linear-gradient(var(--accent),transparent);animation:drop 1.8s ease-in-out infinite}
-@keyframes drop{0%,100%{opacity:.3;transform:scaleY(.5);transform-origin:top}50%{opacity:1;transform:scaleY(1);transform-origin:top}}
-section{padding:125px 0;border-top:1px solid var(--line2)}
-.section-meta{display:flex;align-items:center;gap:13px;color:var(--muted);font:10px "JetBrains Mono",monospace;letter-spacing:.16em;direction:ltr;margin-bottom:22px}
-.section-meta:before{content:"";width:34px;height:1px;background:var(--accent)}
-h2{font-size:clamp(1.8rem,4.5vw,3rem);line-height:1.45;margin-bottom:30px;font-weight:700}
-p{font-size:17px;color:var(--soft);line-height:2.15;margin-bottom:22px}
-p.lead{font:500 1.2rem/2 "Noto Naskh Arabic",serif;color:var(--ink)}
-strong{color:var(--ink);font-weight:600}
-blockquote{margin:42px 0;padding:25px 25px 25px 0;border-right:2px solid var(--accent);font:600 clamp(1.35rem,3vw,1.8rem)/1.8 "Noto Naskh Arabic",serif;color:var(--ink)}
-.quote-small{font-size:1.05rem;color:var(--soft)}
-.reveal{opacity:0;transform:translateY(45px);transition:opacity 1s var(--slow),transform 1.1s var(--slow)}
-.reveal.in{opacity:1;transform:none}
-.grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin:35px 0}
-.card{position:relative;padding:28px;background:linear-gradient(145deg,rgba(255,255,255,.035),rgba(255,255,255,.012));border:1px solid var(--line2);transition:.7s var(--ease);overflow:hidden}
-.card:before{content:"";position:absolute;inset:0;background:radial-gradient(280px circle at var(--mx,50%) var(--my,50%),rgba(185,167,123,.08),transparent 60%);opacity:0;transition:.5s}
-.card:hover{transform:translateY(-5px);border-color:var(--line)}.card:hover:before{opacity:1}
-.card>*{position:relative}.card b{display:block;color:var(--ink);font:600 1.15rem "Noto Naskh Arabic",serif;margin-bottom:8px}.card p{font-size:14px;margin:0;color:var(--muted)}
-.callout{padding:34px 30px;border:1px solid var(--line);margin:45px 0;background:rgba(255,255,255,.018)}
-.callout .tag{font:10px "JetBrains Mono",monospace;color:var(--accent);letter-spacing:.15em;direction:ltr;margin-bottom:12px}
-.callout p:last-child{margin-bottom:0}
-.numbered{counter-reset:item;margin:35px 0}.step{display:grid;grid-template-columns:45px 1fr;gap:20px;padding:25px 0;border-top:1px solid var(--line2)}
-.step:last-child{border-bottom:1px solid var(--line2)}.num{font:500 11px "JetBrains Mono",monospace;color:var(--accent);padding-top:7px}.step h3{font:600 1.15rem "Noto Naskh Arabic",serif;margin-bottom:8px}.step p{font-size:15px;margin:0}
-.loaderbox{margin:45px 0;padding:28px;border:1px solid var(--line);background:rgba(0,0,0,.12)}
-.loader-top{display:flex;justify-content:space-between;align-items:center;font:11px "JetBrains Mono",monospace;color:var(--muted);direction:ltr}
-.loader{height:7px;background:rgba(255,255,255,.07);border-radius:10px;margin-top:18px;overflow:hidden}.fill{width:0;height:100%;background:linear-gradient(90deg,var(--accent2),var(--accent));transition:width 2.7s var(--slow);border-radius:inherit}
-.loader-note{margin:22px 0 0;font:1.15rem/2 "Noto Naskh Arabic",serif;color:var(--ink)}
-.life{margin:55px auto 15px;max-width:580px;position:relative;height:210px}.life-line{position:absolute;top:50%;left:5%;right:5%;height:1px;background:linear-gradient(90deg,transparent,var(--line),transparent)}
-.dot{position:absolute;top:calc(50% - 4px);width:8px;height:8px;border-radius:50%;background:var(--accent);box-shadow:0 0 0 7px rgba(185,167,123,.06);animation:travel 6s var(--ease) infinite}
-@keyframes travel{0%{left:5%;opacity:0}10%{opacity:1}45%{left:75%}55%{left:82%;transform:scale(1.35)}80%{left:35%;transform:scale(.8)}100%{left:95%;opacity:0}}
-.life-label{position:absolute;font:10px "JetBrains Mono",monospace;color:var(--muted);top:calc(50% + 18px)}.l1{left:4%}.l2{left:45%}.l3{right:3%}
-.fallbox{text-align:center;margin:55px 0}.fall-symbol{height:190px;position:relative;width:2px;background:linear-gradient(transparent,var(--line),transparent);margin:auto}
-.fall-symbol:before{content:"";position:absolute;width:10px;height:10px;border-radius:50%;background:var(--accent);left:-4px;top:0;animation:fall 4.8s var(--ease) infinite}
-@keyframes fall{0%,10%{top:0;opacity:0;transform:scale(.5)}20%{opacity:1;transform:scale(1)}58%{top:92%}68%{top:92%;transform:scale(1.2)}75%{top:30%;transform:scale(.8)}90%{top:72%;transform:scale(1)}100%{top:100%;opacity:0}}
-.fallbutton{margin-top:25px;padding:14px 30px;background:transparent;border:1px solid var(--line);color:var(--ink);font:500 15px "Noto Naskh Arabic",serif;cursor:pointer;transition:.5s var(--ease)}
-.fallbutton:hover{border-color:var(--accent);transform:translateY(-3px);background:rgba(185,167,123,.05)}
-.fallanswer{max-height:0;opacity:0;overflow:hidden;transition:1s var(--slow);max-width:620px;margin:auto}.fallanswer.show{max-height:260px;opacity:1;margin-top:25px}
-.plant-stage{height:330px;display:grid;place-items:end center;margin:30px 0 20px;overflow:hidden}
-.plant{width:240px;height:310px;position:relative}.pot{position:absolute;bottom:0;left:50%;transform:translateX(-50%);width:105px;height:70px;border:1px solid var(--line);border-top:0;clip-path:polygon(8% 0,92% 0,78% 100%,22% 100%);background:rgba(255,255,255,.025)}
-.soil{position:absolute;bottom:62px;left:50%;transform:translateX(-50%);width:125px;height:20px;border:1px solid var(--line);border-radius:50%}
-.stem{position:absolute;bottom:73px;left:50%;width:3px;height:0;background:var(--accent2);transform-origin:bottom;transition:height 2.2s var(--slow)}
-.plant.grow .stem{height:175px}.leaf{position:absolute;width:70px;height:36px;border:1px solid var(--accent2);border-radius:100% 0 100% 0;opacity:0;transform:scale(.4);transition:1.1s var(--slow)}
-.plant.grow .leaf{opacity:.75;transform:scale(1)}.leaf.a{left:44px;bottom:190px;transform-origin:right bottom}.leaf.b{right:42px;bottom:145px;transform:scaleX(-1);transform-origin:right bottom}.leaf.c{left:67px;bottom:105px}
-.plant.grow .leaf.a{transition-delay:.7s}.plant.grow .leaf.b{transition-delay:1.05s}.plant.grow .leaf.c{transition-delay:1.35s}
-.flower{position:absolute;top:45px;left:50%;transform:translateX(-50%) scale(0);font:3rem "Noto Naskh Arabic",serif;color:var(--accent);transition:1s var(--ease) 1.9s}.plant.grow .flower{transform:translateX(-50%) scale(1)}
-.practical{border:1px solid var(--line);padding:34px;margin-top:40px}
-.practical h3{font:600 1.35rem "Noto Naskh Arabic",serif;margin-bottom:18px}.practical ul{padding-right:20px}.practical li{color:var(--soft);padding:8px 0;font-size:15px}
-.final{padding:150px 0 120px;text-align:center}.final h2{font-size:clamp(2rem,5vw,3.4rem)}.final p{max-width:640px;margin:0 auto 25px}
-.signature{margin-top:55px;font:11px "JetBrains Mono",monospace;color:var(--muted);direction:ltr}.signature span{color:var(--accent)}
-footer{border-top:1px solid var(--line);padding:50px 0 60px;text-align:center;color:var(--muted)}
-footer .mark{font:500 14px "JetBrains Mono",monospace;direction:ltr;color:var(--soft);margin-bottom:14px}
-footer p{font-size:12px;margin:5px;color:var(--muted)}footer .rights{margin-top:25px;font:11px "JetBrains Mono",monospace;direction:ltr;letter-spacing:.03em}
-@media(max-width:650px){
- .wrap{width:min(var(--max),calc(100% - 28px))}.nav{width:calc(100% - 28px);height:64px}.navlinks{display:none}
- .hero{padding-top:105px}.hero-orbit{width:115vw;height:115vw}.grid{grid-template-columns:1fr}
- section{padding:90px 0}p{font-size:16px}.callout{padding:25px 20px}.step{grid-template-columns:35px 1fr;gap:12px}
-}
-@media(prefers-reduced-motion:reduce){
- *,*:before,*:after{animation-duration:.01ms!important;animation-iteration-count:1!important;scroll-behavior:auto!important;transition-duration:.01ms!important}
- .reveal{opacity:1;transform:none}.hero .line,.hero-lead,.hero-note{opacity:1;transform:none}
-}
+  :root {
+    --paper: #f5f1e8;
+    --paper-2: #efe9dc;
+    --ink: #1c1a16;
+    --ink-soft: #4a463e;
+    --ink-faint: #8a8478;
+    --line: #d9d2c2;
+    --line-soft: #e5dfd0;
+    --accent: #6b5f4a;
+    --whisper: #a89d86;
+    --signal: #a4462d;
+    --max: 780px;
+    --ease: cubic-bezier(0.22, 1, 0.36, 1);
+    --bloom: cubic-bezier(0.34, 1.56, 0.64, 1);
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--paper);
+    color: var(--ink);
+    font-family: 'Readex Pro', system-ui, -apple-system, sans-serif;
+    font-weight: 300;
+    line-height: 1.9;
+    font-size: 17px;
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+    position: relative;
+  }
+
+  body::before {
+    content: "";
+    position: fixed; inset: 0;
+    pointer-events: none;
+    background-image:
+      radial-gradient(circle at 20% 30%, rgba(107,95,74,0.04) 0%, transparent 45%),
+      radial-gradient(circle at 80% 70%, rgba(107,95,74,0.03) 0%, transparent 45%);
+    z-index: 0;
+  }
+
+  /* ============ GRAIN ============ */
+  .grain {
+    position: fixed; inset: -100%;
+    width: 300%; height: 300%;
+    pointer-events: none;
+    z-index: 9999;
+    opacity: 0.035;
+    mix-blend-mode: multiply;
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='180' height='180'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>");
+    animation: grainShift 9s steps(8) infinite;
+  }
+  @keyframes grainShift {
+    0%,100% { transform: translate(0,0); }
+    25%  { transform: translate(-5%, 3%); }
+    50%  { transform: translate(-4%, 2%); }
+    75%  { transform: translate(3%, -3%); }
+  }
+
+  /* ============ CURSOR GLOW ============ */
+  .cursor-glow {
+    position: fixed;
+    width: 460px; height: 460px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(107,95,74,0.08) 0%, rgba(107,95,74,0.03) 40%, transparent 70%);
+    pointer-events: none;
+    transform: translate(-50%, -50%);
+    z-index: 1; left: 0; top: 0;
+    opacity: 0;
+    transition: opacity 0.6s ease;
+  }
+  .cursor-glow.on { opacity: 1; }
+  @media (pointer: coarse) { .cursor-glow { display: none; } }
+
+  /* ============ PROGRESS ============ */
+  .progress {
+    position: fixed; top: 0; right: 0;
+    height: 1.5px;
+    background: linear-gradient(to left, var(--ink), var(--accent));
+    width: 0%; z-index: 100;
+    transition: width 0.12s linear;
+    opacity: 0.75;
+  }
+
+  /* ============ HEADER ============ */
+  header {
+    position: sticky; top: 0; z-index: 10;
+    background: rgba(245,241,232,0.85);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border-bottom: 1px solid transparent;
+    transition: border-color 0.5s ease;
+  }
+  header.scrolled { border-bottom-color: var(--line); }
+
+  .nav {
+    max-width: var(--max);
+    margin: 0 auto;
+    padding: 18px 28px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 13.5px;
+  }
+
+  .brand {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--ink);
+    text-decoration: none;
+    direction: ltr;
+  }
+  .brand-text { position: relative; }
+  .brand-text::after {
+    content: "_";
+    color: var(--ink-faint);
+    animation: caret 1.2s steps(2) infinite;
+  }
+  @keyframes caret {
+    0%,49% { opacity: 1; }
+    50%,100% { opacity: 0; }
+  }
+  .brand-num {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 26px; height: 26px;
+    border: 1px solid var(--ink);
+    border-radius: 50%;
+    font-size: 11px;
+    font-weight: 600;
+    position: relative;
+  }
+  .brand-num::after {
+    content: "";
+    position: absolute;
+    inset: -3px;
+    border-radius: 50%;
+    border: 1px solid var(--whisper);
+    opacity: 0;
+    animation: pulseRing 3.6s ease-out infinite;
+  }
+  @keyframes pulseRing {
+    0%   { transform: scale(0.9); opacity: 0.7; }
+    70%  { transform: scale(1.5); opacity: 0; }
+    100% { transform: scale(1.5); opacity: 0; }
+  }
+  .brand-ver {
+    font-size: 10px;
+    letter-spacing: 0.08em;
+    color: var(--ink-faint);
+    padding: 2px 6px;
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    margin-right: 2px;
+    transition: color 0.4s ease, border-color 0.4s ease;
+    direction: ltr;
+  }
+  .brand:hover .brand-ver {
+    color: var(--ink);
+    border-color: var(--ink-faint);
+  }
+
+  .nav-links { display: flex; gap: 22px; }
+  .nav-links a {
+    color: var(--ink-faint);
+    text-decoration: none;
+    transition: color 0.3s ease;
+    position: relative;
+  }
+  .nav-links a::after {
+    content: "";
+    position: absolute;
+    bottom: -4px; right: 0;
+    height: 1px; width: 0;
+    background: var(--ink);
+    transition: width 0.4s var(--ease);
+  }
+  .nav-links a:hover { color: var(--ink); }
+  .nav-links a:hover::after { width: 100%; }
+  @media (max-width: 620px) { .nav-links { display: none; } }
+
+  .wrap {
+    position: relative;
+    z-index: 2;
+    max-width: var(--max);
+    margin: 0 auto;
+    padding: 0 28px;
+  }
+
+  /* ============ HERO ============ */
+  .hero {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 90px 0 80px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .dust {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    overflow: hidden;
+    z-index: 0;
+  }
+  .dust span {
+    position: absolute;
+    width: 3px; height: 3px;
+    border-radius: 50%;
+    background: var(--whisper);
+    opacity: 0;
+    animation: drift linear infinite;
+    filter: blur(0.3px);
+  }
+  @keyframes drift {
+    0%   { transform: translate(0, 20px) scale(0.6); opacity: 0; }
+    15%  { opacity: var(--op, 0.35); }
+    85%  { opacity: var(--op, 0.35); }
+    100% { transform: translate(var(--dx, 20px), -110vh) scale(1); opacity: 0; }
+  }
+
+  /* ============ HERO BELL SYMBOL ============ */
+  .bell-wrap {
+    position: relative;
+    margin-bottom: 36px;
+    z-index: 2;
+    animation: heroFloat 8s ease-in-out infinite;
+  }
+  @keyframes heroFloat {
+    0%, 100% { transform: translateY(0); }
+    50%      { transform: translateY(-5px); }
+  }
+  .bell-svg {
+    display: block;
+    width: 200px;
+    height: 240px;
+    color: var(--ink);
+    overflow: visible;
+  }
+  .bell-svg .b-ring {
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 0.9;
+    opacity: 0;
+    transform-box: fill-box;
+    transform-origin: center;
+    animation: bellRing 6s ease-out infinite;
+  }
+  .bell-svg .b-ring.r1 { animation-delay: 0s; }
+  .bell-svg .b-ring.r2 { animation-delay: 0.5s; }
+  .bell-svg .b-ring.r3 { animation-delay: 1s; }
+
+  @keyframes bellRing {
+    0%   { transform: scale(0.4); opacity: 0.55; }
+    70%  { transform: scale(1.65); opacity: 0; }
+    100% { transform: scale(1.65); opacity: 0; }
+  }
+
+  .bell-svg .b-shape {
+    fill: currentColor;
+    transform-origin: 100px 22px;
+    animation: bellSway 6s ease-in-out infinite;
+  }
+  @keyframes bellSway {
+    0%, 100% { transform: rotate(0deg); }
+    10%      { transform: rotate(-5deg); }
+    20%      { transform: rotate(5deg); }
+    30%      { transform: rotate(-4deg); }
+    40%      { transform: rotate(3deg); }
+    50%      { transform: rotate(0deg); }
+  }
+  .bell-svg .b-clapper {
+    fill: currentColor;
+    animation: clapperSway 6s ease-in-out infinite;
+    transform-box: fill-box;
+    transform-origin: 50% 0%;
+  }
+  @keyframes clapperSway {
+    0%, 100% { transform: rotate(0deg); }
+    12%      { transform: rotate(10deg); }
+    22%      { transform: rotate(-10deg); }
+    32%      { transform: rotate(8deg); }
+    42%      { transform: rotate(-6deg); }
+    52%      { transform: rotate(0deg); }
+  }
+  .bell-svg .b-badge {
+    fill: var(--signal);
+    animation: badgePulse 6s ease-in-out infinite;
+  }
+  @keyframes badgePulse {
+    0%, 55%   { opacity: 1; transform: scale(1); }
+    65%       { opacity: 0.5; transform: scale(0.85); }
+    75%, 100% { opacity: 0; transform: scale(0.6); }
+  }
+  .bell-svg .b-badge-text {
+    fill: var(--paper);
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 9px;
+    font-weight: 600;
+    text-anchor: middle;
+    dominant-baseline: middle;
+    animation: badgePulse 6s ease-in-out infinite;
+  }
+  .bell-svg .b-floor {
+    stroke: currentColor;
+    stroke-width: 1;
+    opacity: 0.18;
+    stroke-dasharray: 3 5;
+    stroke-linecap: round;
+  }
+
+  /* ============ EPISODE ROAD ============ */
+  .episode-road {
+    position: relative;
+    width: min(680px, 100%);
+    height: 86px;
+    margin: 0 auto 34px;
+    direction: ltr;
+    opacity: 0;
+    animation: riseIn 1s var(--ease) 0.25s forwards;
+  }
+  .episode-road svg {
+    position: absolute; inset: 0;
+    width: 100%; height: 100%;
+    overflow: visible;
+  }
+  .episode-road .road-base {
+    fill: none; stroke: var(--line); stroke-width: 1.2;
+  }
+  .episode-road .road-flow {
+    fill: none; stroke: var(--ink); stroke-width: 1.4;
+    stroke-linecap: round; stroke-dasharray: 8 16;
+    animation: roadFlow 7s linear infinite;
+  }
+  @keyframes roadFlow { to { stroke-dashoffset: -96; } }
+
+  .episode-node {
+    position: absolute; top: 50%;
+    width: 42px; height: 42px;
+    transform: translate(-50%, -50%);
+    border: 1px solid var(--line);
+    border-radius: 50%;
+    background: var(--paper);
+    display: grid; place-items: center;
+    font: 500 11px/1 'IBM Plex Mono', monospace;
+    color: var(--ink-faint);
+    transition: transform 0.7s var(--ease), border-color 0.5s ease, color 0.5s ease, box-shadow 0.7s ease;
+  }
+  .episode-node::before {
+    content: ""; position: absolute; inset: -7px;
+    border: 1px solid transparent; border-radius: 50%;
+    transform: scale(0.65); opacity: 0;
+  }
+  .episode-node.current {
+    color: var(--ink);
+    border-color: var(--ink);
+    transform: translate(-50%, -50%) scale(1.08);
+    box-shadow: 0 0 0 7px rgba(107,95,74,0.035);
+  }
+  .episode-node.current::before {
+    border-color: var(--whisper);
+    animation: nodeRing 3.8s ease-out infinite;
+  }
+  @keyframes nodeRing {
+    0% { transform: scale(0.7); opacity: 0.75; }
+    75%, 100% { transform: scale(1.45); opacity: 0; }
+  }
+  .episode-node.future { opacity: 0.4; }
+  .episode-node.n1 { left: 8%; }
+  .episode-node.n2 { left: 38%; }
+  .episode-node.n3 { left: 68%; }
+  .episode-node.n4 { left: 94%; }
+
+  .episode-road-label {
+    position: absolute; left: 50%; bottom: -4px;
+    transform: translateX(-50%);
+    white-space: nowrap; color: var(--ink-faint);
+    font: 400 10px/1.2 'IBM Plex Mono', monospace;
+    letter-spacing: 0.12em;
+  }
+  @media (max-width: 560px) {
+    .episode-road { height: 74px; }
+    .episode-node { width: 36px; height: 36px; }
+    .episode-road-label { font-size: 9px; }
+  }
+
+  /* ============ HERO TEXT ============ */
+  .eyebrow {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    letter-spacing: 0.18em;
+    color: var(--ink-faint);
+    margin-bottom: 22px;
+    opacity: 0;
+    animation: riseIn 1s var(--ease) 0.4s forwards;
+    display: inline-block;
+    direction: ltr;
+  }
+  .eyebrow::after {
+    content: "";
+    display: block;
+    height: 1px; width: 0;
+    background: var(--whisper);
+    margin-top: 10px;
+    margin-right: auto;
+    margin-left: auto;
+    animation: lineDraw 1.4s var(--ease) 0.9s forwards;
+  }
+  @keyframes lineDraw { to { width: 42px; } }
+
+  h1.title {
+    font-family: 'Noto Serif Arabic', serif;
+    font-weight: 700;
+    font-size: clamp(1.8rem, 5.4vw, 3.1rem);
+    line-height: 1.35;
+    color: var(--ink);
+    margin-bottom: 26px;
+  }
+  h1.title .word {
+    display: inline-block;
+    opacity: 0;
+    transform: translateY(28px) rotate(1.5deg);
+    animation: wordIn 1.1s var(--ease) forwards;
+  }
+  @keyframes wordIn {
+    to { opacity: 1; transform: translateY(0) rotate(0); }
+  }
+
+  .subtitle {
+    font-family: 'Noto Serif Arabic', serif;
+    font-size: clamp(1.02rem, 2.5vw, 1.28rem);
+    font-weight: 400;
+    color: var(--ink-soft);
+    line-height: 1.8;
+    margin-bottom: 30px;
+    max-width: 580px;
+    opacity: 0;
+    animation: riseIn 1.2s var(--ease) 1.5s forwards;
+  }
+  .subtitle .series-tag {
+    display: inline-block;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.72em;
+    letter-spacing: 0.06em;
+    color: var(--ink-faint);
+    border: 1px solid var(--line);
+    padding: 2px 8px;
+    border-radius: 10px;
+    margin-left: 8px;
+    direction: ltr;
+    vertical-align: middle;
+  }
+
+  .hero-text {
+    font-size: 16.5px;
+    color: var(--ink-soft);
+    max-width: 560px;
+    line-height: 2;
+    opacity: 0;
+    animation: riseIn 1.2s var(--ease) 1.7s forwards;
+  }
+  .hero-text p + p { margin-top: 16px; }
+
+  @keyframes riseIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  .cta-row {
+    display: flex;
+    gap: 16px;
+    margin-top: 40px;
+    flex-wrap: wrap;
+    justify-content: center;
+    opacity: 0;
+    animation: riseIn 1.2s var(--ease) 2s forwards;
+  }
+
+  .btn {
+    display: inline-block;
+    padding: 14px 26px;
+    border: 1px solid var(--ink);
+    background: transparent;
+    color: var(--ink);
+    text-decoration: none;
+    font-size: 14.5px;
+    cursor: pointer;
+    transition: all 0.5s var(--ease);
+    border-radius: 2px;
+    position: relative;
+    overflow: hidden;
+    isolation: isolate;
+  }
+  .btn:hover {
+    background: var(--ink);
+    color: var(--paper);
+    transform: translateY(-2px);
+    box-shadow: 0 10px 24px -14px rgba(28,26,22,0.5);
+  }
+  .btn.ghost { border-color: var(--line); color: var(--ink-faint); }
+  .btn.ghost:hover { border-color: var(--ink-faint); background: transparent; color: var(--ink); box-shadow: none; }
+
+  .ripple {
+    position: absolute;
+    border-radius: 50%;
+    background: currentColor;
+    opacity: 0.25;
+    transform: scale(0);
+    animation: ripple 0.7s var(--ease);
+    pointer-events: none;
+    z-index: -1;
+  }
+  @keyframes ripple {
+    to { transform: scale(2.4); opacity: 0; }
+  }
+
+  .hero-note {
+    margin-top: 50px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12.5px;
+    color: var(--ink-faint);
+    letter-spacing: 0.08em;
+    direction: ltr;
+    opacity: 0;
+    animation: riseIn 1.4s var(--ease) 2.3s forwards;
+  }
+  .hero-note .hl { color: var(--ink); }
+
+  /* ============ MANTRA BANNER ============ */
+  .mantra {
+    padding: 70px 0;
+    text-align: center;
+    border-top: 1px solid var(--line);
+    border-bottom: 1px solid var(--line);
+    background: rgba(107,95,74,0.03);
+  }
+  .mantra-line {
+    display: block;
+    font-family: 'Noto Serif Arabic', serif;
+    font-weight: 700;
+    font-size: clamp(1.4rem, 4.2vw, 2.2rem);
+    color: var(--ink);
+    letter-spacing: 0.01em;
+    line-height: 1.4;
+    opacity: 0;
+    transform: translateY(16px);
+    transition: opacity 1.2s var(--ease), transform 1.2s var(--ease);
+  }
+  .mantra.in .mantra-line:nth-child(1) { opacity: 1; transform: none; transition-delay: 0.1s; }
+  .mantra.in .mantra-line:nth-child(2) { opacity: 1; transform: none; transition-delay: 0.5s; }
+  .mantra-sub {
+    margin-top: 22px;
+    font-family: 'Noto Serif Arabic', serif;
+    font-size: 1rem;
+    color: var(--ink-faint);
+    opacity: 0;
+    transition: opacity 1.4s var(--ease) 1s;
+  }
+  .mantra.in .mantra-sub { opacity: 1; }
+
+  /* ============ SECTION ============ */
+  section {
+    padding: 90px 0;
+    border-top: 1px solid var(--line);
+    position: relative;
+  }
+
+  .section-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11.5px;
+    letter-spacing: 0.22em;
+    color: var(--ink-faint);
+    margin-bottom: 26px;
+    display: inline-block;
+    position: relative;
+    direction: ltr;
+  }
+  .section-label::before {
+    content: "";
+    position: absolute;
+    top: 50%; right: -60px;
+    width: 0; height: 1px;
+    background: var(--line);
+    transition: width 1s var(--ease) 0.3s;
+  }
+  .reveal.in .section-label::before { width: 40px; }
+
+  h2 {
+    font-family: 'Noto Serif Arabic', serif;
+    font-weight: 700;
+    font-size: clamp(1.5rem, 4vw, 2.1rem);
+    line-height: 1.4;
+    margin-bottom: 30px;
+    color: var(--ink);
+  }
+  h2 .w {
+    display: inline-block;
+    opacity: 0;
+    transform: translateY(16px);
+    transition: opacity 0.9s var(--ease), transform 0.9s var(--ease);
+  }
+  .reveal.in h2 .w { opacity: 1; transform: none; }
+
+  p {
+    color: var(--ink-soft);
+    margin-bottom: 18px;
+    line-height: 2;
+  }
+  p.lead { font-size: 1.08rem; color: var(--ink); }
+
+  blockquote {
+    border-right: 2px solid var(--whisper);
+    padding-right: 22px;
+    margin: 30px 0;
+    font-family: 'Noto Serif Arabic', serif;
+    font-size: 1.15rem;
+    color: var(--ink);
+    line-height: 1.9;
+  }
+
+  .callout {
+    font-family: 'JetBrains Mono', monospace;
+    font-weight: 500;
+    font-size: 1.05rem;
+    direction: ltr;
+    text-align: center;
+    color: var(--ink);
+    padding: 22px 20px;
+    margin: 30px 0;
+    background: rgba(28,26,22,0.04);
+    border-radius: 2px;
+    letter-spacing: 0.02em;
+    position: relative;
+    overflow: hidden;
+    transition: transform 0.7s var(--ease), background 0.5s ease;
+  }
+  .callout:hover { transform: translateY(-2px); background: rgba(28,26,22,0.055); }
+  .callout::before {
+    content: "";
+    position: absolute;
+    top: 0; right: 0;
+    height: 2px;
+    width: 0;
+    background: var(--ink);
+    transition: width 1.6s var(--ease) 0.4s;
+  }
+  .reveal.in .callout::before { width: 100%; }
+
+  /* ============ ILLUSTRATIONS ============ */
+  .illus-block {
+    display: flex;
+    justify-content: center;
+    margin: 0 0 26px;
+    transform: translateY(12px);
+    opacity: 0.2;
+    transition: transform 1.2s var(--ease), opacity 1.2s ease;
+  }
+  .reveal.in .illus-block { transform: none; opacity: 1; }
+  .illus {
+    width: 120px;
+    height: 120px;
+    color: var(--ink);
+    overflow: visible;
+    filter: drop-shadow(0 8px 16px rgba(28,26,22,0.035));
+  }
+
+  /* — 01 Origin: bell — */
+  .il-ring {
+    fill: none; stroke: currentColor; stroke-width: 0.8;
+    opacity: 0;
+    transform-box: fill-box; transform-origin: center;
+    animation: ilRingOut 5s ease-out infinite;
+  }
+  .il-ring.r2 { animation-delay: 1.6s; }
+  .il-ring.r3 { animation-delay: 3.2s; }
+  @keyframes ilRingOut {
+    0% { transform: scale(0.5); opacity: 0.5; }
+    100% { transform: scale(1.7); opacity: 0; }
+  }
+  .il-bell {
+    fill: currentColor;
+    transform-origin: 50px 20px;
+    animation: ilBellSway 5s ease-in-out infinite;
+  }
+  @keyframes ilBellSway {
+    0%,100% { transform: rotate(0deg); }
+    12% { transform: rotate(-6deg); }
+    24% { transform: rotate(6deg); }
+    36% { transform: rotate(-4deg); }
+    48% { transform: rotate(3deg); }
+    60% { transform: rotate(0deg); }
+  }
+  .il-clapper {
+    fill: currentColor;
+    transform-box: fill-box;
+    transform-origin: 50% 0%;
+    animation: ilClapper 5s ease-in-out infinite;
+  }
+  @keyframes ilClapper {
+    0%,100% { transform: rotate(0deg); }
+    14% { transform: rotate(12deg); }
+    26% { transform: rotate(-12deg); }
+    38% { transform: rotate(8deg); }
+    50% { transform: rotate(-5deg); }
+    62% { transform: rotate(0deg); }
+  }
+
+  /* — 02 Notification chain — */
+  .il-chain-line {
+    stroke: currentColor; stroke-width: 1.4;
+    stroke-dasharray: 4 4;
+    fill: none;
+    opacity: 0.5;
+  }
+  .il-chain-dot {
+    fill: currentColor;
+    transform-box: fill-box; transform-origin: center;
+    animation: ilChainPulse 4s ease-in-out infinite;
+  }
+  .il-chain-dot.d1 { animation-delay: 0s; }
+  .il-chain-dot.d2 { animation-delay: 0.35s; }
+  .il-chain-dot.d3 { animation-delay: 0.7s; }
+  .il-chain-dot.d4 { animation-delay: 1.05s; }
+  @keyframes ilChainPulse {
+    0%, 100% { opacity: 0.3; transform: scale(0.7); }
+    20%      { opacity: 1; transform: scale(1.15); }
+    40%      { opacity: 0.9; transform: scale(1); }
+  }
+
+  /* — 03 Habits: checklist — */
+  .il-box {
+    fill: none; stroke: currentColor; stroke-width: 1.4;
+  }
+  .il-check {
+    fill: none; stroke: currentColor; stroke-width: 1.8;
+    stroke-linecap: round; stroke-linejoin: round;
+    stroke-dasharray: 14;
+    stroke-dashoffset: 14;
+    animation: ilCheckDraw 5s ease-in-out infinite;
+  }
+  .il-check.c1 { animation-delay: 0s; }
+  .il-check.c2 { animation-delay: 1s; }
+  .il-check.c3 { animation-delay: 2s; }
+  @keyframes ilCheckDraw {
+    0%, 10% { stroke-dashoffset: 14; opacity: 0; }
+    30%     { stroke-dashoffset: 0; opacity: 1; }
+    85%     { stroke-dashoffset: 0; opacity: 1; }
+    100%    { stroke-dashoffset: 14; opacity: 0; }
+  }
+  .il-line-item {
+    stroke: currentColor; stroke-width: 1.4;
+    stroke-linecap: round;
+    opacity: 0.35;
+  }
+
+  /* — 04 Second chance: two arcs — */
+  .il-arc-a, .il-arc-b {
+    fill: none; stroke: currentColor; stroke-width: 1.6;
+    stroke-linecap: round;
+  }
+  .il-arc-a {
+    stroke-dasharray: 200;
+    stroke-dashoffset: 200;
+    animation: ilArcDraw 6s ease-in-out infinite;
+  }
+  .il-arc-b {
+    stroke-dasharray: 200;
+    stroke-dashoffset: 200;
+    animation: ilArcDraw 6s ease-in-out infinite;
+    animation-delay: 1.6s;
+  }
+  @keyframes ilArcDraw {
+    0%      { stroke-dashoffset: 200; opacity: 0.15; }
+    40%     { stroke-dashoffset: 0; opacity: 1; }
+    75%     { stroke-dashoffset: 0; opacity: 1; }
+    100%    { stroke-dashoffset: -200; opacity: 0.15; }
+  }
+  .il-arrow-head {
+    fill: currentColor;
+    opacity: 0;
+    animation: ilArrowFade 6s ease-in-out infinite;
+  }
+  .il-arrow-head.h2 { animation-delay: 1.6s; }
+  @keyframes ilArrowFade {
+    0%, 30% { opacity: 0; }
+    45%     { opacity: 1; }
+    70%     { opacity: 1; }
+    85%, 100% { opacity: 0; }
+  }
+
+  /* — 05 Perfection: 99% arc — */
+  .il-perf-bg {
+    fill: none; stroke: currentColor; stroke-width: 1; opacity: 0.15;
+  }
+  .il-perf-arc {
+    fill: none; stroke: currentColor; stroke-width: 2.4;
+    stroke-linecap: round;
+    transform-box: fill-box; transform-origin: center;
+    transform: rotate(-90deg);
+    stroke-dasharray: 216 220;
+    animation: ilPerfBreathe 3.4s ease-in-out infinite;
+  }
+  @keyframes ilPerfBreathe {
+    0%, 100% { opacity: 0.85; stroke-width: 2.4; }
+    50%      { opacity: 1; stroke-width: 2.8; }
+  }
+  .il-perf-pct {
+    fill: currentColor;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 14px; font-weight: 500;
+    text-anchor: middle; dominant-baseline: middle;
+  }
+
+  /* — 06 Fall: heartbeat — */
+  .il-heart-line {
+    fill: none; stroke: currentColor; stroke-width: 1.6;
+    stroke-linecap: round; stroke-linejoin: round;
+    stroke-dasharray: 300;
+    stroke-dashoffset: 300;
+    animation: ilHeartDraw 4s linear infinite;
+  }
+  @keyframes ilHeartDraw {
+    0% { stroke-dashoffset: 300; }
+    100% { stroke-dashoffset: -300; }
+  }
+  .il-heart-dot {
+    fill: var(--signal);
+    animation: ilHeartDot 4s ease-in-out infinite;
+  }
+  @keyframes ilHeartDot {
+    0%, 100% { opacity: 0.3; r: 2; }
+    50%      { opacity: 1; r: 3.4; }
+  }
+
+  /* — 07 Identity — */
+  .il-person-head {
+    fill: none; stroke: currentColor; stroke-width: 1.5;
+  }
+  .il-person-body {
+    fill: currentColor; fill-opacity: 0.08;
+    stroke: currentColor; stroke-width: 1.4;
+  }
+  .il-smoke-path {
+    fill: none; stroke: currentColor; stroke-width: 1.2;
+    stroke-linecap: round;
+    stroke-dasharray: 40;
+    stroke-dashoffset: 40;
+    animation: ilSmoke 4s ease-in-out infinite;
+  }
+  .il-smoke-path.s2 { animation-delay: 0.6s; }
+  .il-smoke-path.s3 { animation-delay: 1.2s; }
+  @keyframes ilSmoke {
+    0% { stroke-dashoffset: 40; opacity: 0; }
+    20% { opacity: 0.7; }
+    80% { stroke-dashoffset: 0; opacity: 0; }
+    100% { stroke-dashoffset: 0; opacity: 0; }
+  }
+
+  /* — 08 Life: leaf — */
+  .il-leaf-shape {
+    fill: currentColor; fill-opacity: 0.08;
+    stroke: currentColor; stroke-width: 1.4;
+    transform-box: fill-box; transform-origin: bottom center;
+    animation: ilLeafBreathe 5s ease-in-out infinite;
+  }
+  @keyframes ilLeafBreathe {
+    0%, 100% { transform: scale(1); }
+    50%      { transform: scale(1.04); }
+  }
+  .il-leaf-vein {
+    stroke: currentColor; stroke-width: 1; opacity: 0.5;
+    stroke-linecap: round;
+  }
+  .il-leaf-side-vein {
+    stroke: currentColor; stroke-width: 0.8; opacity: 0.35;
+    stroke-linecap: round;
+  }
+
+  /* — 09 Past: winding path — */
+  .il-path {
+    fill: none; stroke: currentColor; stroke-width: 1.5;
+    stroke-linecap: round; stroke-linejoin: round;
+    stroke-dasharray: 220;
+    stroke-dashoffset: 220;
+    animation: ilPathDraw 5s ease-in-out infinite;
+  }
+  @keyframes ilPathDraw {
+    0% { stroke-dashoffset: 220; opacity: 0.3; }
+    50% { stroke-dashoffset: 0; opacity: 1; }
+    80% { stroke-dashoffset: 0; opacity: 1; }
+    100% { stroke-dashoffset: 0; opacity: 0.3; }
+  }
+  .il-path-dot {
+    fill: currentColor;
+    animation: ilPathDot 5s ease-in-out infinite;
+  }
+  @keyframes ilPathDot {
+    0%, 100% { opacity: 0.3; }
+    50%      { opacity: 1; }
+  }
+
+  /* ============ CARDS ============ */
+  .cards {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px;
+    margin-top: 20px;
+  }
+  @media (max-width: 560px) { .cards { grid-template-columns: 1fr; } }
+
+  .card {
+    padding: 26px 24px;
+    background: var(--paper-2);
+    border: 1px solid transparent;
+    border-radius: 2px;
+    opacity: 0;
+    transform: translateY(24px) rotate(-1.2deg);
+    transition: opacity 0.9s var(--ease), transform 0.9s var(--ease),
+                border-color 0.5s ease, background 0.5s ease;
+  }
+  .cards.in .card { opacity: 1; transform: none; }
+  .cards.in .card:nth-child(1) { transition-delay: 0.05s; }
+  .cards.in .card:nth-child(2) { transition-delay: 0.15s; }
+  .cards.in .card:nth-child(3) { transition-delay: 0.25s; }
+  .cards.in .card:nth-child(4) { transition-delay: 0.35s; }
+  .cards.in .card:nth-child(5) { transition-delay: 0.45s; }
+  .cards.in .card:nth-child(6) { transition-delay: 0.55s; }
+  .card:hover {
+    border-color: var(--line);
+    background: var(--paper);
+    transform: translateY(-3px) rotate(0deg);
+  }
+  .card p {
+    font-family: 'Noto Serif Arabic', serif;
+    font-size: 1.05rem;
+    color: var(--ink);
+    margin: 0;
+    line-height: 1.7;
+  }
+
+  /* ============ LOADER ============ */
+  .loader-wrap { margin-top: 30px; text-align: center; }
+  .loader {
+    height: 4px;
+    background: var(--line);
+    border-radius: 4px;
+    overflow: hidden;
+    position: relative;
+    cursor: pointer;
+    transition: transform 0.3s var(--ease);
+  }
+  .loader.shake { animation: shake 0.45s var(--ease); }
+  @keyframes shake {
+    0%,100% { transform: translateX(0); }
+    20% { transform: translateX(-4px); }
+    40% { transform: translateX(4px); }
+    60% { transform: translateX(-3px); }
+    80% { transform: translateX(3px); }
+  }
+  .loader-fill {
+    height: 100%;
+    background: var(--ink);
+    width: 0%;
+    border-radius: 4px;
+    transition: width 3s var(--ease);
+  }
+  .loader-fill.stuck { animation: pulse99 3.4s ease-in-out infinite; }
+  @keyframes pulse99 {
+    0%,100% { opacity: 1; }
+    50% { opacity: 0.5; }
+  }
+  .loader-meta {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 12px;
+    font-size: 13px;
+    color: var(--ink-faint);
+    font-family: 'JetBrains Mono', monospace;
+  }
+  .loader-note {
+    margin-top: 32px;
+    font-family: 'Noto Serif Arabic', serif;
+    font-size: 1.1rem;
+    color: var(--ink);
+    line-height: 1.9;
+    opacity: 0;
+    transform: translateY(12px);
+    transition: opacity 1.4s var(--ease) 0.3s, transform 1.4s var(--ease) 0.3s;
+  }
+  .loader-note.visible { opacity: 1; transform: none; }
+
+  /* ============ FALL / HEARTBEAT ============ */
+  .pulse-visual {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 40px 0 10px;
+    height: 80px;
+  }
+  .pulse-track {
+    width: 100%;
+    max-width: 340px;
+    height: 60px;
+    color: var(--ink);
+  }
+  .pulse-line {
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 1.8;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    stroke-dasharray: 400;
+    stroke-dashoffset: 400;
+    animation: pulseDraw 3.2s linear infinite;
+  }
+  @keyframes pulseDraw {
+    0%   { stroke-dashoffset: 400; }
+    100% { stroke-dashoffset: -400; }
+  }
+  .pulse-dot {
+    fill: var(--signal);
+    animation: pulseDot 3.2s ease-in-out infinite;
+  }
+  @keyframes pulseDot {
+    0%, 100% { opacity: 0.3; r: 2; }
+    50%      { opacity: 1; r: 3.5; }
+  }
+
+  .fall-caption {
+    text-align: center;
+    font-size: 12.5px;
+    color: var(--ink-faint);
+    margin-top: 14px;
+    letter-spacing: 0.04em;
+    font-style: italic;
+  }
+
+  .fall-btn-wrap { text-align: center; margin-top: 34px; }
+  .fall-btn {
+    font-family: 'Noto Serif Arabic', serif;
+    font-size: 1.35rem;
+    font-weight: 600;
+    padding: 18px 44px;
+    border: 1px solid var(--ink);
+    background: transparent;
+    color: var(--ink);
+    cursor: pointer;
+    border-radius: 2px;
+    position: relative;
+    overflow: hidden;
+    isolation: isolate;
+    transition: all 0.5s var(--ease);
+    animation: heartbeat 4.2s ease-in-out infinite;
+  }
+  .fall-btn:hover {
+    background: var(--ink);
+    color: var(--paper);
+    animation-play-state: paused;
+  }
+  @keyframes heartbeat {
+    0%,100% { transform: scale(1); }
+    12% { transform: scale(1.035); }
+    24% { transform: scale(1); }
+    36% { transform: scale(1.02); }
+    48% { transform: scale(1); }
+  }
+  .fall-response {
+    margin-top: 30px;
+    font-family: 'Noto Serif Arabic', serif;
+    font-size: 1.15rem;
+    color: var(--ink);
+    line-height: 2;
+    opacity: 0;
+    max-height: 0;
+    overflow: hidden;
+    transition: opacity 1.2s var(--ease), max-height 1.2s var(--ease);
+  }
+  .fall-response.visible { opacity: 1; max-height: 300px; }
+
+  /* ============ PLANT ============ */
+  .plant-stage {
+    display: flex;
+    justify-content: center;
+    margin: 30px 0 20px;
+    height: 320px;
+    align-items: flex-end;
+  }
+  .plant {
+    width: 200px;
+    height: 300px;
+    color: var(--ink);
+    overflow: visible;
+  }
+  .plant path, .plant line {
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 1.5;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    stroke-dasharray: var(--len, 500);
+    stroke-dashoffset: var(--len, 500);
+    transition: stroke-dashoffset 2s var(--ease);
+  }
+  .plant.in path, .plant.in line { stroke-dashoffset: 0; }
+  .plant .soil {
+    stroke-dasharray: 3 6;
+    opacity: 0;
+    transition: stroke-dashoffset 1.5s var(--ease), opacity 1.5s var(--ease);
+  }
+  .plant.in .soil { stroke-dashoffset: 0; opacity: 0.45; }
+  .plant .leaf {
+    fill: currentColor;
+    fill-opacity: 0;
+    transition: stroke-dashoffset 1.8s var(--ease),
+                fill-opacity 1.4s var(--ease) 1.4s;
+  }
+  .plant.in .leaf { fill-opacity: 0.1; }
+  .plant.in .root-1 { transition-delay: 0s; }
+  .plant.in .root-2 { transition-delay: 0.12s; }
+  .plant.in .root-3 { transition-delay: 0.22s; }
+  .plant.in .root-4 { transition-delay: 0.34s; }
+  .plant.in .root-5 { transition-delay: 0.46s; }
+  .plant.in .stem   { transition-delay: 0.55s; }
+  .plant.in .leaf-1 { transition-delay: 1.1s; }
+  .plant.in .leaf-2 { transition-delay: 1.3s; }
+  .plant.in .leaf-3 { transition-delay: 1.5s; }
+  .plant.in .leaf-4 { transition-delay: 1.7s; }
+  .plant.in .leaf-5 { transition-delay: 1.9s; }
+  .plant.in .leaf-6 { transition-delay: 2.1s; }
+  .plant .flower {
+    transform-origin: 100px 22px;
+    transform: scale(0) rotate(-40deg);
+    transition: transform 1.6s var(--bloom) 2.8s;
+  }
+  .plant.in .flower { transform: scale(1) rotate(0deg); }
+  .plant .flower ellipse,
+  .plant .flower circle {
+    fill: currentColor;
+    fill-opacity: 0.14;
+    stroke: currentColor;
+    stroke-width: 1.2;
+  }
+  .plant .flower .flower-center {
+    fill: currentColor;
+    fill-opacity: 0.4;
+    stroke: none;
+  }
+
+  /* ============ CLOSING ============ */
+  .closing {
+    padding: 110px 0 90px;
+    text-align: center;
+  }
+  .breath-wrap {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 34px;
+    height: 130px;
+    align-items: center;
+  }
+  .breath {
+    position: relative;
+    width: 90px; height: 90px;
+  }
+  .breath::before,
+  .breath::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(28,26,22,0.14) 0%, transparent 70%);
+    animation: breathe 8s ease-in-out infinite;
+  }
+  .breath::after {
+    inset: 12px;
+    background: radial-gradient(circle, rgba(28,26,22,0.2) 0%, transparent 70%);
+    animation-delay: 0.3s;
+  }
+  @keyframes breathe {
+    0%,100% { transform: scale(0.85); opacity: 0.5; }
+    50% { transform: scale(1.15); opacity: 1; }
+  }
+  .closing h2 { font-size: clamp(1.6rem, 4.5vw, 2.4rem); }
+  .closing p {
+    font-family: 'Noto Serif Arabic', serif;
+    font-size: 1.1rem;
+    color: var(--ink-soft);
+    max-width: 540px;
+    margin: 0 auto 22px;
+  }
+  .closing .final-mantra {
+    font-family: 'Noto Serif Arabic', serif;
+    font-size: clamp(1.3rem, 4vw, 1.9rem);
+    font-weight: 700;
+    color: var(--ink);
+    letter-spacing: 0.01em;
+    margin: 40px auto 0;
+    line-height: 1.45;
+    max-width: 520px;
+  }
+  .closing .final-mantra .line {
+    display: block;
+    opacity: 0;
+    transform: translateY(12px);
+    transition: opacity 1.4s var(--ease), transform 1.4s var(--ease);
+  }
+  .closing.in .final-mantra .line:nth-child(1) { opacity: 1; transform: none; transition-delay: 0.2s; }
+  .closing.in .final-mantra .line:nth-child(2) { opacity: 1; transform: none; transition-delay: 0.7s; }
+  .closing .whisper {
+    font-family: 'Noto Serif Arabic', serif;
+    color: var(--ink-faint);
+    font-size: 14.5px;
+    margin-top: 30px;
+    line-height: 2;
+  }
+
+  /* ============ NEXT EPISODE ============ */
+  .next-episode {
+    margin-top: 50px;
+    padding-top: 40px;
+    border-top: 1px solid var(--line);
+    text-align: center;
+    max-width: 420px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  .next-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    color: var(--ink-faint);
+    direction: ltr;
+    display: block;
+    margin-bottom: 14px;
+  }
+  .next-title {
+    font-family: 'Noto Serif Arabic', serif;
+    font-size: 1.1rem;
+    color: var(--ink-soft);
+    opacity: 0.55;
+    font-style: italic;
+  }
+  .next-title::after {
+    content: " ...";
+    animation: dots 2.4s steps(4) infinite;
+    display: inline-block;
+    overflow: hidden;
+    vertical-align: bottom;
+  }
+  @keyframes dots {
+    0%   { width: 0; }
+    100% { width: 1.4em; }
+  }
+
+  /* ============ GO LIVE ============ */
+  .go-live {
+    display: inline-block;
+    margin-top: 34px;
+    font-size: 14px;
+    letter-spacing: 0.06em;
+    color: var(--ink-faint);
+    text-decoration: none;
+    padding-bottom: 3px;
+    border-bottom: 1px solid transparent;
+    transition: color 0.4s ease, border-color 0.4s ease;
+  }
+  .go-live:hover { color: var(--ink); border-bottom-color: var(--ink); }
+  .go-live .arrow {
+    display: inline-block;
+    margin-right: 6px;
+    transition: transform 0.6s var(--ease);
+  }
+  .go-live:hover .arrow { transform: translateX(-6px); }
+
+  /* ============ FOOTER ============ */
+  footer {
+    border-top: 1px solid var(--line);
+    padding: 50px 0 60px;
+    text-align: center;
+  }
+  footer p {
+    font-size: 13.5px;
+    color: var(--ink-faint);
+    line-height: 1.9;
+    margin: 4px 0;
+  }
+  footer .mark {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 15px;
+    color: var(--ink-soft);
+    margin-bottom: 14px;
+    direction: ltr;
+  }
+  footer .mark .brand-num {
+    font-size: 10px;
+    width: 22px; height: 22px;
+  }
+  .source-note {
+    margin: 26px auto 0;
+    max-width: 600px;
+    padding-top: 22px;
+    border-top: 1px solid var(--line);
+    font-size: 12.5px;
+    color: var(--ink-faint);
+    line-height: 1.9;
+  }
+  .copyright {
+    margin-top: 26px !important;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    letter-spacing: 0.14em;
+    color: var(--ink-faint) !important;
+    direction: ltr;
+  }
+  .copyright .cline {
+    display: inline-block;
+    height: 1px;
+    width: 0;
+    background: var(--line);
+    transition: width 1.4s var(--ease) 0.4s;
+  }
+  .copyright.in .cline { width: 40px; }
+
+  ::selection { background: var(--ink); color: var(--paper); }
+
+  .reveal {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 1.1s var(--ease), transform 1.1s var(--ease);
+  }
+  .reveal.in { opacity: 1; transform: none; }
+
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+    }
+    .reveal { opacity: 1; transform: none; }
+    .card { opacity: 1; transform: none; }
+    h2 .w { opacity: 1; transform: none; }
+    .mantra-line { opacity: 1; transform: none; }
+    .closing .final-mantra .line { opacity: 1; transform: none; }
+    .grain { display: none; }
+    .plant path, .plant line, .plant .leaf { stroke-dashoffset: 0; fill-opacity: 0.1; }
+    .plant .flower { transform: scale(1) rotate(0); }
+    .illus-block { opacity: 1; transform: none; }
+  }
 </style>
 </head>
-
 <body>
-<div class="progress" id="progress"></div>
 
+<div class="grain" aria-hidden="true"></div>
+<div class="cursor-glow" id="cursorGlow" aria-hidden="true"></div>
+<div class="progress" id="progress" aria-hidden="true"></div>
+
+<!-- ============ HEADER ============ -->
 <header id="header">
   <nav class="nav">
-    <a class="brand" href="#" aria-label="why 88">
-      <span class="brand-mark">88</span><span>why 88</span>
+    <a href="#" class="brand" aria-label="why 88 version 1">
+      <span class="brand-text">why 88</span>
+      <span class="brand-ver">v1</span>
     </a>
-    <div class="navlinks">
-      <a href="#origin">البداية</a>
-      <a href="#habits">العادات</a>
+    <div class="nav-links">
+      <a href="#origin">الأصل</a>
+      <a href="#notify">الإشعار</a>
+      <a href="#tasks">المهام</a>
+      <a href="#perfect">الكمال</a>
       <a href="#fall">السقوط</a>
       <a href="#garden">الزراعة</a>
-      <a href="#end">الخلاصة</a>
     </div>
   </nav>
 </header>
 
-<main>
+<!-- ============ HERO ============ -->
 <div class="wrap">
-<section class="hero">
-  <div class="hero-orbit" aria-hidden="true"></div>
-  <div class="hero-content">
-    <div class="kicker">WHY 88 <span>·</span> CASE 01 <span>·</span> HUMAN BEFORE PRODUCT</div>
-    <h1>
-      <span class="line">لا تحتاج إلى تطبيق</span>
-      <span class="line">ليخبرك أنك تعرف</span>
-      <span class="line">ما الذي يجب أن تفعله.</span>
-    </h1>
-    <p class="hero-lead">كنت سأبني تطبيقاً للعادات. ثم اكتشفت أن السؤال الأهم لم يكن: «كيف أجعله يعود كل يوم؟» بل: «لماذا يحتاج إليّ أصلاً؟»</p>
-    <p class="hero-note">هذه ليست وصفة للنجاح، ولا وعداً بأن الحياة ستصبح سهلة. إنها محاولة صادقة للنظر إلى الإنسان قبل أن ننظر إلى النظام.</p>
+<section class="hero" style="border-top:none;">
+  <div class="dust" id="dust" aria-hidden="true"></div>
+
+  <!-- HERO BELL SYMBOL -->
+  <div class="bell-wrap" aria-hidden="true">
+    <svg class="bell-svg" viewBox="0 0 200 240">
+      <line class="b-floor" x1="40" y1="200" x2="160" y2="200"></line>
+
+      <circle class="b-ring r1" cx="100" cy="105" r="42"></circle>
+      <circle class="b-ring r2" cx="100" cy="105" r="42"></circle>
+      <circle class="b-ring r3" cx="100" cy="105" r="42"></circle>
+
+      <g class="b-shape">
+        <path d="M100 35 C75 35 62 55 62 82 L62 122 L48 145 L152 145 L138 122 L138 82 C138 55 125 35 100 35 Z"/>
+      </g>
+      <circle class="b-clapper" cx="100" cy="158" r="7"></circle>
+
+      <!-- 88 badge fading -->
+      <circle class="b-badge" cx="148" cy="52" r="12"></circle>
+      <text class="b-badge-text" x="148" y="52">88</text>
+    </svg>
   </div>
-  <div class="scrollcue">SCROLL<i></i></div>
-</section>
 
-<section id="origin" class="reveal">
-  <div class="section-meta">01 — البداية</div>
-  <h2>الفكرة التي كان يمكن أن تصبح منتجاً… ثم أصبحت سؤالاً.</h2>
-  <p class="lead">في البداية كانت الفكرة مألوفة جداً: تطبيق لتتبع العادات والمهام، إشعارات في الوقت المناسب، سلسلة أيام متتالية، نسبة إنجاز، واجهة جميلة، وربما شيء صغير يصفق لك كلما فعلت ما طلبته منك.</p>
-  <p>أستطيع أن أبني ذلك. بل إن بناءه قد يكون ممتعاً. يمكنني أن أضع لك تقويماً، وأن أجعل التطبيق يتذكر عنك ما تريد أن تتذكره، وأن أذكّرك بأن تشرب الماء أو تقرأ أو تتمرن أو تنجز درساً أو تراجع ملفاً. ويمكنني أيضاً أن أجعلك تشعر بأنك تتقدم، لأن الشاشة ستخبرك بذلك كل صباح.</p>
-  <p>لكن أثناء التفكير في المنتج، ظهرت مشكلة لم تكن تقنية. <strong>ماذا لو كان التطبيق ناجحاً في جعل الإنسان يعتمد عليه، لكنه لم ينجح في جعله يفهم نفسه؟</strong></p>
-  <blockquote>لماذا أحتاج إلى وسيط بيني وبين شيء أعرف، في الأصل، أنني أريد فعله؟</blockquote>
-  <p>من هنا تغيّرت طبيعة المشروع. لم أعد أريد أن أصنع شيئاً يطالبك بالعودة إليه. أردت شيئاً يحدث العكس: <strong>شيئاً تقرؤه، ثم تستطيع أن تغلقه وتذهب لتعيش.</strong></p>
-</section>
-
-<section id="notifications" class="reveal">
-  <div class="section-meta">02 — الإشعار</div>
-  <h2>أنت لا تحتاج إلى Notifications لكي تعرف أنك حي.</h2>
-  <p>هناك فرق بين أن تساعدك أداة على تذكّر شيء فعلاً خارج قدرتك على التذكر، وبين أن تتحول الأداة نفسها إلى صوت داخلي تستعيره منها كل يوم.</p>
-  <div class="grid">
-    <article class="card"><b>التذكير</b><p>يحل مشكلة نسيان معلومة أو موعد أو التزام محدد. وهذا استخدام مشروع ومفيد للأدوات.</p></article>
-    <article class="card"><b>الاعتماد</b><p>يبدأ عندما تشعر أنك لا تستطيع الحركة إلا إذا قالت لك الشاشة: افعل الآن.</p></article>
-    <article class="card"><b>القياس</b><p>قد يساعدك على رؤية نمط واقعي، لكنه لا يخلق المعنى الذي يدفعك إلى الاستمرار.</p></article>
-    <article class="card"><b>الإرادة</b><p>لا يمكن اختزالها في شريط تقدم أو رقم. أحياناً تبدأ الخطوة قبل أن تستطيع وصف سببها.</p></article>
+  <!-- EPISODE ROAD -->
+  <div class="episode-road" aria-label="طريق حلقات why 88">
+    <svg viewBox="0 0 680 86" preserveAspectRatio="none" aria-hidden="true">
+      <path class="road-base" d="M55 43 C170 8 240 78 340 43 S510 8 640 43"></path>
+      <path class="road-flow" d="M55 43 C170 8 240 78 340 43 S510 8 640 43"></path>
+    </svg>
+    <span class="episode-node n1 current">01</span>
+    <span class="episode-node n2 future">02</span>
+    <span class="episode-node n3 future">03</span>
+    <span class="episode-node n4 future">∞</span>
+    <span class="episode-road-label">حلقات في الطريق · ليست قائمة مهام</span>
   </div>
-  <p>لهذا لا أقول إن تطبيقات التذكير سيئة. هذا سيكون تبسيطاً غير عادل. <strong>الأداة الجيدة تخدم الإنسان عندما يحتاجها؛ المشكلة تبدأ عندما يصبح الإنسان خادماً للأداة.</strong></p>
-  <div class="callout">
-    <div class="tag">THE REAL QUESTION</div>
-    <p>إذا كان التطبيق اختفى غداً، هل ستعرف ماذا تريد أن تفعل؟</p>
-    <p class="quote-small">إن كانت الإجابة نعم، فالأداة كانت وسيلة. وإن كانت الإجابة لا، فربما حان الوقت لنسأل عن الشيء الذي كنا نستعيره منها.</p>
+
+  <div class="eyebrow">why 88 · v1 · سلسلة تعبيرية</div>
+
+  <h1 class="title" id="heroTitle" aria-label="لا تحتاج إلى تطبيق ليخبرك أنك لا تزال حياً">
+    <span class="word">لا</span>
+    <span class="word">تحتاج</span>
+    <span class="word">إلى</span>
+    <span class="word">تطبيق</span>
+    <br>
+    <span class="word">ليخبرك</span>
+    <span class="word">أنك</span>
+    <span class="word">لا</span>
+    <span class="word">تزال</span>
+    <span class="word">حياً.</span>
+  </h1>
+
+  <p class="subtitle">
+    حلقة عن تطبيق كنت سأبنيه، ثم توقفت وسألت نفسي سؤالاً واحداً:
+    لماذا يحتاج إليّ أصلاً؟
+    <span class="series-tag">ep. 01</span>
+  </p>
+
+  <div class="hero-text">
+    <p>
+      هذه ليست حلقة ضد التطبيقات. إنها ضد الوسيط الذي لا يضيف شيئاً —
+      ضد التطبيق الذي يبيعك ما تملكه أصلاً.
+    </p>
+    <p>
+      اقرأ، ثم أغلق الصفحة، ثم اذهب لتعيش. هذا كل ما أطلبه منك.
+    </p>
   </div>
-</section>
 
-<section id="habits" class="reveal">
-  <div class="section-meta">03 — العادات</div>
-  <h2>أنا لا أحب كلمة «عادة» كما تُباع لنا.</h2>
-  <p>قد يسمع شخص حديث العادات فيفكر فوراً في عالم التنمية البشرية: استيقظ في الخامسة، لا تفوّت يوماً، ابنِ سلسلة من مئة يوم، كن نسخة أفضل من نفسك، ثم صوّر النتيجة. لا أرى ضرورة لأن تكون الحياة بهذا الشكل.</p>
-  <p>يمكنك أن تسميها عادات إن أحببت. أنا أميل إلى كلمة أبسط: <strong>مهام خططت لها لأنك رأيت فيها معنى.</strong> هذه الصياغة تذكّرك بأنك لست آلة تكرر حركة إلى الأبد.</p>
-  <p>ولا أريد أن أكذب عليك بجملة من نوع «خصص دقيقة واحدة يومياً وستتغير حياتك». أحياناً الدقيقة مفيدة، وأحياناً لا تكفي، وأحياناً تحتاج إلى ساعة، وأحياناً تحتاج إلى النوم وترك كل شيء ليوم آخر.</p>
-  <p>ما أراه أكثر أهمية هو ترتيب الداخل قبل ازدحام الخارج: اعرف ماذا تريد الآن، اعترف بما لم تستطع فعله، افصل بين ما هو تحت سيطرتك وما ليس كذلك، ثم اختر الخطوة التالية التي تستطيع تحمل نتائجها.</p>
-  <div class="numbered">
-    <div class="step"><div class="num">01</div><div><h3>سمِّ المهمة كما هي.</h3><p>لا تقل «سأصبح شخصاً منضبطاً». قل: «سأرسل هذا الملف»، «سأراجع هذا الفصل»، «سأزرع هذه النبتة».</p></div></div>
-    <div class="step"><div class="num">02</div><div><h3>حدّد سببها، لا شعارها.</h3><p>الهدف الذي تفهمه يساعدك عندما تختفي الحماسة. أما الشعار فيبدو جميلاً حتى اللحظة التي تحتاج فيها إلى اتخاذ قرار حقيقي.</p></div></div>
-    <div class="step"><div class="num">03</div><div><h3>اترك مساحة للفشل.</h3><p>إذا كان النظام ينهار بالكامل لأنك أخطأت يوماً واحداً، فالنظام هش، لا أنت.</p></div></div>
-    <div class="step"><div class="num">04</div><div><h3>ارجع عندما تستطيع.</h3><p>العودة ليست خيانة للسلسلة. هي جزء من الحياة. بعض الفرص الثانية أقل جودة، وبعضها أفضل مما توقعت.</p></div></div>
+  <div class="cta-row">
+    <a href="#origin" class="btn">اقرأ القصة</a>
+    <a href="#mantra" class="btn ghost">الجملة الأولى</a>
   </div>
-</section>
 
-<section class="reveal">
-  <div class="section-meta">04 — الفرصة</div>
-  <h2>هناك دائماً فرصة أخرى… لكن ليس بالضرورة بالشكل نفسه.</h2>
-  <p>قد تفشل في امتحان، تتأخر عن مشروع، تتوقف عن الرياضة، تترك كتاباً، تتغير ظروفك، تخسر مالاً، أو تكتشف أن الهدف الذي كنت تلاحقه لم يعد هدفك أصلاً.</p>
-  <p>أقول لك إن هناك فرصة ثانية وثالثة وما بعدها، لكن لا أريد أن أحول هذه الجملة إلى وعد رومانسي. <strong>الفرصة التالية قد تأتي بشروط مختلفة.</strong> قد يكون وقتك أقل، أو جسدك مختلفاً، أو مسؤولياتك أكبر، أو معرفتك أوسع.</p>
-  <p>وهذا سبب آخر لعدم عبادة الماضي. أنت لا تملك إعادة المشهد نفسه؛ تملك فقط القرار الذي ستتخذه من موقعك الحالي.</p>
-  <blockquote>لا تحاول استعادة الأمس كما كان. حاول أن تفهم ما الذي تستطيع فعله اليوم.</blockquote>
-</section>
-
-<section id="paradox" class="reveal">
-  <div class="section-meta">05 — الكمال</div>
-  <h2>مفارقة الـ 100%: ربما يكون النقص جزءاً من اكتمالك.</h2>
-  <p>تخيل شريط تحميل لشخصيتك. وصلت إلى 99%. ما الذي ينقصك؟ ربما تلك النسبة الصغيرة التي تسميها «نقصاً». لكن لو أضفتها، ماذا يحدث؟ لقد وصلت إلى الكمال، وبمجرد أن يصبح الكمال حقيقة، لم يعد هناك شيء تنقصه.</p>
-  <p>المفارقة أن مفهوم الكمال نفسه يحتاج إلى نقص لكي يكون له معنى. والأهم من ذلك أن معيارك للكمال ليس ثابتاً. ما تراه كاملاً اليوم قد يبدو لك سطحياً بعد سنوات، وما تراه فشلاً اليوم قد تكتشف لاحقاً أنه غيّر اتجاه حياتك.</p>
-  <div class="loaderbox">
-    <div class="loader-top"><span>CHARACTER_BUILD</span><span id="pct">0%</span></div>
-    <div class="loader"><div class="fill" id="fill"></div></div>
-    <p class="loader-note">لن يصل إلى 100%. ليس لأن النظام معطّل، بل لأن الإنسان ليس ملفاً نهائياً.</p>
-  </div>
-  <p>هذا لا يعني أن تتوقف عن التحسن. بالعكس. معناه أن <strong>التحسن شيء، واحتقار نفسك لأنها لم تصل إلى الصورة المثالية شيء آخر.</strong> الأول قد يبنيك. الثاني قد يستهلكك دون أن يضيف شيئاً.</p>
-</section>
-
-<section id="fall" class="reveal">
-  <div class="section-meta">06 — السقوط</div>
-  <h2>ستسقط. وهذه ليست نبوءة سوداء.</h2>
-  <p>كل إنسان يخطئ. بعض الأخطاء صغيرة، وبعضها يغيّر سنوات من الحياة. أنت لا تتحكم في حجم كل نتيجة، ولا تستطيع أن تتفاوض مع كل عاقبة بعد وقوعها.</p>
-  <p>ما تستطيع فعله هو تحمّل مسؤولية قرارك، ثم العمل داخل الواقع الذي نتج عنه. الكلمات لا تلغي النتائج. الاعتذار لا يمحو الزمن. والندم وحده لا يعيد الشيء إلى مكانه.</p>
-  <div class="fallbox">
-    <div class="fall-symbol" aria-hidden="true"></div>
-    <button class="fallbutton" id="fallBtn">وماذا أفعل عندما أسقط؟</button>
-    <div class="fallanswer" id="fallAnswer">
-      <p>توقف عن إضافة ضرر جديد إلى الضرر القديم. خذ ما تحتاجه من راحة، افهم ما حدث، أصلح ما يمكن إصلاحه، ثم خذ الخطوة التالية. ليس مطلوباً منك أن تنتصر في اليوم نفسه الذي سقطت فيه.</p>
-    </div>
-  </div>
-  <p>وقد يكون هذا هو الجزء الذي أريدك أن تتذكره أكثر من غيره: <strong>نجاحك ليس قصة جهد فقط.</strong> خلف أي نتيجة توجد احتمالات وظروف وأشخاص وتوقيت ومعلومات وقرارات وأخطاء لا يمكن عدّها. حتى أخطاؤك قد تكون من الأسباب التي قادتك إلى نتيجة لم تكن تراها عندما بدأت.</p>
-  <p>لذلك لا تستخدم نجاح شخص آخر كدليل على أن طريقه قابل للنسخ. تستطيع أن تتعلم من قراراته، لكنك لا تستطيع إعادة الكون الذي أحاط بتلك القرارات.</p>
-</section>
-
-<section class="reveal">
-  <div class="section-meta">07 — المدخن كمثال</div>
-  <h2>لا أريد أن أجعلك مثالاً أخلاقياً. أريدك أن ترى الآلية.</h2>
-  <p>تخيل شخصاً يدخن. قد يصل به التكرار إلى الشعور بأن التدخين «جزء منه». لكن جرّب سؤالاً بسيطاً: لو كان جزءاً بيولوجياً لا يمكن أن ينفصل عنه، فلماذا لم يولد وفي يده سيجارة؟</p>
-  <p>المثال ليس لإصدار حكم على المدخنين، ولا للدخول في جدل صحي هنا. الفكرة أوسع: <strong>كثير من الأشياء التي تتكرر حتى تبدو جزءاً من الهوية بدأت في وقت ما كشيء خارجها.</strong></p>
-  <p>وفي المقابل، لا يعني ذلك أن التخلص منها سهل. التكرار يصنع ارتباطات، والبيئة تؤثر، والجسد والعقل والظروف الاجتماعية كلها تدخل في الصورة. لذلك لا أؤمن بعبارة «أنت فقط لا تريد بما يكفي» كتشخيص محترم لكل إنسان.</p>
-</section>
-
-<section class="reveal">
-  <div class="section-meta">08 — الحياة</div>
-  <h2>لا تدين للكورس بأن تنهيه. ولا للجسد بأن تغيّره بسرعة.</h2>
-  <p>قد تشعر أنك مدين لقائمة طويلة: دورة يجب إنهاؤها، جسم يجب تغييره، مشكلة يجب حلها، مشروع يجب إطلاقه، شخص يجب إقناعه، مستقبل يجب تأمينه.</p>
-  <p>لكن هناك ديناً أسبق من كل ذلك: <strong>أن تعيش حياة تستطيع، عندما تنظر إليها لاحقاً، أن تقول عنها: كانت أيامي حقيقية.</strong></p>
-  <p>لا أقصد حياة مثالية. أقصد حياة فيها تعب وراحة، عمل وصمت، نجاح وفشل، صحبة ووحدة، معرفة وجهل. أنت تتناقص مع الزمن، نعم، لكنك لست ساعة تعمل فقط. وكل كائن حولك يذكّرك بشيء بسيط: الطير يحاول أن يكون طيراً، والقط يعيش يومه كقط، والنبتة لا تقضي حياتها وهي تحاول أن تكون نبتة أخرى.</p>
-  <p>لا يعني هذا البلادة أو ترك الطموح. يعني أن <strong>الطموح يجب ألا يمحو صاحبه.</strong></p>
-</section>
-
-<section id="garden" class="reveal">
-  <div class="section-meta">09 — الزراعة</div>
-  <h2>ولهذا أقول لك: ازرع.</h2>
-  <p class="lead">نعم، ازرع شيئاً حقيقياً. ليس كـ«هاك» إنتاجية، ولا كتحدٍّ لمدة ثلاثين يوماً. ازرع لأن النبتة ستعلّمك شيئاً لا تستطيع لوحة التحكم أن تشرحه جيداً.</p>
-  <div class="plant-stage">
-    <div class="plant" id="plant">
-      <div class="flower">✦</div><div class="leaf a"></div><div class="leaf b"></div><div class="leaf c"></div>
-      <div class="stem"></div><div class="soil"></div><div class="pot"></div>
-    </div>
-  </div>
-  <p>ستسقيها فتتحسن، أو تنسى فتتأثر. قد تعطيها ما يكفي من الماء فتؤذيها، وقد تضعها في مكان لا يناسبها، وقد يكون الضوء أقوى أو أضعف مما توقعت. ثم ستكتشف أن صحة النبتة ليست نتيجة «قوة إرادتها» وحدها.</p>
-  <p>هناك عوامل خارجية كثيرة. وهذا درس مهم للإنسان أيضاً: <strong>البيئة ليست عذراً دائماً، لكنها عامل حقيقي.</strong> فهمها يجعلك أكثر واقعية في التخطيط وأقل قسوة في التشخيص.</p>
-  <div class="practical">
-    <h3>تجربة صغيرة، بلا تطبيق.</h3>
-    <ul>
-      <li>اختر نبتة تستطيع العناية بها فعلاً، لا النبتة التي تبدو أجمل في الصورة.</li>
-      <li>راقبها يومياً دون تحويل المراقبة إلى مسابقة.</li>
-      <li>لاحظ ما الذي يتغير بسبب أفعالك وما الذي يتغير بسبب البيئة.</li>
-      <li>عندما تهملها، لا تهرب من النتيجة؛ أصلح ما تستطيع وتعلّم.</li>
-      <li>وعندما تنجح، لا تفترض أن كل الظروف ستتكرر بالطريقة نفسها.</li>
-    </ul>
-  </div>
-  <p style="margin-top:30px">إذا خرجت من هذه التجربة بفكرة واحدة، فلتكن: <strong>التسليم ليس استسلاماً.</strong> أن تقبل أن هناك أشياء لا تتحكم فيها لا يعني أنك لا تفعل شيئاً. يعني أنك توجه طاقتك إلى الجزء الذي يقع فعلاً في يدك.</p>
-</section>
-
-<section class="reveal">
-  <div class="section-meta">10 — الإنسان</div>
-  <h2>أنت لست الكورس. ولست العادة. ولست النتيجة.</h2>
-  <p>جرّب شيئاً بسيطاً في مكان لا يعرفك فيه أحد. عامل شخصاً بلطف من غير أن يكون بينكما هدف. تحدث مع إنسان لا يهمه عدد إنجازاتك. اعتنِ بحيوان، أو نبتة، أو أي كائن حي تستطيع أن تتفاعل معه بمسؤولية.</p>
-  <p>ربما ستكتشف أن جزءاً من صورتك عن نفسك كان مبنياً على ما تنتجه، لا على من تكون. الإنتاج مهم. المال مهم. المعرفة مهمة. الصحة مهمة. لكن الإنسان لا يتحول إلى ملف أعمال بمجرد أن يدخل في مرحلة من الطموح.</p>
-  <p>وأيضاً لا تجعل «كن نفسك» شعاراً فارغاً. الإنسان يتغير. يتعلم. يقلّد أحياناً. يخطئ. يعيد تعريف نفسه. المهم أن تعرف الفرق بين أن تتطور بإرادتك وبين أن تعيش طوال الوقت لتلبي صورة اخترعها لك الآخرون.</p>
-</section>
-
-<section class="reveal">
-  <div class="section-meta">11 — الماضي</div>
-  <h2>الماضي لن يختفي. لذلك لا أعدك بأن تنساه.</h2>
-  <p>لن أكذب عليك وأقول: «انسَ الماضي». بعض الأشياء لا تُنسى. وبعضها لا ينبغي أن يُمحى من الذاكرة، لأنها جزء من فهمك لما حدث.</p>
-  <p>المطلوب ليس أن تمحو الصفحة، بل أن تتعلم قراءتها دون أن تسلمها قلمك كل يوم. ماضيك قد يشرح شيئاً عنك، لكنه ليس ملزماً بأن يكتب كل فصولك القادمة.</p>
-  <blockquote>لا تحتاج إلى صفحة بيضاء. تحتاج إلى صفحة تستطيع أن تكتب عليها رغم ما سبق.</blockquote>
-</section>
-
-<section id="end" class="final reveal">
-  <div class="section-meta" style="justify-content:center">12 — KERNEL</div>
-  <h2>هذا هو الـ Kernel الذي أستطيع أن أعطيك إياه.</h2>
-  <p>لا أملك لك حلاً. ولا أريد أن أبيعك واحداً. كل ما أستطيع فعله هو أن أضع أمامك نظاماً بسيطاً من الأفكار: نظّم ما في رأسك، تقبّل أنك ناقص، تحمّل نتائج قراراتك، تحرك نحو هدف مؤقت لا يشترط أن يصبح غايتك الأخيرة، اسقط عندما تسقط، ارتح عندما تحتاج، ثم قم من جديد.</p>
-  <p>ولا تجعل الخوف هو الوقود الوحيد. لا تجعل الحاجة وحدها هي التي تحركك. لا تجعل الساعة خصمك. <strong>اجعل لديك سبباً تستطيع أن تسمعه من داخلك حتى عندما تصمت الشاشة.</strong></p>
-  <p>قد تصل إلى المكان الذي أردته، وقد تصل إلى مكان آخر أفضل لك، وقد لا تعرف لماذا إلا بعد سنوات. لا أستطيع أن أعدك بأن النتيجة ستكون جميلة دائماً. أستطيع فقط أن أقول إن محاولة فهمك لنفسك، وتحمل مسؤوليتك، والعيش مع نقصك، أكثر صدقاً من مطاردة نسخة مثالية لا وجود لها.</p>
-  <p>إذا قرأت كل هذا، فربما تكون قد فهمت المفارقة: <strong>التطبيق الذي كنت سأبنيه نجح عندما لم يعد يحتاج إلى أن يُبنى.</strong></p>
-  <div class="signature">WHY 88 <span>·</span> CASE 01 <span>·</span> HUMAN BEFORE PRODUCT</div>
+  <p class="hero-note">NO TRACKING · <span class="hl">NO ACCOUNT · JUST A TEXT</span></p>
 </section>
 </div>
+
+<!-- ============ MANTRA ============ -->
+<div class="wrap">
+<section class="mantra reveal" id="mantra" style="border-top:none; padding:80px 0;">
+  <span class="mantra-line">الإشعار لا يجعلك حياً.</span>
+  <span class="mantra-line">الحركة تفعل.</span>
+  <p class="mantra-sub">جملة واحدة تختصر الحلقة. الباقي تفصيل.</p>
+</section>
+</div>
+
+<!-- ============ 01 — ORIGIN ============ -->
+<div class="wrap">
+<section id="origin" class="reveal">
+  <div class="section-label">01 — الأصل</div>
+
+  <div class="illus-block">
+    <svg class="illus" viewBox="0 0 100 100" aria-hidden="true">
+      <circle class="il-ring" cx="50" cy="50" r="30"></circle>
+      <circle class="il-ring r2" cx="50" cy="50" r="30"></circle>
+      <circle class="il-ring r3" cx="50" cy="50" r="30"></circle>
+      <path class="il-bell" d="M50 22 C38 22 30 34 30 47 L30 60 L22 70 L78 70 L70 60 L70 47 C70 34 62 22 50 22 Z"></path>
+      <circle class="il-clapper" cx="50" cy="78" r="4"></circle>
+    </svg>
+  </div>
+
+  <h2>كنت سأبني تطبيقاً لتتبع العادات.</h2>
+
+  <p class="lead">
+    كانت الفكرة مألوفة جداً: جدول، إشعارات في الوقت المناسب، سلسلة
+    أيام متتالية، شارات، ألوان تحفّز الإنجاز، لوحة تحكم لطيفة تريك
+    تقدّمك اليومي. كل شيء كان جاهزاً في ذهني. الواجهة، الألوان، حتى
+    الجملة التي ستظهر للمستخدم عند أول فتح.
+  </p>
+
+  <p>
+    جلست أكتب الفكرة، أرسم الشاشات، أفكر في أفضل طريقة لتحفيز
+    المستخدم كي يعود كل يوم. ثم توقف قلمي في منتصف السطر، وسألت
+    نفسي سؤالاً واحداً لم يكن في أي خطة عمل.
+  </p>
+
+  <blockquote>لماذا أحتاج إلى وسيط بينك وبين شيء تعرف في أعماقك أنك تريد فعله؟</blockquote>
+
+  <p>
+    لماذا أحتاج إلى إشعار ليخبرك أنك حي؟ لماذا أحتاج إلى سلسلة أيام
+    حتى تتذكر أنك موجود؟ لماذا أحتاج إلى موقع كامل ليقول لك ما
+    تعرفه أصلاً، في داخلك، منذ زمن؟
+  </p>
+
+  <p>
+    في تلك اللحظة، أدركت أن المشروع لم يكن عن التطبيق. كان عن
+    سؤال أكبر: <strong>ما الذي يجعل الإنسان يتحرك فعلاً؟</strong>
+    الإشعار؟ الشارة؟ أم شيء أعمق لا تعرفه الشاشات؟
+  </p>
+
+  <p>
+    من هنا تغيّر المشروع بالكامل. لم أعد أريد أن أبني شيئاً يطالبك
+    بالعودة إليه كل يوم. أردت شيئاً يحدث العكس:
+    <strong>شيئاً تقرؤه، ثم تغلقه، ثم تذهب لتعيش.</strong>
+  </p>
+
+  <p>
+    هذا الموقع ليس الفكرة. الفكرة ستُزرع فيك وأنت تقرأ هذه الكلمات،
+    بصمت، وحدك. الموقع ليس إلا الفلاح الذي يرمي البذرة — والبذرة
+    تنمو أو لا تنمو، حسب ما تفعله أنت بعد أن تُغلق التبويب.
+  </p>
+
+  <a href="#notify" class="go-live"><span class="arrow">←</span> اذهب لتعيش</a>
+</section>
+</div>
+
+<!-- ============ 02 — NOTIFICATIONS ============ -->
+<div class="wrap">
+<section id="notify" class="reveal">
+  <div class="section-label">02 — الإشعار</div>
+
+  <div class="illus-block">
+    <svg class="illus" viewBox="0 0 100 100" aria-hidden="true">
+      <line class="il-chain-line" x1="18" y1="50" x2="82" y2="50"></line>
+      <circle class="il-chain-dot d1" cx="22" cy="50" r="4"></circle>
+      <circle class="il-chain-dot d2" cx="42" cy="50" r="4"></circle>
+      <circle class="il-chain-dot d3" cx="62" cy="50" r="4"></circle>
+      <circle class="il-chain-dot d4" cx="80" cy="50" r="4"></circle>
+    </svg>
+  </div>
+
+  <h2>لا تحتاج إلى Notifications لكي تعرف أنك حي.</h2>
+
+  <p>
+    هناك فرق بين أن تساعدك أداة على تذكّر شيء فعلاً خارج قدرتك على
+    التذكر، وبين أن تتحول الأداة نفسها إلى صوت داخلي تستعيره منها
+    كل يوم.
+  </p>
+
+  <div class="cards" id="notifyCards">
+    <div class="card">
+      <p>التذكير الذي يحل مشكلة نسيان موعد، ليس هو نفسه التذكير الذي يُخبرك أن تصبح شخصاً آخر.</p>
+    </div>
+    <div class="card">
+      <p>القياس الذي يخدم هدفاً محدداً، ليس هو نفسه القياس الذي يحوّل يومك كله إلى امتحان.</p>
+    </div>
+    <div class="card">
+      <p>الاعتماد يبدأ في اللحظة التي لا تستطيع فيها الحركة إلا إذا قالت لك الشاشة: افعل الآن.</p>
+    </div>
+    <div class="card">
+      <p>الإرادة لا تُختصر في شريط تقدم. أحياناً تبدأ الخطوة قبل أن تستطيع وصف سببها بجملة واضحة.</p>
+    </div>
+  </div>
+
+  <p>
+    لهذا لا أقول إن تطبيقات التذكير سيئة. هذا تبسيط غير عادل.
+    <strong>الأداة الجيدة تخدم الإنسان عندما يحتاجها؛ المشكلة تبدأ
+    عندما يصبح الإنسان خادماً للأداة.</strong>
+  </p>
+
+  <div class="callout">IF THE APP DISAPPEARED TOMORROW — WOULD YOU STILL KNOW?</div>
+
+  <p>
+    السؤال ليس: هل التطبيق مفيد أم لا. السؤال هو: هل أنت تعرف ما
+    تريد فعله، حتى لو أُغلق التطبيق غداً؟ إذا كانت الإجابة نعم،
+    فالأداة كانت وسيلة. وإن كانت الإجابة لا، فربما حان الوقت
+    لنسأل عن الشيء الذي كنت تستعيره منها.
+  </p>
+
+  <a href="#tasks" class="go-live"><span class="arrow">←</span> اذهب لتعيش</a>
+</section>
+</div>
+
+<!-- ============ 03 — TASKS ============ -->
+<div class="wrap">
+<section id="tasks" class="reveal">
+  <div class="section-label">03 — المهام</div>
+
+  <div class="illus-block">
+    <svg class="illus" viewBox="0 0 100 100" aria-hidden="true">
+      <rect class="il-box" x="18" y="26" width="12" height="12" rx="2"></rect>
+      <path class="il-check c1" d="M21 32 L24 35 L29 28"></path>
+      <line class="il-line-item" x1="40" y1="32" x2="82" y2="32"></line>
+
+      <rect class="il-box" x="18" y="46" width="12" height="12" rx="2"></rect>
+      <path class="il-check c2" d="M21 52 L24 55 L29 48"></path>
+      <line class="il-line-item" x1="40" y1="52" x2="82" y2="52"></line>
+
+      <rect class="il-box" x="18" y="66" width="12" height="12" rx="2"></rect>
+      <path class="il-check c3" d="M21 72 L24 75 L29 68"></path>
+      <line class="il-line-item" x1="40" y1="72" x2="82" y2="72"></line>
+    </svg>
+  </div>
+
+  <h2>أنا لا أحب كلمة «عادة» كما تُباع لنا.</h2>
+
+  <p>
+    قد يسمع شخص حديث العهد بالعادات فيفكر فوراً في عالم التنمية
+    البشرية: استيقظ في الخامسة، لا تفوّت يوماً، ابنِ سلسلة من مئة
+    يوم، كن نسخة أفضل من نفسك، ثم صوّر النتيجة. لا أرى ضرورة لأن
+    تكون الحياة بهذا الشكل.
+  </p>
+
+  <p>
+    يمكنك أن تسميها عادات إن أحببت. أنا أميل إلى كلمة أبسط:
+    <strong>مهام خططت لها لأنك رأيت فيها معنى.</strong> هذه الصياغة
+    تذكّرك بأنك لست آلة تكرر حركة إلى الأبد.
+  </p>
+
+  <p>
+    ولا أريد أن أكذب عليك بجملة من نوع «خصص دقيقة واحدة يومياً
+    وستتغير حياتك». أحياناً الدقيقة مفيدة، وأحياناً لا تكفي،
+    وأحياناً تحتاج إلى ساعة، وأحياناً تحتاج إلى النوم وترك كل شيء
+    ليوم آخر.
+  </p>
+
+  <p>
+    ما أراه أكثر أهمية هو ترتيب الداخل قبل ازدحام الخارج: اعرف
+    ماذا تريد الآن، اعترف بما لم تستطع فعله، افصل بين ما هو تحت
+    سيطرتك وما ليس كذلك، ثم اختر الخطوة التالية التي تستطيع تحمل
+    نتائجها.
+  </p>
+
+  <a href="#chance" class="go-live"><span class="arrow">←</span> اذهب لتعيش</a>
+</section>
+</div>
+
+<!-- ============ 04 — SECOND CHANCE ============ -->
+<div class="wrap">
+<section id="chance" class="reveal">
+  <div class="section-label">04 — الفرصة</div>
+
+  <div class="illus-block">
+    <svg class="illus" viewBox="0 0 100 100" aria-hidden="true">
+      <path class="il-arc-a" d="M50 20 A30 30 0 1 0 80 50"></path>
+      <path class="il-arc-b" d="M50 80 A30 30 0 1 0 20 50"></path>
+      <polygon class="il-arrow-head h1" points="80,50 73,44 73,56"></polygon>
+      <polygon class="il-arrow-head h2" points="20,50 27,44 27,56"></polygon>
+    </svg>
+  </div>
+
+  <h2>هناك دائماً فرصة أخرى… لكن ليس بالضرورة بالشكل نفسه.</h2>
+
+  <p>
+    قد تفشل في امتحان، تتأخر عن مشروع، تتوقف عن الرياضة، تترك
+    كتاباً، تتغير ظروفك، تخسر مالاً، أو تكتشف أن الهدف الذي كنت
+    تلاحقه لم يعد هدفك أصلاً.
+  </p>
+
+  <p>
+    أقول لك إن هناك فرصة ثانية وثالثة وما بعدها، لكن لا أريد أن
+    أحوّل هذه الجملة إلى وعد رومانسي.
+    <strong>الفرصة التالية قد تأتي بشروط مختلفة.</strong> قد يكون
+    وقتك أقل، أو جسدك مختلفاً، أو مسؤولياتك أكبر، أو معرفتك أوسع.
+  </p>
+
+  <p>
+    وهذا سبب آخر لعدم عبادة الماضي. أنت لا تملك إعادة المشهد نفسه؛
+    تملك فقط القرار الذي ستتخذه من موقعك الحالي. الفرصة ليست نسخة
+    من الطريق القديم، بل طريق جديد بشروط جديدة.
+  </p>
+
+  <blockquote>لا تحاول استعادة الأمس كما كان. حاول أن تفهم ما الذي تستطيع فعله اليوم.</blockquote>
+
+  <p>
+    من يفهم هذا يستطيع أن يتحرك. من ينتظر استعادة الماضي سيبقى
+    واقفاً في مكانه ينتظر شيئاً لن يعود.
+  </p>
+
+  <a href="#perfect" class="go-live"><span class="arrow">←</span> اذهب لتعيش</a>
+</section>
+</div>
+
+<!-- ============ 05 — PERFECTION ============ -->
+<div class="wrap">
+<section id="perfect" class="reveal">
+  <div class="section-label">05 — الكمال</div>
+
+  <div class="illus-block">
+    <svg class="illus" viewBox="0 0 100 100" aria-hidden="true">
+      <circle class="il-perf-bg" cx="50" cy="50" r="35"></circle>
+      <circle class="il-perf-arc" cx="50" cy="50" r="35"></circle>
+      <text class="il-perf-pct" x="50" y="50">99%</text>
+    </svg>
+  </div>
+
+  <h2>مفارقة الـ 100%: ربما يكون النقص جزءاً من اكتمالك.</h2>
+
+  <p>
+    تخيل شريط تحميل لشخصيتك. وصلت إلى 99%. ما الذي ينقصك؟ ربما
+    تلك النسبة الصغيرة التي تسميها «نقصاً». لكن لو أضفتها، ماذا
+    يحدث؟ لقد وصلت إلى الكمال، وبمجرد أن يصبح الكمال حقيقة، لم
+    يعد هناك شيء تنقصه.
+  </p>
+
+  <p>
+    المفارقة أن مفهوم الكمال نفسه يحتاج إلى نقص لكي يكون له معنى.
+    والأهم من ذلك أن معيارك للكمال ليس ثابتاً. ما تراه كاملاً
+    اليوم قد يبدو لك سطحياً بعد سنوات، وما تراه فشلاً اليوم قد
+    تكتشف لاحقاً أنه غيّر اتجاه حياتك.
+  </p>
+
+  <div class="loader-wrap">
+    <div class="loader" id="loader" aria-hidden="true">
+      <div class="loader-fill" id="loaderFill"></div>
+    </div>
+    <div class="loader-meta">
+      <span>CHARACTER_BUILD</span>
+      <span id="loaderPct">0%</span>
+    </div>
+    <p class="loader-note" id="loaderNote">
+      لن يصل إلى 100%. ليس لأن النظام معطّل،<br>
+      بل لأن الإنسان ليس ملفاً نهائياً.
+    </p>
+  </div>
+
+  <p>
+    هذا لا يعني أن تتوقف عن التحسن. بالعكس. معناه أن
+    <strong>التحسن شيء، واحتقار نفسك لأنها لم تصل إلى الصورة
+    المثالية شيء آخر.</strong> الأول قد يبنيك. الثاني قد يستهلكك
+    دون أن يضيف شيئاً.
+  </p>
+
+  <p>
+    من نعم الله عليك أنك لا ترى وجهك كل يوم. لو رأيته باستمرار
+    لظننته عادياً حتى يصبح نقطة ضعف. المقياس الذي تدير به نفسك
+    مقياس متقلب، ولا عيب في ذلك. العيب أن تأخذه كحكم نهائي على
+    قيمتك.
+  </p>
+
+  <a href="#fall" class="go-live"><span class="arrow">←</span> اذهب لتعيش</a>
+</section>
+</div>
+
+<!-- ============ 06 — FALL ============ -->
+<div class="wrap">
+<section id="fall" class="reveal">
+  <div class="section-label">06 — السقوط</div>
+
+  <div class="illus-block">
+    <svg class="illus" viewBox="0 0 100 100" aria-hidden="true">
+      <path class="il-heart-line" d="M8 50 L22 50 L28 38 L34 62 L40 28 L48 72 L54 44 L60 56 L66 50 L92 50"></path>
+      <circle class="il-heart-dot" cx="50" cy="50" r="2"></circle>
+    </svg>
+  </div>
+
+  <h2>ستسقط. وهذه ليست نبوءة سوداء.</h2>
+
+  <p>
+    كل إنسان يخطئ. بعض الأخطاء صغيرة، وبعضها يغيّر سنوات من الحياة.
+    أنت لا تتحكم في حجم كل نتيجة، ولا تستطيع أن تتفاوض مع كل عاقبة
+    بعد وقوعها.
+  </p>
+
+  <p>
+    ما تستطيع فعله هو تحمّل مسؤولية قرارك، ثم العمل داخل الواقع
+    الذي نتج عنه. الكلمات لا تلغي النتائج. الاعتذار لا يمحو
+    الزمن. والندم وحده لا يعيد الشيء إلى مكانه.
+  </p>
+
+  <div class="pulse-visual" aria-hidden="true">
+    <svg class="pulse-track" viewBox="0 0 340 60">
+      <path class="pulse-line" d="M0 30 L60 30 L72 12 L86 48 L100 4 L118 56 L132 22 L146 38 L160 30 L200 30 L212 14 L226 46 L240 6 L258 54 L272 24 L286 36 L300 30 L340 30"></path>
+      <circle class="pulse-dot" cx="170" cy="30" r="2"></circle>
+    </svg>
+  </div>
+  <p class="fall-caption">تسقط. تقوم. تسقط. تقوم. هكذا تعمل الحياة.</p>
+
+  <div class="fall-btn-wrap">
+    <button class="fall-btn" id="fallBtn">سقطت؟</button>
+    <div class="fall-response" id="fallResponse">
+      هذه هي الجزئية الأهم.<br>
+      السقوط ليس نهاية النظام، بل إشارة أنه يعمل.<br>
+      أنت لا تزال حياً.
+    </div>
+  </div>
+
+  <p style="margin-top:40px;">
+    وقد يكون هذا هو الجزء الذي أريدك أن تتذكره أكثر من غيره:
+    <strong>نجاحك ليس قصة جهد فقط.</strong> خلف أي نتيجة توجد
+    احتمالات وظروف وأشخاص وتوقيت ومعلومات وقرارات وأخطاء لا
+    يمكن عدّها. حتى أخطاؤك قد تكون من الأسباب التي قادتك إلى
+    نتيجة لم تكن تراها عندما بدأت.
+  </p>
+
+  <p>
+    لذلك لا تستخدم نجاح شخص آخر كدليل على أن طريقه قابل للنسخ.
+    تستطيع أن تتعلم من قراراته، لكنك لا تستطيع إعادة الكون الذي
+    أحاط بتلك القرارات.
+  </p>
+
+  <p>
+    وحين تحبط، لا تفسد ما بنيته. اسمح لنفسك بفترة راحة بلا
+    إنجازات ولا مدخلات خارجية. بعدها سترى أنك، مهما كان حالك،
+    فمازال هناك من هو أسوأ منك. وهذه ليست مواساة رخيصة، بل
+    حقيقة تُعيد لك حجمك الحقيقي.
+  </p>
+
+  <a href="#smoker" class="go-live"><span class="arrow">←</span> اذهب لتعيش</a>
+</section>
+</div>
+
+<!-- ============ 07 — SMOKER ============ -->
+<div class="wrap">
+<section id="smoker" class="reveal">
+  <div class="section-label">07 — المدخن كمثال</div>
+
+  <div class="illus-block">
+    <svg class="illus" viewBox="0 0 100 100" aria-hidden="true">
+      <circle class="il-person-head" cx="46" cy="28" r="10"></circle>
+      <path class="il-person-body" d="M34 46 C34 60 34 78 36 88 L56 88 C58 78 58 60 58 46 Z"></path>
+      <path class="il-smoke-path" d="M64 26 C68 20 72 24 74 18"></path>
+      <path class="il-smoke-path s2" d="M68 26 C72 18 78 22 82 14"></path>
+      <path class="il-smoke-path s3" d="M72 28 C78 22 82 26 88 20"></path>
+    </svg>
+  </div>
+
+  <h2>لا أريد أن أجعلك مثالاً أخلاقياً. أريدك أن ترى الآلية.</h2>
+
+  <p>
+    تخيل شخصاً يدخن. قد يصل به التكرار إلى الشعور بأن التدخين
+    «جزء منه». لكن جرّب سؤالاً بسيطاً: لو كان جزءاً بيولوجياً لا
+    يمكن أن ينفصل عنه، فلماذا لم يولد وفي يده سيجارة؟
+  </p>
+
+  <p>
+    المثال ليس لإصدار حكم على المدخنين، ولا للدخول في جدل صحي
+    هنا. الفكرة أوسع:
+    <strong>كثير من الأشياء التي تتكرر حتى تبدو جزءاً من الهوية
+    بدأت في وقت ما كشيء خارجها.</strong>
+  </p>
+
+  <p>
+    وفي المقابل، لا يعني ذلك أن التخلص منها سهل. التكرار يصنع
+    ارتباطات، والبيئة تؤثر، والجسد والعقل والظروف الاجتماعية
+    كلها تدخل في الصورة. لذلك لا أؤمن بعبارة «أنت فقط لا تريد
+    بما يكفي» كتشخيص محترم لكل إنسان.
+  </p>
+
+  <p>
+    الإنسان قادر على العيش بدون أشياء كثيرة بمجرد أن تنعدم
+    الوسيلة التي توفّرها له. هذه ملاحظة بسيطة لكنها عميقة:
+    ليست الإرادة وحدها ما يحرّكك، بل أيضاً ما هو متاح أمامك
+    وما هو غائب عنك.
+  </p>
+
+  <a href="#life" class="go-live"><span class="arrow">←</span> اذهب لتعيش</a>
+</section>
+</div>
+
+<!-- ============ 08 — LIFE ============ -->
+<div class="wrap">
+<section id="life" class="reveal">
+  <div class="section-label">08 — الحياة</div>
+
+  <div class="illus-block">
+    <svg class="illus" viewBox="0 0 100 100" aria-hidden="true">
+      <path class="il-leaf-shape" d="M50 20 C34 36 28 54 32 70 C36 82 44 86 50 86 C56 86 64 82 68 70 C72 54 66 36 50 20 Z"></path>
+      <line class="il-leaf-vein" x1="50" y1="30" x2="50" y2="82"></line>
+      <path class="il-leaf-side-vein" d="M50 42 C44 44 40 50 38 58"></path>
+      <path class="il-leaf-side-vein" d="M50 50 C56 52 60 58 62 66"></path>
+      <path class="il-leaf-side-vein" d="M50 60 C45 62 42 66 40 72"></path>
+    </svg>
+  </div>
+
+  <h2>لا تدين للكورس بأن تنهيه. ولا للجسد بأن تغيّره بسرعة.</h2>
+
+  <p>
+    قد تشعر أنك مدين لقائمة طويلة: دورة يجب إنهاؤها، جسم يجب
+    تغييره، مشكلة يجب حلها، مشروع يجب إطلاقه، شخص يجب إقناعه،
+    مستقبل يجب تأمينه.
+  </p>
+
+  <p>
+    لكن هناك ديناً أسبق من كل ذلك:
+    <strong>أن تعيش حياة تستطيع، عندما تنظر إليها لاحقاً، أن
+    تقول عنها: كانت أيامي حقيقية.</strong>
+  </p>
+
+  <p>
+    لا أقصد حياة مثالية. أقصد حياة فيها تعب وراحة، عمل وصمت،
+    نجاح وفشل، صحبة ووحدة، معرفة وجهل. أنت تتناقص مع الزمن،
+    نعم، لكنك لست ساعة تعمل فقط. وكل كائن حولك يذكّرك بشيء
+    بسيط: الطير يحاول أن يكون طيراً، والقط يعيش يومه كقط،
+    والنبتة لا تقضي حياتها وهي تحاول أن تكون نبتة أخرى.
+  </p>
+
+  <p>
+    لا يعني هذا البلادة أو ترك الطموح. يعني أن
+    <strong>الطموح يجب ألا يمحو صاحبه.</strong> يعني أن الراحة
+    ليست دائماً استرخاءً — قد تكون في تعب مؤقت من أجل غاية،
+    وقد تكون في صمت لا تفكر فيه بشيء.
+  </p>
+
+  <p>
+    وإذا كنت تريد اختباراً صغيراً: اذهب إلى مكان لا يعرفك فيه
+    أحد، وعامل شخصاً بلطف من غير أن يكون لك عنده هدف. راقب
+    نفسك. سترى أنك لست الكورس الذي تريد إنهاءه، ولا العادة
+    التي تحاول بنائها، بل إنسان. هذا وحده قد يكفي.
+  </p>
+
+  <a href="#garden" class="go-live"><span class="arrow">←</span> اذهب لتعيش</a>
+</section>
+</div>
+
+<!-- ============ 09 — GARDEN ============ -->
+<div class="wrap">
+<section id="garden" class="reveal">
+  <div class="section-label">09 — الزراعة</div>
+
+  <h2>ولهذا أقول لك: ازرع.</h2>
+
+  <p class="lead">
+    نعم، ازرع شيئاً حقيقياً. ليس كـ«هاك» إنتاجية، ولا كتحدٍّ
+    لمدة ثلاثين يوماً. ازرع لأن النبتة ستعلّمك شيئاً لا تستطيع
+    لوحة التحكم أن تشرحه جيداً.
+  </p>
+
+  <div class="plant-stage">
+    <svg class="plant" id="plant" viewBox="0 0 200 300" aria-hidden="true">
+      <line class="soil" x1="30" y1="225" x2="170" y2="225"></line>
+      <path class="root root-1" d="M100,225 C100,248 96,265 88,288"></path>
+      <path class="root root-2" d="M100,232 C88,240 76,252 68,272"></path>
+      <path class="root root-3" d="M100,235 C112,243 124,255 132,275"></path>
+      <path class="root root-4" d="M100,248 C94,262 90,272 84,282"></path>
+      <path class="root root-5" d="M100,250 C108,262 112,272 118,282"></path>
+      <path class="stem" d="M100,225 C100,180 96,140 100,100 C103,65 99,42 100,22"></path>
+      <path class="leaf leaf-1" d="M100,196 C84,188 66,194 64,211 C80,214 95,211 100,196 Z"></path>
+      <path class="leaf leaf-2" d="M100,169 C116,161 134,167 136,184 C120,187 105,184 100,169 Z"></path>
+      <path class="leaf leaf-3" d="M100,143 C84,135 66,141 64,158 C80,161 95,158 100,143 Z"></path>
+      <path class="leaf leaf-4" d="M100,117 C116,109 134,115 136,132 C120,135 105,132 100,117 Z"></path>
+      <path class="leaf leaf-5" d="M100,91 C86,84 72,89 70,104 C84,106 96,104 100,91 Z"></path>
+      <path class="leaf leaf-6" d="M100,67 C114,60 128,65 130,80 C116,82 103,80 100,67 Z"></path>
+      <g class="flower">
+        <ellipse cx="100" cy="10" rx="4" ry="7"></ellipse>
+        <ellipse cx="100" cy="10" rx="4" ry="7" transform="rotate(72 100 22)"></ellipse>
+        <ellipse cx="100" cy="10" rx="4" ry="7" transform="rotate(144 100 22)"></ellipse>
+        <ellipse cx="100" cy="10" rx="4" ry="7" transform="rotate(216 100 22)"></ellipse>
+        <ellipse cx="100" cy="10" rx="4" ry="7" transform="rotate(288 100 22)"></ellipse>
+        <circle class="flower-center" cx="100" cy="22" r="3.5"></circle>
+      </g>
+    </svg>
+  </div>
+
+  <p>
+    ستسقيها فتتحسن، أو تنسى فتتأثر. قد تعطيها ما يكفي من الماء
+    فتؤذيها، وقد تضعها في مكان لا يناسبها، وقد يكون الضوء أقوى
+    أو أضعف مما توقعت. ثم ستكتشف أن صحة النبتة ليست نتيجة
+    «قوة إرادتها» وحدها.
+  </p>
+
+  <p>
+    هناك عوامل خارجية كثيرة. وهذا درس مهم للإنسان أيضاً:
+    <strong>البيئة ليست عذراً دائماً، لكنها عامل حقيقي.</strong>
+    فهمها يجعلك أكثر واقعية في التخطيط وأقل قسوة في التشخيص.
+  </p>
+
+  <blockquote>
+    طيلة هذه الفلسفة، هذا هو ما كان ينقصك: التسليم. إذا تعلمته،
+    ستعيش مرتاحاً — ليس لأنك بخير ومثالي، بل لأنك نجوت، ولأنك
+    لا تزال حياً تتنفس.
+  </blockquote>
+
+  <p>
+    التسليم ليس استسلاماً. أن تقبل أن هناك أشياء لا تتحكم فيها
+    لا يعني أنك لا تفعل شيئاً. يعني أنك توجه طاقتك إلى الجزء
+    الذي يقع فعلاً في يدك.
+  </p>
+
+  <a href="#past" class="go-live"><span class="arrow">←</span> اذهب لتعيش</a>
+</section>
+</div>
+
+<!-- ============ 10 — PAST ============ -->
+<div class="wrap">
+<section id="past" class="reveal">
+  <div class="section-label">10 — الماضي</div>
+
+  <div class="illus-block">
+    <svg class="illus" viewBox="0 0 100 100" aria-hidden="true">
+      <path class="il-path" d="M18 82 C30 62 40 72 50 52 C60 32 70 42 82 18"></path>
+      <circle class="il-path-dot" cx="18" cy="82" r="3"></circle>
+      <circle class="il-path-dot" cx="82" cy="18" r="3" style="animation-delay:0.4s;"></circle>
+    </svg>
+  </div>
+
+  <h2>الماضي لن يختفي. لذلك لا أعدك بأن تنساه.</h2>
+
+  <p>
+    لن أكذب عليك وأقول: «انسَ الماضي». بعض الأشياء لا تُنسى.
+    وبعضها لا ينبغي أن يُمحى من الذاكرة، لأنها جزء من فهمك
+    لما حدث.
+  </p>
+
+  <p>
+    المطلوب ليس أن تمحو الصفحة، بل أن تتعلم قراءتها دون أن
+    تسلّمها قلمك كل يوم. ماضيك قد يشرح شيئاً عنك، لكنه ليس
+    ملزماً بأن يكتب كل فصولك القادمة.
+  </p>
+
+  <blockquote>لا تحتاج إلى صفحة بيضاء. تحتاج إلى صفحة تستطيع أن تكتب عليها رغم ما سبق.</blockquote>
+
+  <p>
+    الصفحة البيضاء بنسبة 100% غير موجودة عند أي شخص. الجميع
+    يحاول أن يلوّن صفحته بأي لون. لذلك لا تقارن صفحتك بصفحة
+    شخص آخر، ولا تقارنها بالصفحة التي كنت تتمنى أن تكون.
+    قارنها فقط بالصفحة التي كانت لديك أمس.
+  </p>
+
+  <a href="#closing" class="go-live"><span class="arrow">←</span> اذهب لتعيش</a>
+</section>
+</div>
+
+<!-- ============ 11 — CLOSING ============ -->
+<div class="wrap">
+<section id="closing" class="closing reveal">
+  <div class="breath-wrap" aria-hidden="true">
+    <div class="breath"></div>
+  </div>
+
+  <h2>هذا هو تطبيقي الحقيقي.</h2>
+
+  <p>
+    إذا وصلت هذه الكلمات إلى إدراكك، أكون قد نجحت بموقعي
+    ومشروعي. وأكون قد ثبّتُ بنجاح نسخة كاملة من مشروعي
+    داخل عقلك.
+  </p>
+
+  <p>
+    لا أملك لك حلاً، ولا أريد أن أبيعك واحداً. كل ما أستطيع
+    فعله هو أن أضع أمامك نظاماً بسيطاً من الأفكار: نظّم ما في
+    رأسك، تقبّل أنك ناقص، تحمّل نتائج قراراتك، تحرك نحو هدف
+    مؤقت لا يشترط أن يصبح غايتك الأخيرة، اسقط عندما تسقط،
+    ارتح عندما تحتاج، ثم قم من جديد.
+  </p>
+
+  <p>
+    ولا تجعل الخوف هو الوقود الوحيد. لا تجعل الحاجة وحدها هي
+    التي تحركك. لا تجعل الساعة خصمك.
+    <strong>اجعل لديك سبباً تستطيع أن تسمعه من داخلك حتى
+    عندما تصمت الشاشة.</strong>
+  </p>
+
+  <p class="final-mantra">
+    <span class="line">أنت لست بحاجة إلى تطبيق.</span>
+    <span class="line">أنت بحاجة إلى هدف حقيقي في عقلك.</span>
+  </p>
+
+  <p class="whisper">
+    أنت، يا عزيزي المستخدم، لا أدعوك للبلادة الكسولة،
+    ولا للتشدد المرهق.<br>
+    أدعوك لأن تبني هدفاً حقيقياً في عقلك.<br>
+    هذا الهدف، وهذا الوعي، هو تطبيقي أنا الحقيقي.
+  </p>
+
+  <div class="next-episode">
+    <span class="next-label">COMING IN WHY 88</span>
+    <p class="next-title">ep. 02 — قيد الكتابة</p>
+  </div>
+</section>
+</div>
+
 </main>
 
+<!-- ============ FOOTER ============ -->
 <footer>
   <div class="wrap">
-    <div class="mark">why 88 · MC88</div>
-    <p>هذا الموقع لا يطلب منك أن تصبح شخصاً آخر. فقط أن تنظر إلى نفسك بصدق أكبر.</p>
-    <p>الحالة الأولى — نص تأملي وتجربة فكرية، لا بديلاً عن المشورة المتخصصة عند الحاجة.</p>
-    <p class="rights">Copyright : mohamed005cheikh@gmail.com | by MC88</p>
+    <p class="mark">why 88 <span class="brand-num">v1</span></p>
+    <p>هذا الموقع لا يتابعك.</p>
+    <p>لا يذكّرك.</p>
+    <p>لا يحكم عليك.</p>
+    <p style="margin-top:14px;">عد متى شئت.</p>
+
+    <div class="source-note">
+      ملاحظة: هذه الحلقة نص تأملي وتجربة فكرية. ليست نصيحة طبية
+      أو نفسية، ولا بديلاً عن المختص عند الحاجة.
+    </div>
+
+    <p class="copyright" id="copyright">
+      <span class="cline"></span>
+      <span>© MC88</span>
+      <span class="cline"></span>
+    </p>
   </div>
 </footer>
 
 <script>
-const progress=document.getElementById("progress"),header=document.getElementById("header");
-function scrollUI(){
-  const max=document.documentElement.scrollHeight-innerHeight;
-  progress.style.width=(max>0?(scrollY/max)*100:0)+"%";
-  header.classList.toggle("scrolled",scrollY>20);
-}
-addEventListener("scroll",scrollUI,{passive:true});scrollUI();
+(function () {
+  const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-const observer=new IntersectionObserver(entries=>{
-  entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add("in");observer.unobserve(e.target)}})
-},{threshold:.12,rootMargin:"0px 0px -60px 0px"});
-document.querySelectorAll(".reveal").forEach(x=>observer.observe(x));
-
-document.querySelectorAll(".card").forEach(card=>{
-  card.addEventListener("pointermove",e=>{
-    const r=card.getBoundingClientRect();
-    card.style.setProperty("--mx",((e.clientX-r.left)/r.width*100)+"%");
-    card.style.setProperty("--my",((e.clientY-r.top)/r.height*100)+"%");
+  /* HERO WORDS */
+  document.querySelectorAll('#heroTitle .word').forEach((w, i) => {
+    w.style.animationDelay = (0.75 + i * 0.09) + 's';
   });
-});
 
-const fill=document.getElementById("fill"),pct=document.getElementById("pct");
-const loadObserver=new IntersectionObserver(entries=>{
-  if(entries[0].isIntersecting){
-    const start=performance.now(),duration=2800,target=99;
-    function tick(now){
-      const t=Math.min(1,(now-start)/duration),ease=1-Math.pow(1-t,3),v=Math.round(ease*target);
-      fill.style.width=v+"%";pct.textContent=v+"%";
-      if(t<1)requestAnimationFrame(tick);
+  /* H2 WORD-BY-WORD */
+  document.querySelectorAll('h2').forEach(h2 => {
+    const text = h2.textContent.trim();
+    if (!text) return;
+    const words = text.split(/\s+/);
+    h2.innerHTML = words.map((w, i) =>
+      `<span class="w" style="transition-delay:${(0.05 + i * 0.06).toFixed(2)}s">${w}</span>`
+    ).join(' ');
+  });
+
+  /* DUST */
+  if (!reduce) {
+    const dust = document.getElementById('dust');
+    if (dust) {
+      for (let i = 0; i < 28; i++) {
+        const s = document.createElement('span');
+        const size = 1 + Math.random() * 2.5;
+        const dur = 18 + Math.random() * 22;
+        const delay = -Math.random() * dur;
+        const dx = (Math.random() - 0.5) * 120;
+        const op = 0.15 + Math.random() * 0.35;
+        s.style.width = size + 'px';
+        s.style.height = size + 'px';
+        s.style.right = Math.random() * 100 + '%';
+        s.style.bottom = '-10px';
+        s.style.animationDuration = dur + 's';
+        s.style.animationDelay = delay + 's';
+        s.style.setProperty('--dx', dx + 'px');
+        s.style.setProperty('--op', op);
+        dust.appendChild(s);
+      }
     }
-    requestAnimationFrame(tick);loadObserver.disconnect();
   }
-},{threshold:.45});
-loadObserver.observe(document.getElementById("fill").parentElement.parentElement);
 
-const fallBtn=document.getElementById("fallBtn"),fallAnswer=document.getElementById("fallAnswer");
-fallBtn.addEventListener("click",()=>{
-  fallAnswer.classList.toggle("show");
-  fallBtn.textContent=fallAnswer.classList.contains("show")?"أغلق الإجابة":"وماذا أفعل عندما أسقط؟";
-});
+  /* CURSOR GLOW */
+  const glow = document.getElementById('cursorGlow');
+  if (glow && window.matchMedia('(pointer: fine)').matches && !reduce) {
+    let tx = 0, ty = 0, cx = 0, cy = 0;
+    document.addEventListener('mousemove', (e) => {
+      tx = e.clientX; ty = e.clientY;
+      glow.classList.add('on');
+    });
+    document.addEventListener('mouseleave', () => glow.classList.remove('on'));
+    (function loop() {
+      cx += (tx - cx) * 0.15;
+      cy += (ty - cy) * 0.15;
+      glow.style.transform = `translate(${cx}px, ${cy}px) translate(-50%, -50%)`;
+      requestAnimationFrame(loop);
+    })();
+  }
 
-const plant=document.getElementById("plant");
-const plantObserver=new IntersectionObserver(entries=>{
-  if(entries[0].isIntersecting){plant.classList.add("grow");plantObserver.disconnect();}
-},{threshold:.5});
-plantObserver.observe(plant);
+  /* SCROLL PROGRESS + HEADER */
+  const progress = document.getElementById('progress');
+  const header = document.getElementById('header');
+  const updateScroll = () => {
+    const h = document.documentElement;
+    const scrolled = h.scrollTop / (h.scrollHeight - h.clientHeight) * 100;
+    progress.style.width = Math.min(scrolled, 100) + '%';
+    header.classList.toggle('scrolled', h.scrollTop > 20);
+  };
+  window.addEventListener('scroll', updateScroll, { passive: true });
+  updateScroll();
 
-document.querySelectorAll("a[href^='#']").forEach(a=>{
-  a.addEventListener("click",e=>{
-    const id=a.getAttribute("href");if(id==="#")return;
-    const el=document.querySelector(id);if(!el)return;
-    e.preventDefault();el.scrollIntoView({behavior:"smooth",block:"start"});
+  /* REVEAL */
+  const reveals = document.querySelectorAll('.reveal');
+  if ('IntersectionObserver' in window && !reduce) {
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          e.target.classList.add('in');
+          io.unobserve(e.target);
+        }
+      });
+    }, { threshold: 0.12 });
+    reveals.forEach(el => io.observe(el));
+  } else {
+    reveals.forEach(el => el.classList.add('in'));
+  }
+
+  /* NOTIFY CARDS */
+  const notifyCards = document.getElementById('notifyCards');
+  if (notifyCards && 'IntersectionObserver' in window) {
+    const co = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          e.target.classList.add('in');
+          co.unobserve(e.target);
+        }
+      });
+    }, { threshold: 0.2 });
+    co.observe(notifyCards);
+  }
+
+  /* COPYRIGHT */
+  const copyright = document.getElementById('copyright');
+  if (copyright && 'IntersectionObserver' in window) {
+    const co = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          e.target.classList.add('in');
+          co.unobserve(e.target);
+        }
+      });
+    }, { threshold: 0.6 });
+    co.observe(copyright);
+  }
+
+  /* LOADER */
+  const fill = document.getElementById('loaderFill');
+  const pct = document.getElementById('loaderPct');
+  const note = document.getElementById('loaderNote');
+  const loader = document.getElementById('loader');
+  let loaderStarted = false;
+
+  function animateLoader() {
+    if (loaderStarted) return;
+    loaderStarted = true;
+    const target = 99;
+    const duration = 3000;
+    const start = performance.now();
+
+    function step(now) {
+      const t = Math.min((now - start) / duration, 1);
+      const eased = 1 - Math.pow(1 - t, 3);
+      const val = Math.round(eased * target);
+      fill.style.width = val + '%';
+      pct.textContent = val + '%';
+      if (t < 1) {
+        requestAnimationFrame(step);
+      } else {
+        pct.textContent = '99%';
+        fill.classList.add('stuck');
+        setTimeout(() => note.classList.add('visible'), 400);
+      }
+    }
+    requestAnimationFrame(step);
+  }
+
+  const loadSection = document.getElementById('perfect');
+  if (loadSection && 'IntersectionObserver' in window) {
+    const lo = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          animateLoader();
+          lo.disconnect();
+        }
+      });
+    }, { threshold: 0.35 });
+    lo.observe(loadSection);
+  }
+
+  if (loader) {
+    loader.addEventListener('click', () => {
+      loader.classList.add('shake');
+      setTimeout(() => loader.classList.remove('shake'), 500);
+    });
+  }
+
+  /* FALL BUTTON */
+  const fallBtn = document.getElementById('fallBtn');
+  const fallResponse = document.getElementById('fallResponse');
+  if (fallBtn && fallResponse) {
+    fallBtn.addEventListener('click', () => {
+      const open = fallResponse.classList.toggle('visible');
+      fallBtn.textContent = open ? 'أغلق الإجابة' : 'سقطت؟';
+    });
+  }
+
+  /* PLANT */
+  const plant = document.getElementById('plant');
+  if (plant) {
+    plant.querySelectorAll('path, line').forEach(p => {
+      if (p.classList.contains('soil')) return;
+      try {
+        const len = Math.ceil(p.getTotalLength());
+        p.style.setProperty('--len', len);
+      } catch (e) {
+        p.style.setProperty('--len', 500);
+      }
+    });
+
+    if ('IntersectionObserver' in window && !reduce) {
+      const po = new IntersectionObserver((entries) => {
+        entries.forEach(e => {
+          if (e.isIntersecting) {
+            e.target.classList.add('in');
+            po.unobserve(e.target);
+          }
+        });
+      }, { threshold: 0.4 });
+      po.observe(plant);
+    } else {
+      plant.classList.add('in');
+    }
+  }
+
+  /* EPISODE ROAD */
+  const episodeRoad = document.querySelector('.episode-road');
+  if (episodeRoad && 'IntersectionObserver' in window && !reduce) {
+    const roadObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        episodeRoad.querySelectorAll('.road-flow').forEach(path => {
+          path.style.animationPlayState = entry.isIntersecting ? 'running' : 'paused';
+        });
+      });
+    }, { threshold: 0.1 });
+    roadObserver.observe(episodeRoad);
+  }
+
+  /* BELL PARALLAX */
+  const bellWrap = document.querySelector('.bell-wrap');
+  if (bellWrap && window.matchMedia('(pointer:fine)').matches && !reduce) {
+    let px = 0, py = 0, bx = 0, by = 0;
+    window.addEventListener('mousemove', (e) => {
+      px = (e.clientX / window.innerWidth - 0.5) * 8;
+      py = (e.clientY / window.innerHeight - 0.5) * 6;
+    }, { passive: true });
+    (function heroLoop() {
+      bx += (px - bx) * 0.045;
+      by += (py - by) * 0.045;
+      bellWrap.style.transform = `translate3d(${bx}px, ${by}px, 0)`;
+      requestAnimationFrame(heroLoop);
+    })();
+  }
+
+  /* RIPPLE */
+  document.querySelectorAll('.btn, .fall-btn').forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      const rect = btn.getBoundingClientRect();
+      const size = Math.max(rect.width, rect.height);
+      const ripple = document.createElement('span');
+      ripple.className = 'ripple';
+      ripple.style.width = ripple.style.height = size + 'px';
+      ripple.style.left = (e.clientX - rect.left - size / 2) + 'px';
+      ripple.style.top  = (e.clientY - rect.top  - size / 2) + 'px';
+      btn.appendChild(ripple);
+      setTimeout(() => ripple.remove(), 800);
+    });
   });
-});
+})();
 </script>
+
 </body>
-</html>
+  </html>
