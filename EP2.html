@@ -1,0 +1,1731 @@
+<!DOCTYPE html>
+
+<html dir="rtl" lang="ar">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>why 88 v2 — Eat less. Do more exercise.</title>
+<meta content="الحلقة الثانية من why 88: الطعام، الحركة، والميزان الداخلي دون تحويل الحياة إلى جدول." name="description"/>
+<meta content="#f5f1e8" name="theme-color"/>
+<meta content="MC88" name="author"/>
+
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+
+<style>
+  :root {
+    --paper: #f5f1e8;
+    --paper-2: #efe9dc;
+    --ink: #1c1a16;
+    --ink-soft: #4a463e;
+    --ink-faint: #8a8478;
+    --line: #d9d2c2;
+    --accent: #6b5f4a;
+    --whisper: #a89d86;
+    --signal: #a4462d;
+    --max: 780px;
+    --ease: cubic-bezier(0.22, 1, 0.36, 1);
+    --bloom: cubic-bezier(0.34, 1.56, 0.64, 1);
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--paper);
+    color: var(--ink);
+    font-family: 'Readex Pro', system-ui, -apple-system, sans-serif;
+    font-weight: 300;
+    line-height: 1.9;
+    font-size: 17px;
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+    position: relative;
+  }
+
+  body::before {
+    content: "";
+    position: fixed; inset: 0;
+    pointer-events: none;
+    background-image:
+      radial-gradient(circle at 20% 30%, rgba(107,95,74,0.04) 0%, transparent 45%),
+      radial-gradient(circle at 80% 70%, rgba(107,95,74,0.03) 0%, transparent 45%);
+    z-index: 0;
+  }
+
+  .grain {
+    position: fixed; inset: -100%;
+    width: 300%; height: 300%;
+    pointer-events: none;
+    z-index: 9999;
+    opacity: 0.035;
+    mix-blend-mode: multiply;
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='180' height='180'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>");
+    animation: grainShift 9s steps(8) infinite;
+  }
+  @keyframes grainShift {
+    0%,100% { transform: translate(0,0); }
+    25%  { transform: translate(-5%, 3%); }
+    50%  { transform: translate(-4%, 2%); }
+    75%  { transform: translate(3%, -3%); }
+  }
+
+  .cursor-glow {
+    position: fixed;
+    width: 460px; height: 460px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(107,95,74,0.08) 0%, rgba(107,95,74,0.03) 40%, transparent 70%);
+    pointer-events: none;
+    transform: translate(-50%, -50%);
+    z-index: 1; left: 0; top: 0;
+    opacity: 0;
+    transition: opacity 0.6s ease;
+  }
+  .cursor-glow.on { opacity: 1; }
+  @media (pointer: coarse) { .cursor-glow { display: none; } }
+
+  .progress {
+    position: fixed; top: 0; right: 0;
+    height: 1.5px;
+    background: linear-gradient(to left, var(--ink), var(--accent));
+    width: 0%; z-index: 100;
+    transition: width 0.12s linear;
+    opacity: 0.75;
+  }
+
+  /* ============ HEADER ============ */
+  header {
+    position: sticky; top: 0; z-index: 10;
+    background: rgba(245,241,232,0.85);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border-bottom: 1px solid transparent;
+    transition: border-color 0.5s ease;
+  }
+  header.scrolled { border-bottom-color: var(--line); }
+
+  .nav {
+    max-width: var(--max);
+    margin: 0 auto;
+    padding: 18px 28px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 13.5px;
+  }
+
+  .brand {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--ink);
+    text-decoration: none;
+    direction: ltr;
+  }
+  .brand-text { position: relative; }
+  .brand-text::after {
+    content: "_";
+    color: var(--ink-faint);
+    animation: caret 1.2s steps(2) infinite;
+  }
+  @keyframes caret {
+    0%,49% { opacity: 1; }
+    50%,100% { opacity: 0; }
+  }
+  .brand-num {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 26px; height: 26px;
+    border: 1px solid var(--ink);
+    border-radius: 50%;
+    font-size: 11px;
+    font-weight: 600;
+    position: relative;
+  }
+  .brand-num::after {
+    content: "";
+    position: absolute;
+    inset: -3px;
+    border-radius: 50%;
+    border: 1px solid var(--whisper);
+    opacity: 0;
+    animation: pulseRing 3.6s ease-out infinite;
+  }
+  @keyframes pulseRing {
+    0%   { transform: scale(0.9); opacity: 0.7; }
+    70%  { transform: scale(1.5); opacity: 0; }
+    100% { transform: scale(1.5); opacity: 0; }
+  }
+  .brand-ver {
+    font-size: 10px;
+    letter-spacing: 0.08em;
+    color: var(--ink-faint);
+    padding: 2px 6px;
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    margin-right: 2px;
+    transition: color 0.4s ease, border-color 0.4s ease;
+    direction: ltr;
+  }
+  .brand:hover .brand-ver {
+    color: var(--ink);
+    border-color: var(--ink-faint);
+  }
+
+  .nav-links { display: flex; gap: 22px; }
+  .nav-links a {
+    color: var(--ink-faint);
+    text-decoration: none;
+    transition: color 0.3s ease;
+    position: relative;
+  }
+  .nav-links a::after {
+    content: "";
+    position: absolute;
+    bottom: -4px; right: 0;
+    height: 1px; width: 0;
+    background: var(--ink);
+    transition: width 0.4s var(--ease);
+  }
+  .nav-links a:hover { color: var(--ink); }
+  .nav-links a:hover::after { width: 100%; }
+  @media (max-width: 620px) { .nav-links { display: none; } }
+
+  .wrap {
+    position: relative;
+    z-index: 2;
+    max-width: var(--max);
+    margin: 0 auto;
+    padding: 0 28px;
+  }
+
+  /* ============ HERO ============ */
+  .hero {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 90px 0 80px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .dust {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    overflow: hidden;
+    z-index: 0;
+  }
+  .dust span {
+    position: absolute;
+    width: 3px; height: 3px;
+    border-radius: 50%;
+    background: var(--whisper);
+    opacity: 0;
+    animation: drift linear infinite;
+    filter: blur(0.3px);
+  }
+  @keyframes drift {
+    0%   { transform: translate(0, 20px) scale(0.6); opacity: 0; }
+    15%  { opacity: var(--op, 0.35); }
+    85%  { opacity: var(--op, 0.35); }
+    100% { transform: translate(var(--dx, 20px), -110vh) scale(1); opacity: 0; }
+  }
+
+  /* ============ BALANCE SCALE ============ */
+  .balance-wrap {
+    position: relative;
+    margin-bottom: 40px;
+    z-index: 2;
+  }
+  .balance-svg {
+    display: block;
+    width: 210px;
+    height: 260px;
+    color: var(--ink);
+    overflow: visible;
+  }
+
+  .balance-svg .b-base,
+  .balance-svg .b-post {
+    stroke: currentColor;
+    stroke-width: 2;
+    stroke-linecap: round;
+  }
+
+  .balance-svg .b-beam {
+    stroke: currentColor;
+    stroke-width: 2.4;
+    stroke-linecap: round;
+  }
+
+  .balance-svg .b-chain {
+    stroke: currentColor;
+    stroke-width: 1;
+    stroke-linecap: round;
+    opacity: 0.55;
+  }
+
+  .balance-svg .b-pan {
+    fill: currentColor;
+    fill-opacity: 0.08;
+    stroke: currentColor;
+    stroke-width: 1.4;
+  }
+
+  .balance-svg .b-beam-group {
+    transform-origin: 100px 95px;
+    animation: beamSwing 7s ease-in-out infinite;
+  }
+  @keyframes beamSwing {
+    0%, 100% { transform: rotate(-6.5deg); }
+    50%      { transform: rotate(6.5deg); }
+  }
+
+  .balance-svg .b-apples circle {
+    fill: currentColor;
+    transform-box: fill-box;
+    transform-origin: center;
+    animation: applePulse 7s ease-in-out infinite;
+    animation-delay: var(--d, 0s);
+  }
+  @keyframes applePulse {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    25%      { opacity: 1; transform: scale(1); }
+    75%      { opacity: 0.55; transform: scale(0.85); }
+  }
+
+  .balance-svg .b-dumbbell rect {
+    fill: currentColor;
+    animation: dbPulse 7s ease-in-out infinite;
+  }
+  @keyframes dbPulse {
+    0%, 100% { opacity: 1; }
+    25%      { opacity: 0.55; }
+    75%      { opacity: 1; }
+  }
+
+  .balance-svg .b-shadow {
+    fill: currentColor;
+    opacity: 0.08;
+    animation: shadowPulse 7s ease-in-out infinite;
+  }
+  @keyframes shadowPulse {
+    0%, 100% { opacity: 0.06; }
+    50%      { opacity: 0.14; }
+  }
+
+  /* ============ SERIES STRIP ============ */
+  .series-strip {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 26px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.16em;
+    color: var(--ink-faint);
+    direction: ltr;
+    opacity: 0;
+    animation: riseIn 1s var(--ease) 0.2s forwards;
+  }
+  .series-item {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 24px;
+    height: 24px;
+    padding: 0 6px;
+    border-radius: 12px;
+    border: 1px solid transparent;
+    transition: all 0.5s var(--ease);
+    position: relative;
+  }
+  .series-item.current {
+    color: var(--ink);
+    border-color: var(--ink);
+  }
+  .series-item.current::after {
+    content: "";
+    position: absolute;
+    inset: -3px;
+    border-radius: 15px;
+    border: 1px solid var(--whisper);
+    animation: pulseRing 3.2s ease-out infinite;
+  }
+  .series-item.past {
+    color: var(--ink-faint);
+    opacity: 0.7;
+  }
+  .series-item.future {
+    color: var(--ink-faint);
+    opacity: 0.35;
+  }
+  .series-sep {
+    opacity: 0.3;
+    font-size: 10px;
+  }
+
+  /* ============ HERO TEXT ============ */
+  .eyebrow {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    letter-spacing: 0.18em;
+    color: var(--ink-faint);
+    margin-bottom: 22px;
+    opacity: 0;
+    animation: riseIn 1s var(--ease) 0.4s forwards;
+    display: inline-block;
+    direction: ltr;
+  }
+  .eyebrow::after {
+    content: "";
+    display: block;
+    height: 1px; width: 0;
+    background: var(--whisper);
+    margin-top: 10px;
+    margin-right: auto;
+    margin-left: auto;
+    animation: lineDraw 1.4s var(--ease) 0.9s forwards;
+  }
+  @keyframes lineDraw { to { width: 42px; } }
+
+  h1.title {
+    font-family: 'Noto Serif Arabic', serif;
+    font-weight: 700;
+    font-size: clamp(1.8rem, 5.5vw, 3.1rem);
+    line-height: 1.35;
+    color: var(--ink);
+    margin-bottom: 26px;
+  }
+  h1.title .word {
+    display: inline-block;
+    opacity: 0;
+    transform: translateY(28px) rotate(1.5deg);
+    animation: wordIn 1.1s var(--ease) forwards;
+  }
+  @keyframes wordIn {
+    to { opacity: 1; transform: translateY(0) rotate(0); }
+  }
+
+  .subtitle {
+    font-family: 'Noto Serif Arabic', serif;
+    font-size: clamp(1.02rem, 2.5vw, 1.28rem);
+    font-weight: 400;
+    color: var(--ink-soft);
+    line-height: 1.8;
+    margin-bottom: 30px;
+    max-width: 580px;
+    opacity: 0;
+    animation: riseIn 1.2s var(--ease) 1.5s forwards;
+  }
+  .subtitle .series-tag {
+    display: inline-block;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.72em;
+    letter-spacing: 0.06em;
+    color: var(--ink-faint);
+    border: 1px solid var(--line);
+    padding: 2px 8px;
+    border-radius: 10px;
+    margin-left: 8px;
+    direction: ltr;
+    vertical-align: middle;
+  }
+
+  .hero-text {
+    font-size: 16.5px;
+    color: var(--ink-soft);
+    max-width: 560px;
+    line-height: 2;
+    opacity: 0;
+    animation: riseIn 1.2s var(--ease) 1.7s forwards;
+  }
+  .hero-text p + p { margin-top: 16px; }
+
+  @keyframes riseIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  .cta-row {
+    display: flex;
+    gap: 16px;
+    margin-top: 40px;
+    flex-wrap: wrap;
+    justify-content: center;
+    opacity: 0;
+    animation: riseIn 1.2s var(--ease) 2s forwards;
+  }
+
+  .btn {
+    display: inline-block;
+    padding: 14px 26px;
+    border: 1px solid var(--ink);
+    background: transparent;
+    color: var(--ink);
+    text-decoration: none;
+    font-size: 14.5px;
+    cursor: pointer;
+    transition: all 0.5s var(--ease);
+    border-radius: 2px;
+    position: relative;
+    overflow: hidden;
+    isolation: isolate;
+  }
+  .btn:hover {
+    background: var(--ink);
+    color: var(--paper);
+    transform: translateY(-2px);
+    box-shadow: 0 10px 24px -14px rgba(28,26,22,0.5);
+  }
+  .btn.ghost { border-color: var(--line); color: var(--ink-faint); }
+  .btn.ghost:hover { border-color: var(--ink-faint); background: transparent; color: var(--ink); box-shadow: none; }
+
+  .ripple {
+    position: absolute;
+    border-radius: 50%;
+    background: currentColor;
+    opacity: 0.25;
+    transform: scale(0);
+    animation: ripple 0.7s var(--ease);
+    pointer-events: none;
+    z-index: -1;
+  }
+  @keyframes ripple {
+    to { transform: scale(2.4); opacity: 0; }
+  }
+
+  .hero-note {
+    margin-top: 50px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 13px;
+    color: var(--ink-faint);
+    letter-spacing: 0.08em;
+    direction: ltr;
+    opacity: 0;
+    animation: riseIn 1.4s var(--ease) 2.3s forwards;
+  }
+  .hero-note .hl { color: var(--ink); }
+
+  /* ============ MANTRA BANNER ============ */
+  .mantra {
+    padding: 70px 0;
+    text-align: center;
+    border-top: 1px solid var(--line);
+    border-bottom: 1px solid var(--line);
+    background: rgba(107,95,74,0.03);
+  }
+  .mantra-line {
+    display: block;
+    font-family: 'JetBrains Mono', monospace;
+    font-weight: 500;
+    font-size: clamp(1.6rem, 5vw, 2.6rem);
+    color: var(--ink);
+    letter-spacing: 0.02em;
+    line-height: 1.3;
+    direction: ltr;
+    opacity: 0;
+    transform: translateY(16px);
+    transition: opacity 1.2s var(--ease), transform 1.2s var(--ease);
+  }
+  .mantra.in .mantra-line:nth-child(1) { opacity: 1; transform: none; transition-delay: 0.1s; }
+  .mantra.in .mantra-line:nth-child(2) { opacity: 1; transform: none; transition-delay: 0.5s; }
+  .mantra-sub {
+    margin-top: 22px;
+    font-family: 'Noto Serif Arabic', serif;
+    font-size: 1rem;
+    color: var(--ink-faint);
+    opacity: 0;
+    transition: opacity 1.4s var(--ease) 1s;
+  }
+  .mantra.in .mantra-sub { opacity: 1; }
+
+  /* ============ SECTION ============ */
+  section {
+    padding: 90px 0;
+    border-top: 1px solid var(--line);
+    position: relative;
+  }
+
+  .section-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11.5px;
+    letter-spacing: 0.22em;
+    color: var(--ink-faint);
+    margin-bottom: 26px;
+    display: inline-block;
+    position: relative;
+    direction: ltr;
+  }
+  .section-label::before {
+    content: "";
+    position: absolute;
+    top: 50%; right: -60px;
+    width: 0; height: 1px;
+    background: var(--line);
+    transition: width 1s var(--ease) 0.3s;
+  }
+  .reveal.in .section-label::before { width: 40px; }
+
+  h2 {
+    font-family: 'Noto Serif Arabic', serif;
+    font-weight: 700;
+    font-size: clamp(1.5rem, 4vw, 2.1rem);
+    line-height: 1.4;
+    margin-bottom: 30px;
+    color: var(--ink);
+  }
+  h2 .w {
+    display: inline-block;
+    opacity: 0;
+    transform: translateY(16px);
+    transition: opacity 0.9s var(--ease), transform 0.9s var(--ease);
+  }
+  .reveal.in h2 .w { opacity: 1; transform: none; }
+
+  p {
+    color: var(--ink-soft);
+    margin-bottom: 18px;
+    line-height: 2;
+  }
+  p.lead { font-size: 1.08rem; color: var(--ink); }
+
+  blockquote {
+    border-right: 2px solid var(--whisper);
+    padding-right: 22px;
+    margin: 30px 0;
+    font-family: 'Noto Serif Arabic', serif;
+    font-size: 1.15rem;
+    color: var(--ink);
+    line-height: 1.9;
+  }
+
+  .callout {
+    font-family: 'JetBrains Mono', monospace;
+    font-weight: 500;
+    font-size: 1.05rem;
+    direction: ltr;
+    text-align: center;
+    color: var(--ink);
+    padding: 22px 20px;
+    margin: 30px 0;
+    background: rgba(28,26,22,0.04);
+    border-radius: 2px;
+    letter-spacing: 0.02em;
+    position: relative;
+    overflow: hidden;
+  }
+  .callout::before {
+    content: "";
+    position: absolute;
+    top: 0; right: 0;
+    height: 2px;
+    width: 0;
+    background: var(--ink);
+    transition: width 1.6s var(--ease) 0.4s;
+  }
+  .reveal.in .callout::before { width: 100%; }
+
+  /* ============ ILLUSTRATIONS ============ */
+  .illus-block {
+    display: flex;
+    justify-content: center;
+    margin: 0 0 26px;
+  }
+  .illus {
+    width: 120px;
+    height: 120px;
+    color: var(--ink);
+    overflow: visible;
+  }
+
+  /* 01 — phone with chart dying */
+  .i-phone { fill: none; stroke: currentColor; stroke-width: 1.6; }
+  .i-bar {
+    fill: currentColor;
+    transform-box: fill-box;
+    transform-origin: bottom;
+    animation: barGrow 5s ease-in-out infinite;
+  }
+  .i-bar.b1 { animation-delay: 0.0s; }
+  .i-bar.b2 { animation-delay: 0.2s; }
+  .i-bar.b3 { animation-delay: 0.4s; }
+  @keyframes barGrow {
+    0%, 10%   { transform: scaleY(0.1); opacity: 0.3; }
+    30%       { transform: scaleY(1); opacity: 1; }
+    55%       { transform: scaleY(1); opacity: 1; }
+    70%       { transform: scaleY(1); opacity: 0.4; }
+    85%, 100% { transform: scaleY(0.1); opacity: 0; }
+  }
+  .i-x line {
+    stroke: var(--signal);
+    stroke-width: 2.4;
+    stroke-linecap: round;
+    stroke-dasharray: 130;
+    stroke-dashoffset: 130;
+    animation: xDraw 5s ease-in-out infinite;
+  }
+  @keyframes xDraw {
+    0%, 55%   { stroke-dashoffset: 130; opacity: 0; }
+    62%       { opacity: 1; }
+    78%       { stroke-dashoffset: 0; opacity: 1; }
+    95%, 100% { stroke-dashoffset: 0; opacity: 0.5; }
+  }
+
+  /* 02 — plate empty / fork rejected */
+  .i-plate {
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 1.6;
+  }
+  .i-plate-inner {
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 1;
+    opacity: 0.4;
+  }
+  .i-food {
+    fill: currentColor;
+    transform-box: fill-box;
+    transform-origin: center;
+    animation: foodVanish 5s ease-in-out infinite;
+  }
+  .i-food.f1 { animation-delay: 0s; }
+  .i-food.f2 { animation-delay: 0.3s; }
+  .i-food.f3 { animation-delay: 0.6s; }
+  @keyframes foodVanish {
+    0%, 15%   { opacity: 0.7; transform: scale(1); }
+    45%       { opacity: 0; transform: scale(0.4); }
+    70%, 100% { opacity: 0; transform: scale(0.4); }
+  }
+  .i-question {
+    fill: currentColor;
+    opacity: 0;
+    font-family: 'Noto Serif Arabic', serif;
+    font-weight: 700;
+    font-size: 22px;
+    text-anchor: middle;
+    animation: qFade 5s ease-in-out infinite;
+  }
+  @keyframes qFade {
+    0%, 35%   { opacity: 0; }
+    50%       { opacity: 0.7; }
+    60%, 100% { opacity: 0; }
+  }
+
+  /* 03 — compass pointing inward */
+  .i-compass-ring {
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 1.4;
+    opacity: 0.4;
+  }
+  .i-compass-dot {
+    fill: currentColor;
+    opacity: 0.6;
+  }
+  .i-compass-pulse {
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 0.8;
+    transform-box: fill-box;
+    transform-origin: center;
+    animation: compassPulse 3s ease-out infinite;
+  }
+  @keyframes compassPulse {
+    0%   { transform: scale(0.6); opacity: 0.5; }
+    100% { transform: scale(1.6); opacity: 0; }
+  }
+  .i-compass-needle {
+    transform-origin: 50px 50px;
+    animation: needleSwing 4.5s ease-in-out infinite;
+  }
+  @keyframes needleSwing {
+    0%, 100% { transform: rotate(-25deg); }
+    50%      { transform: rotate(25deg); }
+  }
+  .i-compass-needle line {
+    stroke: currentColor;
+    stroke-width: 2;
+    stroke-linecap: round;
+  }
+  .i-compass-needle .head {
+    fill: var(--signal);
+  }
+
+  /* 04 — eat less / do more arrows */
+  .i-arrow path,
+  .i-arrow line {
+    stroke: currentColor;
+    stroke-width: 2;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    fill: none;
+  }
+  .i-arrow.down {
+    animation: arrowDown 3s ease-in-out infinite;
+  }
+  .i-arrow.up {
+    animation: arrowUp 3s ease-in-out infinite;
+  }
+  @keyframes arrowDown {
+    0%, 100% { transform: translateY(-2px); }
+    50%      { transform: translateY(4px); }
+  }
+  @keyframes arrowUp {
+    0%, 100% { transform: translateY(2px); }
+    50%      { transform: translateY(-4px); }
+  }
+  .i-arrow-down-label,
+  .i-arrow-up-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 8px;
+    fill: currentColor;
+    opacity: 0.5;
+    letter-spacing: 0.05em;
+  }
+
+  /* 05 — butterfly effect */
+  .i-ripple {
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 0.7;
+    opacity: 0;
+    transform-box: fill-box;
+    transform-origin: center;
+    animation: rippleOut 4.5s ease-out infinite;
+  }
+  .i-ripple.r1 { animation-delay: 0s; }
+  .i-ripple.r2 { animation-delay: 1.5s; }
+  .i-ripple.r3 { animation-delay: 3s; }
+  @keyframes rippleOut {
+    0%   { transform: scale(0.4); opacity: 0.5; }
+    100% { transform: scale(1.8); opacity: 0; }
+  }
+  .i-butterfly {
+    transform-origin: 50px 50px;
+    animation: flutter 4s ease-in-out infinite;
+  }
+  @keyframes flutter {
+    0%, 100% { transform: translate(0, 0) rotate(-2deg); }
+    25%      { transform: translate(2px, -3px) rotate(2deg); }
+    50%      { transform: translate(0, -5px) rotate(-1deg); }
+    75%      { transform: translate(-2px, -3px) rotate(1deg); }
+  }
+  .i-wing {
+    fill: currentColor;
+    fill-opacity: 0.15;
+    stroke: currentColor;
+    stroke-width: 1.2;
+    transform-box: fill-box;
+    animation: wingFlap 0.6s ease-in-out infinite;
+  }
+  .i-wing.wl { transform-origin: right center; }
+  .i-wing.wr { transform-origin: left center; }
+  @keyframes wingFlap {
+    0%, 100% { transform: scaleX(1); }
+    50%      { transform: scaleX(0.55); }
+  }
+  .i-body-line {
+    stroke: currentColor;
+    stroke-width: 1.6;
+    stroke-linecap: round;
+  }
+
+  /* ============ CARDS ============ */
+  .cards {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px;
+    margin-top: 20px;
+  }
+  @media (max-width: 560px) { .cards { grid-template-columns: 1fr; } }
+
+  .card {
+    padding: 26px 24px;
+    background: var(--paper-2);
+    border: 1px solid transparent;
+    border-radius: 2px;
+    opacity: 0;
+    transform: translateY(24px) rotate(-1.2deg);
+    transition: opacity 0.9s var(--ease), transform 0.9s var(--ease),
+                border-color 0.5s ease, background 0.5s ease;
+  }
+  .cards.in .card { opacity: 1; transform: none; }
+  .cards.in .card:nth-child(1) { transition-delay: 0.05s; }
+  .cards.in .card:nth-child(2) { transition-delay: 0.15s; }
+  .cards.in .card:nth-child(3) { transition-delay: 0.25s; }
+  .cards.in .card:nth-child(4) { transition-delay: 0.35s; }
+  .cards.in .card:nth-child(5) { transition-delay: 0.45s; }
+  .cards.in .card:nth-child(6) { transition-delay: 0.55s; }
+  .card:hover {
+    border-color: var(--line);
+    background: var(--paper);
+    transform: translateY(-3px) rotate(0deg);
+  }
+  .card p {
+    font-family: 'Noto Serif Arabic', serif;
+    font-size: 1.05rem;
+    color: var(--ink);
+    margin: 0;
+    line-height: 1.7;
+  }
+
+  /* ============ CALORIE LOADER ============ */
+  .loader-wrap { margin-top: 30px; text-align: center; }
+  .loader {
+    height: 4px;
+    background: var(--line);
+    border-radius: 4px;
+    overflow: hidden;
+    position: relative;
+    cursor: pointer;
+    transition: transform 0.3s var(--ease);
+  }
+  .loader.shake { animation: shake 0.45s var(--ease); }
+  @keyframes shake {
+    0%,100% { transform: translateX(0); }
+    20% { transform: translateX(-4px); }
+    40% { transform: translateX(4px); }
+    60% { transform: translateX(-3px); }
+    80% { transform: translateX(3px); }
+  }
+  .loader-fill {
+    height: 100%;
+    background: var(--ink);
+    width: 0%;
+    border-radius: 4px;
+    transition: width 3s var(--ease);
+  }
+  .loader-fill.stuck { animation: pulse99 3.4s ease-in-out infinite; }
+  @keyframes pulse99 {
+    0%,100% { opacity: 1; }
+    50% { opacity: 0.5; }
+  }
+  .loader-meta {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 12px;
+    font-size: 13px;
+    color: var(--ink-faint);
+    font-family: 'JetBrains Mono', monospace;
+  }
+  .loader-note {
+    margin-top: 32px;
+    font-family: 'Noto Serif Arabic', serif;
+    font-size: 1.1rem;
+    color: var(--ink);
+    line-height: 1.9;
+    opacity: 0;
+    transform: translateY(12px);
+    transition: opacity 1.4s var(--ease) 0.3s, transform 1.4s var(--ease) 0.3s;
+  }
+  .loader-note.visible { opacity: 1; transform: none; }
+
+  /* ============ FALL — HEARTBEAT TRACK ============ */
+  .pulse-visual {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 40px 0 10px;
+    height: 80px;
+  }
+  .pulse-track {
+    width: 100%;
+    max-width: 340px;
+    height: 60px;
+    color: var(--ink);
+  }
+  .pulse-line {
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 1.8;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    stroke-dasharray: 400;
+    stroke-dashoffset: 400;
+    animation: pulseDraw 3.2s linear infinite;
+  }
+  @keyframes pulseDraw {
+    0%   { stroke-dashoffset: 400; }
+    100% { stroke-dashoffset: -400; }
+  }
+  .pulse-dot {
+    fill: var(--signal);
+    animation: pulseDot 3.2s ease-in-out infinite;
+  }
+  @keyframes pulseDot {
+    0%, 100% { opacity: 0.3; r: 2; }
+    50%      { opacity: 1; r: 3.5; }
+  }
+
+  .fall-caption {
+    text-align: center;
+    font-size: 12.5px;
+    color: var(--ink-faint);
+    margin-top: 14px;
+    letter-spacing: 0.04em;
+    font-style: italic;
+  }
+
+  .fall-btn-wrap { text-align: center; margin-top: 34px; }
+  .fall-btn {
+    font-family: 'Noto Serif Arabic', serif;
+    font-size: 1.35rem;
+    font-weight: 600;
+    padding: 18px 44px;
+    border: 1px solid var(--ink);
+    background: transparent;
+    color: var(--ink);
+    cursor: pointer;
+    border-radius: 2px;
+    position: relative;
+    overflow: hidden;
+    isolation: isolate;
+    transition: all 0.5s var(--ease);
+    animation: heartbeat 4.2s ease-in-out infinite;
+  }
+  .fall-btn:hover {
+    background: var(--ink);
+    color: var(--paper);
+    animation-play-state: paused;
+  }
+  @keyframes heartbeat {
+    0%,100% { transform: scale(1); }
+    12% { transform: scale(1.035); }
+    24% { transform: scale(1); }
+    36% { transform: scale(1.02); }
+    48% { transform: scale(1); }
+  }
+  .fall-response {
+    margin-top: 30px;
+    font-family: 'Noto Serif Arabic', serif;
+    font-size: 1.15rem;
+    color: var(--ink);
+    line-height: 2;
+    opacity: 0;
+    max-height: 0;
+    overflow: hidden;
+    transition: opacity 1.2s var(--ease), max-height 1.2s var(--ease);
+  }
+  .fall-response.visible { opacity: 1; max-height: 240px; }
+
+  /* ============ CLOSING ============ */
+  .closing {
+    padding: 110px 0 90px;
+    text-align: center;
+  }
+  .breath-wrap {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 34px;
+    height: 130px;
+    align-items: center;
+  }
+  .breath {
+    position: relative;
+    width: 90px; height: 90px;
+  }
+  .breath::before,
+  .breath::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(28,26,22,0.14) 0%, transparent 70%);
+    animation: breathe 8s ease-in-out infinite;
+  }
+  .breath::after {
+    inset: 12px;
+    background: radial-gradient(circle, rgba(28,26,22,0.2) 0%, transparent 70%);
+    animation-delay: 0.3s;
+  }
+  @keyframes breathe {
+    0%,100% { transform: scale(0.85); opacity: 0.5; }
+    50% { transform: scale(1.15); opacity: 1; }
+  }
+  .closing h2 { font-size: clamp(1.6rem, 4.5vw, 2.4rem); }
+  .closing p {
+    font-family: 'Noto Serif Arabic', serif;
+    font-size: 1.1rem;
+    color: var(--ink-soft);
+    max-width: 520px;
+    margin: 0 auto 22px;
+  }
+  .closing .final-mantra {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: clamp(1.3rem, 4vw, 1.9rem);
+    font-weight: 500;
+    color: var(--ink);
+    direction: ltr;
+    letter-spacing: 0.02em;
+    margin: 40px auto 0;
+    line-height: 1.4;
+    max-width: 520px;
+  }
+  .closing .final-mantra .line {
+    display: block;
+    opacity: 0;
+    transform: translateY(12px);
+    transition: opacity 1.4s var(--ease), transform 1.4s var(--ease);
+  }
+  .closing.in .final-mantra .line:nth-child(1) { opacity: 1; transform: none; transition-delay: 0.2s; }
+  .closing.in .final-mantra .line:nth-child(2) { opacity: 1; transform: none; transition-delay: 0.7s; }
+  .closing .whisper {
+    font-family: 'Noto Serif Arabic', serif;
+    color: var(--ink-faint);
+    font-size: 14.5px;
+    margin-top: 30px;
+    line-height: 2;
+  }
+
+  /* ============ NEXT EPISODE ============ */
+  .next-episode {
+    margin-top: 50px;
+    padding-top: 40px;
+    border-top: 1px solid var(--line);
+    text-align: center;
+    max-width: 420px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  .next-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    color: var(--ink-faint);
+    direction: ltr;
+    display: block;
+    margin-bottom: 14px;
+  }
+  .next-title {
+    font-family: 'Noto Serif Arabic', serif;
+    font-size: 1.1rem;
+    color: var(--ink-soft);
+    opacity: 0.55;
+    font-style: italic;
+  }
+  .next-title::after {
+    content: " ...";
+    animation: dots 2.4s steps(4) infinite;
+    display: inline-block;
+    overflow: hidden;
+    vertical-align: bottom;
+  }
+  @keyframes dots {
+    0%   { width: 0; }
+    100% { width: 1.4em; }
+  }
+
+  /* ============ FOOTER ============ */
+  footer {
+    border-top: 1px solid var(--line);
+    padding: 50px 0 60px;
+    text-align: center;
+  }
+  footer p {
+    font-size: 13.5px;
+    color: var(--ink-faint);
+    line-height: 1.9;
+    margin: 4px 0;
+  }
+  footer .mark {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 15px;
+    color: var(--ink-soft);
+    margin-bottom: 14px;
+    direction: ltr;
+  }
+  footer .mark .brand-num {
+    font-size: 10px;
+    width: 22px; height: 22px;
+  }
+  .copyright {
+    margin-top: 26px !important;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    letter-spacing: 0.14em;
+    color: var(--ink-faint) !important;
+    direction: ltr;
+  }
+  .copyright .cline {
+    display: inline-block;
+    height: 1px;
+    width: 0;
+    background: var(--line);
+    transition: width 1.4s var(--ease) 0.4s;
+  }
+  .copyright.in .cline { width: 40px; }
+
+  /* ============ GO LIVE ============ */
+  .go-live {
+    display: inline-block;
+    margin-top: 34px;
+    font-size: 14px;
+    letter-spacing: 0.06em;
+    color: var(--ink-faint);
+    text-decoration: none;
+    padding-bottom: 3px;
+    border-bottom: 1px solid transparent;
+    transition: color 0.4s ease, border-color 0.4s ease;
+  }
+  .go-live:hover { color: var(--ink); border-bottom-color: var(--ink); }
+  .go-live .arrow {
+    display: inline-block;
+    margin-right: 6px;
+    transition: transform 0.6s var(--ease);
+  }
+  .go-live:hover .arrow { transform: translateX(-6px); }
+
+  ::selection { background: var(--ink); color: var(--paper); }
+
+  .reveal {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 1.1s var(--ease), transform 1.1s var(--ease);
+  }
+  .reveal.in { opacity: 1; transform: none; }
+
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+    }
+    .reveal { opacity: 1; transform: none; }
+    .card { opacity: 1; transform: none; }
+    h2 .w { opacity: 1; transform: none; }
+    .mantra-line { opacity: 1; transform: none; }
+    .closing .final-mantra .line { opacity: 1; transform: none; }
+    .grain { display: none; }
+  }
+
+/* ===== EPISODE ROAD — a series, not a menu ===== */
+.episode-road{
+  position:relative;
+  width:min(680px, 100%);
+  height:86px;
+  margin:0 auto 34px;
+  direction:ltr;
+}
+.episode-road svg{
+  position:absolute; inset:0;
+  width:100%; height:100%;
+  overflow:visible;
+}
+.episode-road .road-base{
+  fill:none; stroke:var(--line); stroke-width:1.2;
+}
+.episode-road .road-flow{
+  fill:none; stroke:var(--ink); stroke-width:1.4;
+  stroke-linecap:round; stroke-dasharray:8 16;
+  animation:roadFlow 7s linear infinite;
+}
+@keyframes roadFlow{to{stroke-dashoffset:-96}}
+.episode-node{
+  position:absolute; top:50%;
+  width:42px;height:42px;
+  transform:translate(-50%,-50%);
+  border:1px solid var(--line);
+  border-radius:50%;
+  background:var(--paper);
+  display:grid;place-items:center;
+  font:500 11px/1 'IBM Plex Mono',monospace;
+  color:var(--ink-faint);
+  transition:transform .7s var(--ease), border-color .5s ease, color .5s ease, box-shadow .7s ease;
+}
+.episode-node::before{
+  content:""; position:absolute; inset:-7px;
+  border:1px solid transparent; border-radius:50%;
+  transform:scale(.65); opacity:0;
+}
+.episode-node.done{opacity:.65}
+.episode-node.current{
+  color:var(--ink);
+  border-color:var(--ink);
+  transform:translate(-50%,-50%) scale(1.08);
+  box-shadow:0 0 0 7px rgba(107,95,74,.035);
+}
+.episode-node.current::before{
+  border-color:var(--whisper);
+  animation:nodeRing 3.8s ease-out infinite;
+}
+@keyframes nodeRing{
+  0%{transform:scale(.7);opacity:.75}
+  75%,100%{transform:scale(1.45);opacity:0}
+}
+.episode-node.n1{left:8%}.episode-node.n2{left:38%}.episode-node.n3{left:68%}.episode-node.n4{left:94%}
+.episode-road-label{
+  position:absolute; left:50%; bottom:-4px; transform:translateX(-50%);
+  white-space:nowrap; color:var(--ink-faint);
+  font:400 10px/1.2 'IBM Plex Mono',monospace;
+  letter-spacing:.12em;
+}
+@media(max-width:560px){
+  .episode-road{height:74px}
+  .episode-node{width:36px;height:36px}
+  .episode-road-label{font-size:9px}
+}
+
+/* softer editorial motion */
+.balance-wrap{animation:heroFloat 8s ease-in-out infinite}
+@keyframes heroFloat{0%,100%{transform:translateY(0)}50%{transform:translateY(-5px)}}
+.illus{filter:drop-shadow(0 8px 16px rgba(28,26,22,.035))}
+section.reveal .illus-block{transform:translateY(12px);opacity:.2;transition:transform 1.2s var(--ease),opacity 1.2s ease}
+section.reveal.in .illus-block{transform:none;opacity:1}
+.callout{transition:transform .7s var(--ease),background .5s ease}
+.callout:hover{transform:translateY(-2px);background:rgba(28,26,22,.055)}
+.source-note{
+  margin:28px auto 0; max-width:650px;
+  padding-top:20px; border-top:1px solid var(--line);
+  font-size:12.5px; color:var(--ink-faint); line-height:1.9;
+}
+.source-note a{color:inherit}
+</style>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&amp;family=Readex+Pro:wght@300;400;500;600;700&amp;family=Noto+Serif+Arabic:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/></head>
+<body>
+<div aria-hidden="true" class="grain"></div>
+<div aria-hidden="true" class="cursor-glow" id="cursorGlow"></div>
+<div aria-hidden="true" class="progress" id="progress"></div>
+<header id="header">
+<nav class="nav">
+<a aria-label="why 88 version 2" class="brand" href="#">
+<span class="brand-text">why 88</span>
+<span class="brand-ver">v2</span>
+</a>
+<div class="nav-links">
+<a href="#origin">الأصل</a>
+<a href="#lie">الكذبة</a>
+<a href="#balance">الميزان</a>
+<a href="#move">كل حركة</a>
+<a href="#butterfly">الفراشة</a>
+</div>
+</nav>
+</header>
+<!-- ============ HERO ============ -->
+<div class="wrap">
+<section class="hero" style="border-top:none;">
+<div aria-hidden="true" class="dust" id="dust"></div>
+<!-- BALANCE SCALE ANIMATION -->
+<div aria-hidden="true" class="balance-wrap">
+<svg class="balance-svg" viewbox="0 0 200 260">
+<ellipse class="b-shadow" cx="100" cy="245" rx="60" ry="4"></ellipse>
+<line class="b-base" x1="55" x2="145" y1="240" y2="240"></line>
+<line class="b-post" x1="100" x2="100" y1="95" y2="240"></line>
+<g class="b-beam-group">
+<line class="b-beam" x1="30" x2="170" y1="95" y2="95"></line>
+<!-- left: apples -->
+<line class="b-chain" x1="45" x2="45" y1="95" y2="120"></line>
+<ellipse class="b-pan" cx="45" cy="122" rx="20" ry="5"></ellipse>
+<g class="b-apples">
+<circle cx="36" cy="114" r="4.5" style="--d:0s"></circle>
+<circle cx="45" cy="112" r="4.5" style="--d:0.15s"></circle>
+<circle cx="54" cy="114" r="4.5" style="--d:0.3s"></circle>
+<circle cx="45" cy="105" r="4.5" style="--d:0.45s"></circle>
+</g>
+<!-- right: dumbbell -->
+<line class="b-chain" x1="155" x2="155" y1="95" y2="120"></line>
+<ellipse class="b-pan" cx="155" cy="122" rx="20" ry="5"></ellipse>
+<g class="b-dumbbell">
+<rect height="4" rx="1.5" width="30" x="140" y="114"></rect>
+<rect height="18" rx="1.5" width="5.5" x="138" y="107"></rect>
+<rect height="18" rx="1.5" width="5.5" x="166" y="107"></rect>
+</g>
+</g>
+</svg>
+</div>
+<div aria-label="طريق حلقات why 88" class="episode-road">
+<svg aria-hidden="true" preserveaspectratio="none" viewbox="0 0 680 86">
+<path class="road-base" d="M55 43 C170 8 240 78 340 43 S510 8 640 43"></path>
+<path class="road-flow" d="M55 43 C170 8 240 78 340 43 S510 8 640 43"></path>
+</svg>
+<span class="episode-node n1 done">01</span>
+<span class="episode-node n2 current">02</span>
+<span class="episode-node n3">03</span>
+<span class="episode-node n4">∞</span>
+<span class="episode-road-label">حلقات في الطريق · ليست قائمة مهام</span>
+</div>
+<div class="eyebrow">why 88 · v2 · سلسلة تعبيرية</div>
+<h1 aria-label="لماذا لا تحتاج إلى تطبيق لعدّ السعرات؟" class="title" id="heroTitle">
+<span class="word">لماذا</span>
+<span class="word">لا</span>
+<span class="word">تحتاج</span>
+<br/>
+<span class="word">إلى</span>
+<span class="word">عدّاد</span>
+<span class="word">سعرات؟</span>
+</h1>
+<p class="subtitle">
+      حلقة عن التطبيقات التي تعدّ لك سعراتك — وعن الميزان الذي نسيت أنه داخلك.
+      <span class="series-tag">ep. 02</span>
+</p>
+<div class="hero-text">
+<p>
+        أنت تعرف. في أعماقك، هناك ميزان يعرف ما يضرك وما ينفعك.
+        لا يحتاج شاشة، ولا حساباً، ولا اشتراكاً شهرياً.
+      </p>
+<p>
+        هذه الحلقة ليست ضد التطبيقات فقط. إنها عنك أنت، وعن الحرب
+        البسيطة التي يمكنك أن تخوضها من الآن.
+      </p>
+</div>
+<div class="cta-row">
+<a class="btn" href="#origin">اقرأ القصة</a>
+<a class="btn ghost" href="#mantra">المفتاح</a>
+</div>
+<p class="hero-note">EAT LESS · <span class="hl">DO MORE EXERCISE</span></p>
+</section>
+</div>
+<!-- ============ MANTRA BANNER ============ -->
+<div class="wrap">
+<section class="mantra reveal" id="mantra" style="border-top:none; padding:80px 0;">
+<span class="mantra-line">Eat less.</span>
+<span class="mantra-line">Do more exercise.</span>
+<p class="mantra-sub">اختصار للحلقة، لا وصفة طبية ولا دعوة للحرمان.</p>
+</section>
+</div>
+<!-- ============ ORIGIN ============ -->
+<div class="wrap">
+<section class="reveal" id="origin">
+<div class="section-label">01 — الأصل</div>
+
+
+
+
+
+
+
+
+<div aria-hidden="true" class="illus-block"><svg class="illus" viewbox="0 0 100 100"><circle class="i-compass-ring" cx="50" cy="50" r="32"></circle><circle class="i-compass-pulse" cx="50" cy="50" r="9"></circle><circle class="i-compass-dot" cx="50" cy="50" r="3"></circle></svg></div><h2>كنت سأبني تطبيقاً لعدّ السعرات.</h2><p class="lead">الفكرة سهلة: جدول، خانات، أرقام، قاعدة بيانات للأطعمة، ومعادلات تربط الوزن والطول والعمر والنشاط بتقدير للاحتياج اليومي. تقنياً يمكن بناء هذا التطبيق. لكن قابلية بناء التطبيق لا تعني أن كل شخص يحتاج إلى العيش داخله.</p><p>فتحت الـ <span dir="ltr">sheet</span> الذي أعرفه، ونظرت إلى الفكرة من جهة أخرى: هل أنا أبني أداة تساعد الإنسان، أم أبني آلة تطلب منه أن يراقب نفسه طوال الوقت؟ هناك فرق بين القياس المفيد وبين تحويل كل وجبة إلى امتحان.</p><p>تطبيقات السعرات ليست عديمة الفائدة. قد تكون مفيدة لبعض الناس، خصوصاً عندما تُستخدم لفترة أو لغرض محدد. المشكلة تبدأ عندما يصبح الرقم هو الحكم الوحيد: إذا لم أسجل، فأنا فاشل؛ وإذا أخطأت في التقدير، فقد أفسدت اليوم. هذا النوع من التفكير يحوّل أداة إلى سلطة.</p><p>أنا لا أريد أن أبيعك كذبة معاكسة: لا أقول إن الأرقام لا قيمة لها. أقول فقط إن الإنسان أكبر من ورقة حساب، وإن النظام الجيد يجب أن يخدم حياته، لا أن يطلب من حياته أن تخدمه.</p><blockquote>الأداة الجيدة تزيد وعيك؛ لا تستبدل وعيك.</blockquote><a class="go-live" href="#lie"><span class="arrow">←</span> اذهب لتعيش</a></section>
+</div>
+<!-- ============ THE LIE ============ -->
+<div class="wrap">
+<section class="reveal" id="lie">
+<div class="section-label">02 — الإشارة</div>
+
+
+
+
+
+
+
+
+
+
+<div aria-hidden="true" class="illus-block"><svg class="illus" viewbox="0 0 100 100"><circle class="i-compass-ring" cx="50" cy="50" r="32"></circle><circle class="i-compass-pulse" cx="50" cy="50" r="9"></circle><circle class="i-compass-dot" cx="50" cy="50" r="3"></circle></svg></div><h2>الجوع ليس دائماً هو القصة كاملة.</h2><p class="lead">قبل أن تقول لنفسك: «أنا جائع»، اسأل سؤالاً أبسط: ماذا حدث قبل هذه الرغبة؟ أحياناً يكون الجوع جسدياً فعلاً. وأحياناً تتداخل معه العادة، والملل، والتوتر، وقلة النوم، والجلوس الطويل، ورؤية الطعام أو توقيت اعتدت أن تأكل فيه. لا تحتاج إلى اتهام نفسك بالكذب؛ تحتاج فقط إلى ملاحظة ما يحدث.</p><p>إذا كان يومك كله جلوساً وشاشة وانتظاراً، فمن الطبيعي أن تبحث عن شيء يملأ الوقت. والحركة ليست علاجاً سحرياً لكل شهية، لكنها تغيّر إيقاع اليوم وتضيف إلى حياتك شيئاً آخر غير التفكير في الطعام.</p><p>لذلك لا أريد منك أن تحارب كل إحساس بالجوع. أريد منك أن تفرّق بين الإشارات. تناول ما يحتاجه جسمك، وتعلّم أن تلاحظ متى تأكل لأنك جائع، ومتى تأكل لأنك معتاد أو متوتر أو فقط لأن الطعام موجود أمامك.</p><p><strong>وهذه الحلقة ليست تشخيصاً طبياً:</strong> الشهية والوزن يتأثران بعوامل كثيرة، منها النوم والأدوية والحالات الصحية والبيئة. إذا كان عندك مرض، أو اضطراب في الأكل، أو تغير غير مفهوم في الشهية أو الوزن، فهذه ليست مساحة للتجارب العشوائية؛ المختص أقدر على تقييم حالتك.</p><div class="callout">لاحظ الإشارة قبل أن تستجيب لها.</div><a class="go-live" href="#balance"><span class="arrow">←</span> اذهب لتعيش</a></section>
+</div>
+<!-- ============ INNER BALANCE ============ -->
+<div class="wrap">
+<section class="reveal" id="balance">
+<div class="section-label">03 — الميزان</div>
+
+
+
+
+
+
+
+
+
+<div aria-hidden="true" class="illus-block"><svg class="illus" viewbox="0 0 100 100"><circle class="i-compass-ring" cx="50" cy="50" r="32"></circle><circle class="i-compass-pulse" cx="50" cy="50" r="9"></circle><circle class="i-compass-dot" cx="50" cy="50" r="3"></circle></svg></div><h2>ما أريده منك ليس عدّاداً؛ أريده ميزاناً.</h2><p class="lead">الفكرة التي أدافع عنها هنا ليست «ثق بحدسك مهما كان». هذا أيضاً تبسيط. الميزان الداخلي الذي أقصده هو قدرة تتكوّن من المعرفة والملاحظة والخبرة: أعرف ما الذي يريحني، وما الذي يكرر المشكلة، وما الذي يجعل يومي أفضل، وأعرف متى تكون تجربتي غير كافية للحكم.</p><p>يمكنك استخدام تطبيق، ميزان، جدول، أو سجل طعام إذا كان ذلك يخدم هدفاً واضحاً. لكن لا تجعل الأداة هي مصدر ضميرك. إذا احتجت إلى تسجيل كل شيء كي تعرف أنك تناولت أكثر مما يناسبك، فالمشكلة ليست في التسجيل نفسه؛ المشكلة في أن الوعي لم ينتقل بعد من الشاشة إلىك.</p><p>وإذا عرفت أن شيئاً لا يناسبك، فلا تحتاج إلى إثبات ذلك لنفسك عشر مرات. الفضول طبيعي، لكن الحكمة أحياناً هي أن تتوقف قبل أن تتحول التجربة إلى عادة. لا تنتظر أن يصبح الضرر كبيراً حتى تعترف بالإشارة الصغيرة.</p><div class="callout">your mind knows · the sheet is only a tool</div><a class="go-live" href="#move"><span class="arrow">←</span> اذهب لتعيش</a></section>
+</div>
+<!-- ============ EVERY MOVE COUNTS ============ -->
+<div class="wrap">
+<section class="reveal" id="move">
+<div class="section-label">04 — الحركة</div>
+
+
+
+
+
+
+
+
+
+
+<div aria-hidden="true" class="illus-block"><svg class="illus" viewbox="0 0 100 100"><circle class="i-compass-ring" cx="50" cy="50" r="32"></circle><circle class="i-compass-pulse" cx="50" cy="50" r="9"></circle><circle class="i-compass-dot" cx="50" cy="50" r="3"></circle></svg></div><h2>كل حركة لها قيمة، حتى لو لم تبدُ رياضة.</h2><p class="lead">لا تبدأ من الصورة النهائية. ابدأ من القدرة الحالية. المشي، صعود الدرج، الأعمال المنزلية، اللعب، التنقل على قدميك، والتمرين المنظم كلها أشكال من الحركة. منظمة الصحة العالمية تعتبر الحركة اليومية، بما فيها بعض الأعمال المنزلية والتنقل، نشاطاً بدنياً؛ والقليل أفضل من لا شيء.</p><p>إذا كنت تريد بناء جسم أقوى أو أكثر لياقة، فالتمرين لا يصبح «مفيداً» فقط بعد أن تفقد الدهون. جسمك يستجيب للتدريب في كل مرحلة، ويمكن للقوة واللياقة والصحة العامة أن تتحسن قبل أن ترى الشكل الذي تتخيله في المرآة.</p><p>وإذا كان هدفك أن تصبح العضلات أوضح بصرياً، فهنا تدخل مسألة أخرى: لا يمكنك اختيار مكان خسارة الدهون بتمرين منطقة واحدة. تقوية عضلة محددة ممكنة، أما توزيع فقدان الدهون فيتأثر بالجسم كله وعوامل فردية. لذلك لا تجعل تمرين البطن وعداً بإزالة دهون البطن وحدها.</p><p>أما إن كان حجم جسمك كبيراً، فلا أريد أن أحول ذلك إلى إهانة ولا إلى إنكار. الوزن والصحة موضوعان مختلفان جزئياً ومتداخلان في الوقت نفسه. ابدأ بما تستطيع الاستمرار عليه، واطلب توجيهاً طبياً إذا كانت لديك حالة صحية أو قيود على الحركة.</p><div class="callout">LESS INPUT · MORE MOVEMENT · BETTER LIFE</div><blockquote>لا تنتظر أن يصبح جسمك مثالياً كي تمنحه سبباً للحركة.</blockquote><a class="go-live" href="#butterfly"><span class="arrow">←</span> اذهب لتعيش</a></section>
+</div>
+<!-- ============ BUTTERFLY EFFECT ============ -->
+<div class="wrap">
+<section class="reveal" id="butterfly">
+<div class="section-label">05 — الفراشة</div>
+
+
+
+
+
+
+
+<div aria-hidden="true" class="illus-block"><svg class="illus" viewbox="0 0 100 100"><circle class="i-compass-ring" cx="50" cy="50" r="32"></circle><circle class="i-compass-pulse" cx="50" cy="50" r="9"></circle><circle class="i-compass-dot" cx="50" cy="50" r="3"></circle></svg></div><h2>لا تنتظر الـ downfall حتى تغيّر اتجاهك.</h2><p class="lead">أحياناً تتخيل أن التغيير لا يبدأ إلا عندما تصل إلى نقطة سيئة جداً: عندما يزيد الوزن كثيراً، أو تتعب من الدرج، أو تشعر أن ملابسك تغيرت، أو يأتي تحليل طبي يوقظك. لكن الانتظار حتى تصبح المشكلة واضحة ليس شرطاً كي تستحق الخطوة الأولى.</p><p>كل تعديل صغير في السلوك يدخل في شبكة أكبر: تنام أفضل فتستيقظ أقدر على الحركة؛ تتحرك أكثر فتقضي وقتاً أقل جالساً؛ تنظم طعامك فتقل الفوضى؛ وتصبح البيئة من حولك أسهل قليلاً. ليست هذه «قوة سحرية» ولا وعداً بأن كل خطوة ستنتج نتيجة محددة، لكنها طريقة واقعية لفهم كيف تتراكم السلوكيات.</p><p>ولهذا أستخدم صورة الفراشة هنا كاستعارة، لا كقانون علمي: حركة صغيرة قد يكون لها أثر بعيد، لكننا لا نستطيع دائماً معرفة حجمه أو اتجاهه مسبقاً. ما نستطيع فعله هو اختيار الخطوة التالية التي تقع تحت سيطرتنا.</p><blockquote>لا تنتظر الانهيار كي تبدأ بالبناء.</blockquote><a class="go-live" href="#loading"><span class="arrow">←</span> اذهب لتعيش</a></section>
+</div>
+<!-- ============ LOADING (calorie tracker that never finishes) ============ -->
+<div class="wrap">
+<section class="reveal" id="loading">
+<div class="section-label">— العدّاد</div>
+
+
+
+
+<div aria-hidden="true" class="illus-block"><svg class="illus" viewbox="0 0 100 100"><circle class="i-compass-ring" cx="50" cy="50" r="32"></circle><circle class="i-compass-pulse" cx="50" cy="50" r="9"></circle><circle class="i-compass-dot" cx="50" cy="50" r="3"></circle></svg></div><h2>حتى عدّاد السعرات لا يستطيع أن يختصر الحياة.</h2><p class="lead">لنفرض أنك قررت تسجيل كل لقمة وكل مشروب وكل تمرين. قد يكون التسجيل دقيقاً ومفيداً لبعض الناس، لكنه يظل نموذجاً تقريبياً للحياة، لا نسخة كاملة منها. احتياجات الجسم واستهلاك الطاقة والشهية والنشاط تتغير، والتقديرات الغذائية نفسها ليست دائماً أرقاماً مطلقة.</p><p>لذلك لا أريد أن أجعل 100% هدفاً مقدساً. إذا فاتتك وجبة في السجل، أو أخطأت في التقدير، أو لم تتمرن في يوم ما، فهذا لا يمسح الأسبوع كله. النظام الذي لا يسمح بخطأ صغير يحتاج إلى إعادة تصميم.</p><p>شاهد الشريط. سيصل إلى 99% ثم يتوقف. ليس لأن 99% رقم علمي أو لأن الكمال مستحيل بطريقة سحرية، بل لأنني أريد أن أذكرك بشيء: القياس أداة، والحياة ليست ملف بيانات.</p></section>
+</div>
+<!-- ============ PULSE ============ -->
+<div class="wrap">
+<section class="reveal" id="pulse">
+<div class="section-label">— النبض</div>
+
+
+
+
+
+
+
+<div aria-hidden="true" class="illus-block"><svg class="illus" viewbox="0 0 100 100"><circle class="i-compass-ring" cx="50" cy="50" r="32"></circle><circle class="i-compass-pulse" cx="50" cy="50" r="9"></circle><circle class="i-compass-dot" cx="50" cy="50" r="3"></circle></svg></div><h2>سترجع أحياناً. هذا لا يلغي الطريق.</h2><p class="lead">قد يأتي يوم تأكل فيه أكثر مما كنت تنوي، أو تجلس ساعات، أو تتوقف عن التدريب لأسبوع، أو تعود إلى نمط كنت تحاول تركه. لا تجعل الخطأ الصغير سبباً لإلغاء كل ما قبله.</p><p>العودة ليست بطولة، بل مهارة. عد إلى الوجبة التالية الطبيعية، إلى المشي التالي، إلى النوم التالي، إلى الخطة التالية. لا تعاقب نفسك بالجوع ولا بالتمرين المفرط كي «تصلح» يوماً سيئاً.</p><p>وإذا لاحظت أن علاقتك بالطعام أو الجسم تتحول إلى خوف، أو ذنب مستمر، أو حرمان شديد، فهنا تتغير القاعدة: اطلب مساعدة مختص. الهدف ليس أن تربح معركة ضد جسدك؛ الهدف أن تعيش في جسد تستطيع العناية به.</p><div class="callout">FALL · BREATHE · RETURN</div><a class="go-live" href="#closing"><span class="arrow">←</span> اذهب لتعيش</a></section>
+</div>
+<!-- ============ CLOSING ============ -->
+<div class="wrap">
+<section class="closing reveal" id="closing">
+
+
+
+
+
+
+<div aria-hidden="true" class="breath-wrap"><div class="breath"></div></div><h2>هذا هو تطبيقي الحقيقي.</h2><p>إذا بقيت من هذه الحلقة بفكرة واحدة، فلا أريدها أن تكون خوفاً من الطعام، ولا هوساً بالوزن، ولا عداءً للتطبيقات. أريدك أن تستعيد شيئاً أبسط: أن تعرف لماذا تفعل ما تفعله.</p><p>استخدم الأرقام إذا كانت تخدمك. اتركها إذا تحولت إلى قيد. تحرك أكثر، وكل بطريقة تناسب احتياجك، ونم، وراقب سلوكك، واطلب مساعدة المختص عندما تتجاوز المسألة قدرتك على التقييم.</p><p class="final-mantra"><span class="line">Eat less.</span><span class="line">Do more exercise.</span></p><p class="whisper">ليس المقصود أن تأكل أقل من حاجتك. المقصود أن تتوقف عن الأكل بلا وعي، وأن تجعل الحركة جزءاً من الحياة لا عقوبة لها.</p><div class="next-episode"><span class="next-label">coming in why 88</span><p class="next-title">ep. 03 — قيد الكتابة</p></div></section>
+</div>
+<!-- ============ FOOTER ============ -->
+<footer><div class="wrap"><p class="mark">why 88 <span class="brand-num">v2</span></p><p>هذا الموقع لا يتابعك.</p><p>لا يذكّرك.</p><p>لا يحكم عليك.</p><p>الفكرة هنا أن تستخدم الوعي والأدوات معاً، لا أن تستبدل أحدهما بالآخر.</p><div class="source-note">ملاحظة صحية: هذه الحلقة نص تأملي وليست تشخيصاً أو خطة علاج. المراجع العامة للحركة وإدارة الوزن: <a href="https://www.who.int/news-room/fact-sheets/detail/physical-activity">منظمة الصحة العالمية</a> · <a href="https://www.cdc.gov/healthy-weight-growth/physical-activity/">CDC</a></div><p class="copyright" id="copyright"><span class="cline"></span><span>Copyright : mohamed005cheikh@gmail.com | by MC88</span><span class="cline"></span></p></div></footer>
+<script>
+(function () {
+  const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  /* HERO WORDS */
+  document.querySelectorAll('#heroTitle .word').forEach((w, i) => {
+    w.style.animationDelay = (0.75 + i * 0.12) + 's';
+  });
+
+  /* H2 WORD-BY-WORD */
+  document.querySelectorAll('h2').forEach(h2 => {
+    const text = h2.textContent.trim();
+    if (!text) return;
+    const words = text.split(/\s+/);
+    h2.innerHTML = words.map((w, i) =>
+      `<span class="w" style="transition-delay:${(0.05 + i * 0.06).toFixed(2)}s">${w}</span>`
+    ).join(' ');
+  });
+
+  /* DUST */
+  if (!reduce) {
+    const dust = document.getElementById('dust');
+    for (let i = 0; i < 28; i++) {
+      const s = document.createElement('span');
+      const size = 1 + Math.random() * 2.5;
+      const dur = 18 + Math.random() * 22;
+      const delay = -Math.random() * dur;
+      const dx = (Math.random() - 0.5) * 120;
+      const op = 0.15 + Math.random() * 0.35;
+      s.style.width = size + 'px';
+      s.style.height = size + 'px';
+      s.style.right = Math.random() * 100 + '%';
+      s.style.bottom = '-10px';
+      s.style.animationDuration = dur + 's';
+      s.style.animationDelay = delay + 's';
+      s.style.setProperty('--dx', dx + 'px');
+      s.style.setProperty('--op', op);
+      dust.appendChild(s);
+    }
+  }
+
+  /* CURSOR GLOW */
+  const glow = document.getElementById('cursorGlow');
+  if (window.matchMedia('(pointer: fine)').matches && !reduce) {
+    let tx = 0, ty = 0, cx = 0, cy = 0;
+    document.addEventListener('mousemove', (e) => {
+      tx = e.clientX; ty = e.clientY;
+      glow.classList.add('on');
+    });
+    document.addEventListener('mouseleave', () => glow.classList.remove('on'));
+    (function loop() {
+      cx += (tx - cx) * 0.15;
+      cy += (ty - cy) * 0.15;
+      glow.style.transform = `translate(${cx}px, ${cy}px) translate(-50%, -50%)`;
+      requestAnimationFrame(loop);
+    })();
+  }
+
+  /* SCROLL PROGRESS */
+  const progress = document.getElementById('progress');
+  const header = document.getElementById('header');
+  const updateScroll = () => {
+    const h = document.documentElement;
+    const scrolled = h.scrollTop / (h.scrollHeight - h.clientHeight) * 100;
+    progress.style.width = Math.min(scrolled, 100) + '%';
+    header.classList.toggle('scrolled', h.scrollTop > 20);
+  };
+  window.addEventListener('scroll', updateScroll, { passive: true });
+  updateScroll();
+
+  /* REVEAL */
+  const reveals = document.querySelectorAll('.reveal');
+  if ('IntersectionObserver' in window && !reduce) {
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          e.target.classList.add('in');
+          io.unobserve(e.target);
+        }
+      });
+    }, { threshold: 0.12 });
+    reveals.forEach(el => io.observe(el));
+  } else {
+    reveals.forEach(el => el.classList.add('in'));
+  }
+
+  /* CARDS */
+  const cardsGrid = document.getElementById('cardsGrid');
+  if (cardsGrid && 'IntersectionObserver' in window) {
+    const co = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          e.target.classList.add('in');
+          co.unobserve(e.target);
+        }
+      });
+    }, { threshold: 0.2 });
+    co.observe(cardsGrid);
+  }
+
+  /* COPYRIGHT */
+  const copyright = document.getElementById('copyright');
+  if (copyright && 'IntersectionObserver' in window) {
+    const co = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          e.target.classList.add('in');
+          co.unobserve(e.target);
+        }
+      });
+    }, { threshold: 0.6 });
+    co.observe(copyright);
+  }
+
+  /* LOADING BAR */
+  const fill = document.getElementById('loaderFill');
+  const pct = document.getElementById('loaderPct');
+  const note = document.getElementById('loaderNote');
+  const loader = document.getElementById('loader');
+  let loaderStarted = false;
+
+  function animateLoader() {
+    if (loaderStarted) return;
+    loaderStarted = true;
+    const target = 99;
+    const duration = 3000;
+    const start = performance.now();
+
+    function step(now) {
+      const t = Math.min((now - start) / duration, 1);
+      const eased = 1 - Math.pow(1 - t, 3);
+      const val = Math.round(eased * target);
+      fill.style.width = val + '%';
+      pct.textContent = val + '%';
+      if (t < 1) {
+        requestAnimationFrame(step);
+      } else {
+        pct.textContent = '99%';
+        fill.classList.add('stuck');
+        setTimeout(() => note.classList.add('visible'), 400);
+      }
+    }
+    requestAnimationFrame(step);
+  }
+
+  const loadSection = document.getElementById('loading');
+  if (loadSection && 'IntersectionObserver' in window) {
+    const lo = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          animateLoader();
+          lo.disconnect();
+        }
+      });
+    }, { threshold: 0.35 });
+    lo.observe(loadSection);
+  }
+
+  if (loader) {
+    loader.addEventListener('click', () => {
+      loader.classList.add('shake');
+      setTimeout(() => loader.classList.remove('shake'), 500);
+    });
+  }
+
+  /* FALL / PULSE BUTTON */
+  const fallBtn = document.getElementById('fallBtn');
+  const fallResponse = document.getElementById('fallResponse');
+  if (fallBtn) {
+    fallBtn.addEventListener('click', () => {
+      fallResponse.classList.toggle('visible');
+    });
+  }
+
+
+  /* EPISODE ROAD — pause the road when it leaves the viewport */
+  const episodeRoad = document.querySelector('.episode-road');
+  if (episodeRoad && 'IntersectionObserver' in window && !reduce) {
+    const roadObserver = new IntersectionObserver((entries)=>{
+      entries.forEach(entry=>{
+        episodeRoad.querySelectorAll('.road-flow').forEach(path=>{
+          path.style.animationPlayState = entry.isIntersecting ? 'running' : 'paused';
+        });
+      });
+    }, {threshold:0.1});
+    roadObserver.observe(episodeRoad);
+  }
+
+  /* HERO PARALLAX — restrained, pointer-only */
+  const balanceWrap = document.querySelector('.balance-wrap');
+  if (balanceWrap && window.matchMedia('(pointer:fine)').matches && !reduce) {
+    let px=0, py=0, bx=0, by=0;
+    window.addEventListener('mousemove',(e)=>{
+      px=(e.clientX/window.innerWidth-.5)*8;
+      py=(e.clientY/window.innerHeight-.5)*6;
+    },{passive:true});
+    (function heroLoop(){
+      bx += (px-bx)*0.045; by += (py-by)*0.045;
+      balanceWrap.style.transform=`translate3d(${bx}px,${by}px,0)`;
+      requestAnimationFrame(heroLoop);
+    })();
+  }
+
+  /* RIPPLE */
+  document.querySelectorAll('.btn, .fall-btn').forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      const rect = btn.getBoundingClientRect();
+      const size = Math.max(rect.width, rect.height);
+      const ripple = document.createElement('span');
+      ripple.className = 'ripple';
+      ripple.style.width = ripple.style.height = size + 'px';
+      ripple.style.left = (e.clientX - rect.left - size / 2) + 'px';
+      ripple.style.top  = (e.clientY - rect.top  - size / 2) + 'px';
+      btn.appendChild(ripple);
+      setTimeout(() => ripple.remove(), 800);
+    });
+  });
+})();
+</script>
+</body>
+  </html>
